@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/util/serverDetails.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
 
   signIn(String email, pass) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String url = 'http://192.168.1.215:8080/medsec/api/login';
+    String url = ServerDetails.ip + ':' + ServerDetails.port + ServerDetails.api + 'login';
     Map<String, String> headers = {"Content-type": "application/json"};
     var data = jsonEncode({
       'email': email,
