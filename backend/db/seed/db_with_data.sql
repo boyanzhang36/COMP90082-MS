@@ -1,15 +1,13 @@
-CREATE DATABASE  IF NOT EXISTS `medsec` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `medsec`;
--- MySQL dump 10.13  Distrib 5.7.22, for osx10.13 (x86_64)
+-- MariaDB dump 10.17  Distrib 10.4.7-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: 127.0.0.1    Database: medsec
+-- Host: localhost    Database: medsec
 -- ------------------------------------------------------
--- Server version	5.7.22
+-- Server version	10.4.7-MariaDB-1:10.4.7+maria~bionic
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -32,9 +30,9 @@ CREATE TABLE `Appointment` (
   `date_change` datetime DEFAULT NULL,
   `date` datetime NOT NULL,
   `duration` int(45) NOT NULL,
-  `detail` longtext,
-  `note` longtext,
-  `user_note` longtext,
+  `detail` longtext DEFAULT NULL,
+  `note` longtext DEFAULT NULL,
+  `user_note` longtext DEFAULT NULL,
   `status` enum('UNCONFIRMED','CONFIRMED','CANCELLED') DEFAULT 'UNCONFIRMED',
   PRIMARY KEY (`id`),
   KEY `fk_Appointment_Patient1_idx` (`uid`),
@@ -48,7 +46,7 @@ CREATE TABLE `Appointment` (
 
 LOCK TABLES `Appointment` WRITE;
 /*!40000 ALTER TABLE `Appointment` DISABLE KEYS */;
-INSERT INTO `Appointment` VALUES (1,1,'Day Oncology Unit','2018-05-16 05:23:41','2018-05-16 05:23:41','2018-06-12 10:30:00',60,'Education Session','Looking after yourself during chemotherapy - Watch\nPatient Health History Sheet - Please fill in and email back to daychemo.wrD@ramsayhealth.com.au\nPharmacy Medication Sheet - Please fill in and email back to daychemo.wrp@ramsayhealth.com.au\nParking Information - ReadQuestions Sheet - Read','Remember to bring scan result.','CONFIRMED'),(2,1,'Warringal Private Hospital / Epworth Eastern','2018-05-14 10:17:40','2018-05-14 10:17:40','2018-06-08 08:00:00',10,'Inflisaport Insertion','Warringal Private Hospital will contact you the day before to confirm admission and fasting times.\\nInfusaport Questionnaire - Please fill in and send back to reception@.66darebinst.com.au\\nDoctor Information - Read\\nProcedure Information - Read\\nAnaesthetists Information - Read',NULL,'CONFIRMED'),(3,1,'Warringal Private Hospital / Epworth Eastern','2018-05-14 10:17:40','2018-05-14 10:17:40','2018-06-08 08:00:00',10,NULL,NULL,NULL,'UNCONFIRMED');
+INSERT INTO `Appointment` VALUES (1,1,'Day Oncology Unit','2018-05-16 05:23:41','2018-05-16 05:23:41','2018-06-12 10:30:00',60,'Education Session','Looking after yourself during chemotherapy - Watch\nPatient Health History Sheet - Please fill in and email back to daychemo.wrD@ramsayhealth.com.au\nPharmacy Medication Sheet - Please fill in and email back to daychemo.wrp@ramsayhealth.com.au\nParking Information - ReadQuestions Sheet - Read','Remember to bring scan result.','CONFIRMED'),(2,1,'Warringal Private Hospital / Epworth Eastern','2018-05-14 10:17:40','2018-05-14 10:17:40','2018-06-08 08:00:00',10,'Inflisaport Insertion','Warringal Private Hospital will contact you the day before to confirm admission and fasting times.\\nInfusaport Questionnaire - Please fill in and send back to reception@.66darebinst.com.au\\nDoctor Information - Read\\nProcedure Information - Read\\nAnaesthetists Information - Read',NULL,'CONFIRMED'),(3,1,'Warringal Private Hospital / Epworth Eastern','2018-05-14 10:17:40','2018-05-14 10:17:40','2018-06-08 08:00:00',10,NULL,NULL,NULL,'UNCONFIRMED'),(4,5,'Appoinment','2019-09-20 08:26:10',NULL,'2019-09-20 08:26:10',1,'test',NULL,NULL,'UNCONFIRMED');
 /*!40000 ALTER TABLE `Appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,6 +65,7 @@ CREATE TABLE `Doctor` (
   `email` varchar(45) NOT NULL,
   `website` varchar(45) DEFAULT NULL,
   `expertise` mediumtext NOT NULL,
+  `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -77,6 +76,7 @@ CREATE TABLE `Doctor` (
 
 LOCK TABLES `Doctor` WRITE;
 /*!40000 ALTER TABLE `Doctor` DISABLE KEYS */;
+INSERT INTO `Doctor` VALUES (1,'555','14 Fake st','','doctor@doctor.com',NULL,'Radiology','Callum'),(2,'555','16 tardis street','555','timelord_01@Gallifrey','test.com','Electronic screwdriver','Dr. Who'),(3,'655','Bond st ','555','Drno@gmail.com','Www.no.com','Lasers, sharks','Dr. No'),(5,'55','Fgjgd','555','Gdshh','Gfdf','Cgjh','Gfdh');
 /*!40000 ALTER TABLE `Doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,6 +131,34 @@ CREATE TABLE `Hospital` (
 LOCK TABLES `Hospital` WRITE;
 /*!40000 ALTER TABLE `Hospital` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Hospital` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `NotificationToken`
+--
+
+DROP TABLE IF EXISTS `NotificationToken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `NotificationToken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `fcm_token` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uid_fcm_token` (`uid`,`fcm_token`),
+  KEY `fk_NotificationToken_User_idx` (`uid`),
+  CONSTRAINT `fk_NotificationToken_User` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `NotificationToken`
+--
+
+LOCK TABLES `NotificationToken` WRITE;
+/*!40000 ALTER TABLE `NotificationToken` DISABLE KEYS */;
+INSERT INTO `NotificationToken` VALUES (45,5,'dYdFwGvckS4:APA91bFsMvl_sNQ4Wd9_DQITMVWNwHjhN9BFCtzi1NwvuQOjn4bz_vwpHgyPKlWnF3PbGWohzasSOdfD0CkA8gdCYLlaFvkS6F_8QgVEbDRfQhZpaCJLcUKYeRFAVxlTfqIMQk6X2i8i'),(47,6,'dYdFwGvckS4:APA91bFsMvl_sNQ4Wd9_DQITMVWNwHjhN9BFCtzi1NwvuQOjn4bz_vwpHgyPKlWnF3PbGWohzasSOdfD0CkA8gdCYLlaFvkS6F_8QgVEbDRfQhZpaCJLcUKYeRFAVxlTfqIMQk6X2i8i');
+/*!40000 ALTER TABLE `NotificationToken` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -207,9 +235,10 @@ CREATE TABLE `User` (
   `state` varchar(45) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
   `token_expire_date` datetime DEFAULT NULL,
-  `token_valid_from` datetime DEFAULT CURRENT_TIMESTAMP,
+  `token_valid_from` datetime DEFAULT NULL,
   `role` enum('PATIENT','ADMIN') DEFAULT 'PATIENT',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -219,29 +248,9 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES ('123',1,'Williamson','Alex','Mileston','1986-08-07','williamson@example.com','97 Masthead Drive','ROCKHAMPTON','QLD',NULL,NULL,'2018-08-05 04:15:10','PATIENT'),('1230',2,'Maggard','Arnold','Logan','1968-02-10','arnold@example.com','42 Edgewater Close','HUSKISSON','NSW',NULL,NULL,'2018-08-09 13:09:29','ADMIN'),(NULL,3,'Sharpe','Chad',NULL,'1979-08-03','chad@example.com','41 Ross Street',NULL,NULL,NULL,NULL,'2018-08-04 14:05:19','PATIENT'),(NULL,4,'Haggerty','Susan',NULL,'1994-01-08','susan@example.com',NULL,NULL,NULL,NULL,NULL,'2018-08-04 14:05:19','PATIENT');
+INSERT INTO `User` VALUES ('123',1,'Williamson','Alex','Mileston','1986-08-07','williamson@example.com','97 Masthead Drive','ROCKHAMPTON','QLD',NULL,NULL,'2018-08-05 04:15:10','PATIENT'),('1230',2,'Maggard','Arnold','Logan','1968-02-10','arnold@example.com','42 Edgewater Close','HUSKISSON','NSW',NULL,NULL,'2018-08-09 13:09:29','ADMIN'),(NULL,3,'Sharpe','Chad',NULL,'1979-08-03','chad@example.com','41 Ross Street',NULL,NULL,NULL,NULL,NULL,'PATIENT'),(NULL,4,'Haggerty','Susan',NULL,'1994-01-08','susan@example.com',NULL,NULL,NULL,NULL,NULL,'2018-08-04 14:05:19','PATIENT'),('1',5,'Dowling','Callum',NULL,'1991-01-25','callum.dowling@gmail.com',NULL,NULL,NULL,'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6Ijd0YmNtbnBhMWk4dGdqODUzNnJydjUwYmJnIiwiZXhwIjoxNTcwNzEzODEwLCJpYXQiOjE1NzA2Mjc0MTAsInN1YiI6IjUifQ.TwtoG1UZGOwOdTGYvY3a6RbCe1czXrAW9uIcNvTgEWuVLkNuOKD3iqx_TJozMQnsQi6M5hlW_vkXNGRe2DaBVw','2019-10-10 13:23:30','2019-10-09 13:23:30','PATIENT'),('ggg',6,'test','test','test','2019-10-09','test@test.com',NULL,NULL,NULL,'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6ImRnMmJyZjRvbnFhZ3JhMW9tc2VxNDNkYzlrIiwiZXhwIjoxNTcwNzIwMDQ2LCJpYXQiOjE1NzA2MzM2NDYsInN1YiI6IjYifQ.tJNNP26dCI4k8jyEYytaZVhQr2OxpP6h354DZZ_yvmsDPeF1rx-itajViUHarT0X6V_r14QiQqz-_xzGYesL1Q','2019-10-10 15:07:26','2019-10-09 15:07:26','PATIENT');
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `UserNotificationToken`
---
-
-DROP TABLE IF EXISTS `NotificationToken`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `NotificationToken` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
-  `fcm_token` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_NotificationToken_User_idx` (`uid`),
-  CONSTRAINT `fk_NotificationToken_User` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -252,4 +261,4 @@ CREATE TABLE `NotificationToken` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-14 18:11:57
+-- Dump completed on 2019-10-09 15:18:30

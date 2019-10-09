@@ -1,41 +1,97 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/login.dart';
+import 'package:frontend/screens/login.dart';
 import 'package:frontend/appointments.dart';
 import 'package:frontend/screens/doctors.dart';
 import 'package:frontend/screens/dashboard.dart';
+import 'package:frontend/screens/register.dart';
 import 'package:frontend/util/authentication.dart';
+import 'package:frontend/util/firebase.dart';
+
+void main() {
+
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  _MyAppState createState() => _MyAppState();
+}
 
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class _MyAppState extends State<MyApp>
+{
+  @override
+  void initState() {
+    FirebaseNotifications().setUpFirebase(context);
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Medical heal app",
       debugShowCheckedModeBanner: false,
       home: new MainPage(),
-      theme: ThemeData(
-        accentColor: Colors.white70
-      ),
+      //theme: ThemeData(
+      //  accentColor: Colors.white70
+      //),
       routes: {
-        '/doctors': (context) => Doctors()
+        '/doctors': (context) => Doctors(),
+        '/register': (context) => Register()
       }
     );
   }
 }
 
-class MainPage extends StatelessWidget {
+
+
+
+
+
+
+class MainPage extends StatefulWidget {
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  Future<String> currentToken;
+
+
   @override
-  Widget build(BuildContext context) {
-    Future<String> currentToken = Authentication.getCurrentToken();
-    if(currentToken ==null){
-      Authentication.logout();
-      return LoginPage();
-    }
-    else{
-      return DashBoard();
-    }
+  void initState() {
+    _getValidToken();
+    super.initState();
+
   }
 
+  void _getValidToken() async{
+    currentToken = Authentication.getCurrentToken();
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String>(
+      future: currentToken, // a previously-obtained Future<String> or null
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+          case ConnectionState.active:
+          case ConnectionState.waiting:
+            return CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue));
+          case ConnectionState.done:
+            if (snapshot.hasError)
+              return Text('Error: ${snapshot.error}');
+            if (snapshot.data == null) {
+              print("deb1");
+              return LoginPage();
+            }
+            else {
+              print("deb2");
+              return DashBoard();
+            }
+        }
+        return null; // unreachable
+      },
+    );
+  }
 }
