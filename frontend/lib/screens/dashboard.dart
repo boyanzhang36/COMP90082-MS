@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login.dart';
-import 'package:frontend/appointments.dart';
+import 'package:frontend/screens/appointments.dart';
 import 'package:frontend/screens/doctors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/util/authentication.dart';
@@ -42,8 +42,7 @@ class _DashBoardState extends State<DashBoard> {
         SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         children: <Widget>[
           _buildCard("APPOINTMENT", Icons.event, Colors.teal, onTap: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => AppointmentPage()));
+            Navigator.pushNamed(context, '/appointments');
           }),
           _buildCard("DOCTORS", Icons.people, Colors.lightBlue, onTap: () {
             Navigator.pushNamed(context, '/doctors');

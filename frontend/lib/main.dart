@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/login.dart';
-import 'package:frontend/appointments.dart';
+import 'package:frontend/screens/appointments.dart';
 import 'package:frontend/screens/doctors.dart';
 import 'package:frontend/screens/dashboard.dart';
 import 'package:frontend/screens/register.dart';
@@ -35,7 +35,8 @@ class _MyAppState extends State<MyApp>
       //),
       routes: {
         '/doctors': (context) => Doctors(),
-        '/register': (context) => Register()
+        '/register': (context) => Register(),
+        '/appointments': (context) => Appointments()
       }
     );
   }

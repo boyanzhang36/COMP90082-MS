@@ -43,6 +43,7 @@ services:
         - ./db/mysql:/var/lib/mysql
         - ./db/seed:/var/seed
       environment:
+        TZ: Australia/Melbourne
         MYSQL_ROOT_PASSWORD: root
         MYSQL_USER: admin
         MYSQL_PASSWORD: test

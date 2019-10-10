@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:frontend/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/util/serverDetails.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+//import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
 
 class Register extends StatefulWidget {
