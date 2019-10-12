@@ -1,5 +1,5 @@
 class Appointment {
-  final String date;
+  final DateTime date;
   final String title;
   final String note;
 
@@ -10,7 +10,7 @@ class Appointment {
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
-        date: json['date'],
+        date: DateTime.parse(json['date']),
         title: json['title'],
         note: json['note']
     );
