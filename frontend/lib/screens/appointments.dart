@@ -4,6 +4,7 @@ import 'package:frontend/util/authentication.dart';
 import 'package:frontend/util/serverDetails.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/components/appointment.dart';
+import 'package:frontend/screens/appointmentdetail.dart';
 import 'dart:convert';
 
 class Appointments extends StatefulWidget {
@@ -24,7 +25,6 @@ class _AppointmentsState extends State<Appointments>
     _events = Map<DateTime, List>();
     final _selectedDay = DateTime.now();
     _calendarController = CalendarController();
-
 
     getAppointments();
     _animationController = AnimationController(
@@ -67,21 +67,16 @@ class _AppointmentsState extends State<Appointments>
         if (jsonResponse != null) {
           setState(() {
             for (var doc in jsonResponse) {
-
               Appointment temp = Appointment.fromJson(doc);
               print("TEMP" + temp.date.toString());
 
-              if(_events[temp.date]==null)
-              {
+              if (_events[temp.date] == null) {
                 print("deb1" + temp.date.toString());
                 _events[temp.date] = List()..add(temp);
-              }
-              else
-              {
+              } else {
                 //_events[temp.date] = List()..add(temp);
                 _events[temp.date].add(temp);
               }
-
             }
           });
         }
@@ -94,7 +89,6 @@ class _AppointmentsState extends State<Appointments>
   void _onDaySelected(DateTime day, List events) {
     print('CALLBACK: _onDaySelected');
     setState(() {
-
       _selectedEvents = events;
     });
   }
@@ -151,9 +145,7 @@ class _AppointmentsState extends State<Appointments>
       formatAnimation: FormatAnimation.slide,
       startingDayOfWeek: StartingDayOfWeek.sunday,
       availableGestures: AvailableGestures.all,
-      availableCalendarFormats: const {
-        CalendarFormat.month: ''
-      },
+      availableCalendarFormats: const {CalendarFormat.month: ''},
       calendarStyle: CalendarStyle(
         outsideDaysVisible: false,
         weekendStyle: TextStyle().copyWith(color: Colors.blue[800]),
@@ -263,25 +255,30 @@ class _AppointmentsState extends State<Appointments>
     );
   }
 
-
-
   Widget _buildEventList() {
     return ListView(
       children: _selectedEvents
           .map((event) => Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 0.8),
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-
-                child: (event is Appointment) ?ListTile(
-
-                  title: Text(event.title + " " + event.date.toString()),
-                  //onTap: () => print('$event tapped!'),
-                ) : null
-              ))
+              decoration: BoxDecoration(
+                border: Border.all(width: 0.8),
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: (event is Appointment)
+                  ? ListTile(
+                      title: Text("Appointment " + event.title),
+                      trailing: Icon(Icons.arrow_right),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AppointmentDetail(event)));
+                      },
+                      //onTap: () => print('$event tapped!'),
+                    )
+                  : null))
           .toList(),
     );
   }

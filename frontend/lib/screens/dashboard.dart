@@ -49,7 +49,7 @@ class _DashBoardState extends State<DashBoard> {
           }),
           _buildCard(
               "HOSPITALS", Icons.local_hospital, Colors.lightBlue, onTap: () {
-            Navigator.of(context).pushNamed("home");
+            Navigator.pushNamed(context, '/hospitals');
           }),
           _buildCard("RADIOLOGY", Icons.healing, Colors.teal, onTap: () {
             Navigator.of(context).pushNamed("alerts");
