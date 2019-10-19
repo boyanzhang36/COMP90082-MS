@@ -1,3 +1,4 @@
+
 # Medical heal app - team bilby
 
 This repoistory contains backend components (database, api) inherited from the previous team, our team has made significant modifications and bugfixes to the backend and made a frontend codebase from scratch. The individual components have also been packaged up using docker containers. The benefits of this approach is the following: changes made to the docker compose yml file will be version controlled and the nuances of a server setup can be ignored because each setup will use the same file. Overall, it is far less timeconsuming to spin up a server than going through the original method of installing each component.  
