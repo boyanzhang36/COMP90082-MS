@@ -38,7 +38,16 @@ class AppointmentDetail extends StatelessWidget {
                   )
                   )
               ),
+              FlatButton(
+                onPressed: () {
+                  //Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                   //   builder: (BuildContext context) => LoginPage()), (
+                    //  Route<dynamic> route) => false);
+                },
+                child: Text("Send appointment to ", style: TextStyle(color: Colors.white)),
+              )
             ]
+
             )
         )
     );

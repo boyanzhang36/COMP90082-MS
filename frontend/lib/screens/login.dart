@@ -76,6 +76,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = false;
       });
+      print(response.headers);
       print(response.body);
     }
   }

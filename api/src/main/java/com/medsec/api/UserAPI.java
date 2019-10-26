@@ -60,7 +60,7 @@ public class UserAPI {
             return Response
                     .status(Response.Status.FORBIDDEN)
                     //.entity(new DefaultRespondEntity("Catch all"))
-                    .entity(new DefaultRespondEntity(e.getMessage()))
+                    .entity(new DefaultRespondEntity(e.getStackTrace().toString()))
                     .build();
         }
     }
