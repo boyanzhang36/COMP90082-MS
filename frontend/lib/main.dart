@@ -7,6 +7,7 @@ import 'package:frontend/screens/dashboard.dart';
 import 'package:frontend/screens/register.dart';
 import 'package:frontend/util/authentication.dart';
 import 'package:frontend/util/firebase.dart';
+import 'package:english_words/english_words.dart';
 
 void main() {
 
