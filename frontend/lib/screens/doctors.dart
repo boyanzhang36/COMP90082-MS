@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/components/doctor.dart';
+import 'package:frontend/screens/doctordetail.dart';
 import 'dart:convert';
 import 'package:frontend/util/serverDetails.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/util/authentication.dart';
-import 'package:frontend/components/doctor.dart';
 
 class Doctors extends StatefulWidget {
   @override
@@ -55,62 +56,31 @@ class _DoctorsState extends State<Doctors> {
   build(context) {
     return Scaffold(
         appBar: AppBar(title: Text("Doctors")),
-        body: Column(
-            children: _doctors
-                .map((element) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        elevation: 4.0,
-                        color: Color.fromRGBO(100, 80, 255, 0.5),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Scaffold(
-                                        appBar:
-                                            AppBar(title: Text(element.name)),
-                                        body: Column(
-                                            children: <Widget>[
-                                          Text("Address " + element.address),
-                                          Text("Contact " +element.contact),
-                                          Text("Email " + element.email),
-                                          Text("Expertise" + element.expertise),
-                                          Text("ID" + element.id)
-                                        ])
-                                    )
-                                )
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Icon(
-                                Icons.person,
-                                size: 16.0,
-                                color: Colors.white,
-                              ),
-                              Column(children: <Widget>[
-                                Text(
-                                  element.name,
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  element.email,
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ])
-                            ],
-                          ),
-                        ),
-                      ),
-                    ))
-                .toList()));
+        body: ListView(
+            children: _doctors.map((element) => Container(
+                decoration: BoxDecoration(
+                  border: Border.all(width: 0.8),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                margin:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                child: ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(element.name),
+                    trailing: Icon(Icons.arrow_right),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  doctordetail(element)));
+                    }
+                )
+            )).toList()
+        )
+
+    );
+
   }
 }
+
