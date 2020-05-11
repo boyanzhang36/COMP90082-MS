@@ -132,7 +132,7 @@ class _RegisterState extends State<Register> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 40.0,
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      padding: EdgeInsets.symmetric(horizontal: 30.0),
       margin: EdgeInsets.only(top: 15.0),
       child: RaisedButton(
         onPressed: (emailController.text == "" ||
@@ -150,7 +150,7 @@ class _RegisterState extends State<Register> {
         color: Colors.purple,
         child:
             Text("Register", style: TextStyle(color: Colors.white70)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
   }
