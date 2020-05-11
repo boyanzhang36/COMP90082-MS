@@ -149,7 +149,7 @@ class _RegisterState extends State<Register> {
         elevation: 0.0,
         color: Colors.purple,
         child:
-            Text("Register new user", style: TextStyle(color: Colors.white70)),
+            Text("Register", style: TextStyle(color: Colors.white70)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
       ),
     );
@@ -163,7 +163,7 @@ class _RegisterState extends State<Register> {
           TextFormField(
             controller: emailController,
             cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               icon: Icon(Icons.email, color: Colors.white70),
               hintText: "Email",
@@ -175,7 +175,7 @@ class _RegisterState extends State<Register> {
           TextFormField(
             controller: firstNameController,
             cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               icon: Icon(Icons.person, color: Colors.white70),
               hintText: "First Name",
@@ -187,7 +187,7 @@ class _RegisterState extends State<Register> {
           TextFormField(
             controller: surnameController,
             cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               icon: Icon(Icons.calendar_view_day, color: Colors.white70),
               hintText: "Surname",
@@ -199,10 +199,10 @@ class _RegisterState extends State<Register> {
           Container(
               child: Row(children: <Widget>[
             Expanded(child: new TextFormField(
-              enabled: false,
+                enabled: false,
                 decoration: InputDecoration(
                   icon: Icon(Icons.calendar_today, color: Colors.white70),
-                  hintText: "dob",
+                  hintText: "Date of Birth",
                   border: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white70)),
                   hintStyle: TextStyle(color: Colors.white70),
@@ -232,7 +232,7 @@ class _RegisterState extends State<Register> {
             controller: passwordController,
             cursorColor: Colors.white,
             obscureText: true,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               icon: Icon(Icons.lock, color: Colors.white70),
               hintText: "Password",
@@ -246,13 +246,20 @@ class _RegisterState extends State<Register> {
 
   Container headerSection() {
     return Container(
-      margin: EdgeInsets.only(top: 50.0),
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-      child: Text("Medical heal app",
-          style: TextStyle(
-              color: Colors.white70,
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold)),
+        margin: EdgeInsets.only(top: 120.0),
+        padding: EdgeInsets.only(left: 40.0, right: 20.0),
+        child: Row(children: <Widget>[
+          Text("My Medical Secretary",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white70,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold
+            ),
+          ),
+          Image.asset('assets/images/logo.jpg'),
+          //Image.file('../../assets/images/logo.jpg'),
+        ])
     );
   }
 }

@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
       Container(
         width: MediaQuery.of(context).size.width,
         height: 40.0,
-        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        padding: EdgeInsets.symmetric(horizontal: 30.0),
         margin: EdgeInsets.only(top: 15.0),
         child: RaisedButton(
           onPressed: emailController.text == "" || passwordController.text == ""
@@ -99,59 +99,97 @@ class _LoginPageState extends State<LoginPage> {
                 },
           elevation: 0.0,
           color: Colors.purple,
-          child: Text("Sign In", style: TextStyle(color: Colors.white70)),
+          child: Text("LOGIN", style: TextStyle(color: Colors.white70, fontSize: 17)),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
       //Register user button
       Container(
         width: MediaQuery.of(context).size.width,
         height: 40.0,
-        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        padding: EdgeInsets.symmetric(horizontal: 30.0),
         margin: EdgeInsets.only(top: 15.0),
         child: RaisedButton(
           onPressed: (){Navigator.of(context).pushNamed("/register");
           },
           elevation: 0.0,
           color: Colors.purple,
-          child: Text("Register user", style: TextStyle(color: Colors.white70)),
+          child: Text("REGISTER", style: TextStyle(color: Colors.white70, fontSize: 17)),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
+      ),
+      Container(
+          margin: EdgeInsets.only(top: 10.0, left: 60),
+          padding: EdgeInsets.symmetric(horizontal: 30.0),
+          child: Row(
+              children: <Widget>[
+                  Text('Forget your ', style: TextStyle(color: Colors.black, fontSize: 17)),
+                  new InkWell(
+                    onTap: () {
+                      createAlertDialog1(context);
+                    },
+                    child: new Text('Username ', style: TextStyle(color: Colors.white70, fontSize: 17)),
+                  ),
+                  Text('or ', style: TextStyle(color: Colors.black, fontSize: 17)),
+                  new InkWell(
+                    onTap: () {
+                      createAlertDialog2(context);
+                    },
+                    child: new Text('Password ', style: TextStyle(color: Colors.white70, fontSize: 17)),
+                  ),
+                  Text('?'),
+              ],
+          )
       )
+
     ]);
   }
 
   Container textSection() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+      padding: EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0, bottom: 10.0),
       child: Column(
         children: <Widget>[
           TextFormField(
             controller: emailController,
-            cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white70),
+            cursorColor: Colors.black,
+            style: TextStyle(color: Colors.black, fontSize: 17),
             decoration: InputDecoration(
-              icon: Icon(Icons.email, color: Colors.white70),
+              //icon: Icon(Icons.email, color: Colors.white70),
               hintText: "Email",
-              border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white70)),
-              hintStyle: TextStyle(color: Colors.white70),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: const BorderRadius.all(
+                      const Radius.circular(13.0),
+                  ),
+              ),
+              hintStyle: TextStyle(color: Colors.grey),
+              contentPadding: const EdgeInsets.only(left: 20.0),
+              filled: true,
+              fillColor: const Color(0xFFddeff9),
             ),
           ),
-          SizedBox(height: 30.0),
+          SizedBox(height: 20.0),
           TextFormField(
             controller: passwordController,
-            cursorColor: Colors.white,
+            cursorColor: Colors.black,
             obscureText: true,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black, fontSize: 17),
             decoration: InputDecoration(
-              icon: Icon(Icons.lock, color: Colors.white70),
+              //icon: Icon(Icons.lock, color: Colors.white70),
               hintText: "Password",
-              border: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white70)),
-              hintStyle: TextStyle(color: Colors.white70),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: const BorderRadius.all(
+                      const Radius.circular(13.0),
+                  ),
+              ),
+              hintStyle: TextStyle(color: Colors.grey),
+              contentPadding: const EdgeInsets.only(left: 20.0),
+              filled: true,
+              fillColor: const Color(0xFFddeff9),
             ),
           ),
         ],
@@ -161,13 +199,117 @@ class _LoginPageState extends State<LoginPage> {
 
   Container headerSection() {
     return Container(
-      margin: EdgeInsets.only(top: 50.0),
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-      child: Text("Medical heal app",
+      margin: EdgeInsets.only(top: 120.0),
+      padding: EdgeInsets.only(left: 40.0, right: 20.0),
+      child: Row(children: <Widget>[
+        Text("My Medical Secretary",
+          textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.white70,
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold)),
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+        Image.asset('assets/images/logo.jpg'),
+        //Image.file('../../assets/images/logo.jpg'),
+      ])
     );
   }
+
+  createAlertDialog1(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      // false = user must tap button, true = tap outside dialog
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Center(
+              child: Text('Forgot username?', style: TextStyle(color: Colors.grey, fontSize: 17)),
+          ),
+          content: Container(
+              height: 40.0,
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(children: <Widget> [
+                Text('Please contact your clinic'),
+                Text('ph: 039xxxxxxx'),
+              ],)
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(); // Dismiss alert dialog
+              },
+            ),
+            FlatButton(
+              child: Text('Call'),
+              onPressed: () {
+                // Call the number
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  createAlertDialog2(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      // false = user must tap button, true = tap outside dialog
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Center(
+            child: Text('Forgot password?', style: TextStyle(color: Colors.grey, fontSize: 17)),
+          ),
+          content: Container(
+              height: 120.0,
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(children: <Widget> [
+                Text('Please enter your email to reset'),
+                Text('your password.'),
+                Container(
+                  height: 30.0,
+                  margin: EdgeInsets.only(top: 20.0, bottom: 0.0),
+                  padding: EdgeInsets.only(left: 0.0),
+                  child: TextFormField(
+                    controller: emailController,
+                    cursorColor: Colors.black,
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                    decoration: InputDecoration(
+                      //icon: Icon(Icons.email, color: Colors.white70),
+                      hintText: "Email",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(5.0),
+                        ),
+                      ),
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding: const EdgeInsets.only(left: 20.0),
+                      filled: true,
+                      fillColor: Colors.white70,
+                    ),
+                  ),
+                )
+              ],)
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(); // Dismiss alert dialog
+              },
+            ),
+            FlatButton(
+              child: Text('Send'),
+              onPressed: () {
+                // Call the number
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
