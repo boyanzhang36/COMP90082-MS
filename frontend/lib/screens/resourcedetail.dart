@@ -27,8 +27,10 @@ class _resourcedetailState extends State<resourcedetail>
           child: AppBar(
             leading: BackButton(color: Colors.black),
             title: Text("Resource Details", style: TextStyle(color: Colors.black)),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+//            backgroundColor: Colors.transparent,
+            elevation: 0.5,
           )
       ),
       body:   new Builder(

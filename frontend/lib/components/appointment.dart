@@ -1,18 +1,29 @@
+import 'package:flutter/foundation.dart';
+
 class Appointment {
+  final String id;
   final DateTime date;
   final String title;
   final String note;
+  final String userNote;
+  final String status;
 
   Appointment(
-      {this.date,
+      {this.id,
+        this.date,
         this.title,
-        this.note});
+        this.note,
+        this.userNote,
+        this.status});
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
+        id: json['id'],
         date: DateTime.parse(json['date']),
         title: json['title'],
-        note: json['note']
+        note: json['note'],
+        userNote: json['user_note'],
+        status: json['status']
     );
   }
 }

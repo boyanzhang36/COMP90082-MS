@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/components/doctor.dart';
+import 'package:share/share.dart';
 
 class doctordetail extends StatelessWidget{
 
   final Doctor _doctor;
-
-  const doctordetail(this._doctor);
+  final sendmsg;
+  const doctordetail(this._doctor, this.sendmsg);
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,20 @@ class doctordetail extends StatelessWidget{
           child: AppBar(
             leading: BackButton(color: Colors.black),
             title: Text("Doctors Details", style: TextStyle(color: Colors.black)),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+//            backgroundColor: Colors.transparent,
+            elevation: 0.5,
+            actions: <Widget>[
+              IconButton(
+                color: Colors.black,
+                icon: Icon(Icons.share), onPressed: () {
+              if (sendmsg != null){
+                DateTime now = new DateTime.now();
+                Share.share(sendmsg, subject: 'Doctors Details send on ' + now.toString());
+              }
+
+            })],
           )
       ),
       body:   new Builder(
@@ -27,17 +40,18 @@ class doctordetail extends StatelessWidget{
                 children:<Widget>[
                   Container(
                       height: 80.0,
-                      child: Wrap(
-                        spacing: 4.0,
-                        runSpacing: 4.0,
-                        alignment: WrapAlignment.start,
-                        children: <Widget>[
-                          Icon(Icons.person,color: Colors.green, size: 45,),
-                          Text("Dr. "+_doctor.name,
-                            style: TextStyle(fontSize: 25.0, fontFamily: "Arial",color:Colors.black, height: 1.5 ),
-                          ),
-                        ],
-                      ),
+                      child: Center(
+                        child: Wrap(
+                          spacing: 4.0,
+                          runSpacing: 4.0,
+                          alignment: WrapAlignment.start,
+                          children: <Widget>[
+                            Icon(Icons.person,color: Colors.green, size: 45,),
+                            Text("Dr. "+_doctor.name,
+                              style: TextStyle(fontSize: 25.0, fontFamily: "Arial",color:Colors.black, height: 1.5 ),
+                            ),
+                          ],
+                        ))
                   ),
                   new Expanded(
                         child: Container(

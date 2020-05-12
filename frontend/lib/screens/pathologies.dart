@@ -55,7 +55,21 @@ class _PathologiesState extends State<Pathologies> {
   @override
   build(context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Pathologies")),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            leading: BackButton(color: Colors.black),
+            centerTitle: true,
+            title: Text("Pathologies",
+                style:TextStyle(color: Colors.black
+                )
+            ),
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+//          backgroundColor: Color(0x44000000),
+            elevation: 0.5,
+          ),
+        ),
         body: ListView(
             children: _pathologies.map((element) => Container(
                 decoration: BoxDecoration(

@@ -106,13 +106,19 @@ class _AppointmentsState extends State<Appointments>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(45.0),
+          preferredSize: Size.fromHeight(60.0),
           child: AppBar(
+              leading: BackButton(color: Colors.black),
               centerTitle: true,
               title: Text("Appointments",
-                  style:TextStyle(color: Colors.white
+                  style:TextStyle(color: Colors.black
             )
-          )),
+          ),
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+//          backgroundColor: Color(0x44000000),
+            elevation: 0.5,
+          ),
         ),
         body: new Builder(
           builder:(BuildContext context){

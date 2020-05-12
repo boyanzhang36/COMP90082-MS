@@ -27,8 +27,10 @@ class _hospitaldetailState extends State<hospitaldetail>
           child: AppBar(
             leading: BackButton(color: Colors.black),
             title: Text("Hospital Details", style: TextStyle(color: Colors.black)),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+//            backgroundColor: Colors.transparent,
+            elevation: 0.5,
           )
       ),
       body:   new Builder(
@@ -37,7 +39,7 @@ class _hospitaldetailState extends State<hospitaldetail>
                 children:<Widget>[
                   Container(
                     height: 80.0,
-                    child: Wrap(
+                    child: Center(child: Wrap(
                       spacing: 4.0,
                       runSpacing: 4.0,
                       alignment: WrapAlignment.start,
@@ -47,7 +49,7 @@ class _hospitaldetailState extends State<hospitaldetail>
                           style: TextStyle(fontSize: 25.0, fontFamily: "Arial",color:Colors.black, height: 1.5 ),
                         ),
                       ],
-                    ),
+                    ))
                   ),
                   new Expanded(
                     child: Container(

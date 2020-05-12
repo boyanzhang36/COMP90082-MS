@@ -12,6 +12,7 @@ class Doctors extends StatefulWidget {
 }
 
 class _DoctorsState extends State<Doctors> {
+  var sendmsg;
   List<Doctor> _doctors = List<Doctor>();
 
   @override
@@ -55,7 +56,21 @@ class _DoctorsState extends State<Doctors> {
   @override
   build(context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Doctors")),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            leading: BackButton(color: Colors.black),
+            centerTitle: true,
+            title: Text("Doctors",
+                style:TextStyle(color: Colors.black
+                )
+            ),
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+//          backgroundColor: Color(0x44000000),
+            elevation: 0.5,
+          ),
+        ),
         body: ListView(
             children: _doctors.map((element) => Container(
                 decoration: BoxDecoration(
@@ -72,8 +87,16 @@ class _DoctorsState extends State<Doctors> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  doctordetail(element)));
+                              builder: (context) {
+                                sendmsg = "Doctors Details" + "\n" + "\n" + "\n" +
+                                    "Address: "  + element.address.toString() + "\n" +
+                                    "Contact: " + element.contact.toString() + "\n" +
+                                    "Email: "  + element.email.toString() + "\n" +
+                                    "Expertise: "  + element.expertise.toString() + "\n" +"\n"
+                                    +"\n" + "\n" + "From Medical Secretary App";
+
+                                  return doctordetail(element, sendmsg);
+                              }));
                     }
                 )
             )).toList()

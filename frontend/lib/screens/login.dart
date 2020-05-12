@@ -120,29 +120,32 @@ class _LoginPageState extends State<LoginPage> {
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
-      Container(
-          margin: EdgeInsets.only(top: 10.0, left: 60),
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
-          child: Row(
-            children: <Widget>[
-              Text('Forget your ', style: TextStyle(color: Colors.black, fontSize: 17)),
-              new InkWell(
-                onTap: () {
-                  createAlertDialog1(context);
-                },
-                child: new Text('Username ', style: TextStyle(color: Colors.white70, fontSize: 17)),
-              ),
-              Text('or ', style: TextStyle(color: Colors.black, fontSize: 17)),
-              new InkWell(
-                onTap: () {
-                  createAlertDialog2(context);
-                },
-                child: new Text('Password ', style: TextStyle(color: Colors.white70, fontSize: 17)),
-              ),
-              Text('?'),
-            ],
-          )
+      Center(
+        child: Container(
+            margin: EdgeInsets.only(top: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: Center(child: Wrap(
+              children: <Widget>[
+                Text('Forget your ', style: TextStyle(color: Colors.black, fontSize: 17)),
+                new InkWell(
+                  onTap: () {
+                    createAlertDialog1(context);
+                  },
+                  child: new Text('Username ', style: TextStyle(color: Colors.white70, fontSize: 17)),
+                ),
+                Text('or ', style: TextStyle(color: Colors.black, fontSize: 17)),
+                new InkWell(
+                  onTap: () {
+                    createAlertDialog2(context);
+                  },
+                  child: new Text('Password ', style: TextStyle(color: Colors.white70, fontSize: 17)),
+                ),
+                Text('?', style: TextStyle(color: Colors.black, fontSize: 17)),
+              ],
+            ),)
+        ),
       )
+
 
     ]);
   }
@@ -205,12 +208,13 @@ class _LoginPageState extends State<LoginPage> {
           Text("My Medical Secretary",
             textAlign: TextAlign.center,
             style: TextStyle(
+                fontFamily: "Arial",
                 color: Colors.white70,
                 fontSize: 30.0,
                 fontWeight: FontWeight.bold
             ),
           ),
-          Image.asset('assets/images/logo.jpg'),
+          Image.asset('assets/images/logo.png', scale: 2.5),
           //Image.file('../../assets/images/logo.jpg'),
         ])
     );
