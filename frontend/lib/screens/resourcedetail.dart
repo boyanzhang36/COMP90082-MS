@@ -35,49 +35,37 @@ class _resourcedetailState extends State<resourcedetail>
           builder:(BuildContext context){
             return new Column(
                 children:<Widget>[
-                  new Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      color: Color.fromARGB(255, 196, 218, 234),
-                      child: Table(
-                        columnWidths: const {
-                          0: FixedColumnWidth(140.0),
-                          1: FixedColumnWidth(300.0),
-                        },
-                        children: [
-                          //name
-                          TableRow(
-                              children: [
-                                ListTile(
-                                    title: Text(_resourceState.name,
-                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                   // trailing: Icon(Icons.location_on),
-                                    onTap: () {
-                                      launchURL("https:"+_resourceState.website);
-                                    }
-                                )
-                              ]
-                          ),
-                          //website
-                          TableRow(
-                              children: [
-                                ListTile(
-                                    title: Text(_resourceState.website,
-                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                    // trailing: Icon(Icons.location_on),
-                                    onTap: () {
-                                      launchURL("https:"+_resourceState.website);
-                                    }
-                                )
-                              ]
-                          ),
-
-                        ],
-                      ),
-                    ),
+                  Container(
+                      height: 90.0,
+                      child: _buildCard(_resourceState.name, _resourceState.website, Color.fromARGB(255, 196, 218, 234))
                   ),
                 ]);
           }),
+    );
+  }
+
+  Widget _buildCard(String name, String url, Color backgroundColor) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(1.0),
+        ),
+
+        elevation: 4.0,
+        color: backgroundColor,
+        child: InkWell(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              //Icon(Icons.bookmark),
+              Text(name, style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+              Text(url, style: TextStyle(fontSize: 15.0),),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
