@@ -65,7 +65,7 @@ class _DoctorsState extends State<Doctors> {
                 margin:
                 const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
-                    leading: Icon(Icons.person),
+                    leading: Icon(Icons.people,size: 30.0, color: Colors.teal),
                     title: Text(element.name),
                     trailing: Icon(Icons.arrow_right),
                     onTap: () {

@@ -65,6 +65,7 @@ class _PathologiesState extends State<Pathologies> {
                 margin:
                 const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
+                    leading: Icon(Icons.loupe,size: 30.0, color: Colors.teal),
                     title: Text(element.name),
                     trailing: Icon(Icons.arrow_right),
                     onTap: () {

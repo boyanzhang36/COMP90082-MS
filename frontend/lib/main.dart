@@ -5,7 +5,6 @@ import 'package:frontend/screens/doctors.dart';
 import 'package:frontend/screens/hospitals.dart';
 import 'package:frontend/screens/radiologies.dart';
 import 'package:frontend/screens/pathologies.dart';
-import 'package:frontend/screens/radiologies.dart';
 import 'package:frontend/screens/resources.dart';
 import 'package:frontend/screens/dashboard.dart';
 import 'package:frontend/screens/register.dart';
@@ -44,21 +43,9 @@ class _MyAppState extends State<MyApp>
         '/hospitals': (context) => Hospitals(),
         '/radiologies': (context) => Radiologies(),
         '/pathologies': (context) => Pathologies(),
-  }
-        title: "Medical heal app",
-        debugShowCheckedModeBanner: false,
-        home: new MainPage(),
-        //theme: ThemeData(
-        //  accentColor: Colors.white70
-        //),
-        routes: {
-          '/doctors': (context) => Doctors(),
-          '/register': (context) => Register(),
-          '/appointments': (context) => Appointments(),
-          '/hospitals': (context) => Hospitals(),
-          '/radiologies': (context) => Radiologies(),
-          '/resources': (context) => Resources(),
-        }
+        '/resources': (context) => Resources(),
+       }
+
     );
   }
 }
