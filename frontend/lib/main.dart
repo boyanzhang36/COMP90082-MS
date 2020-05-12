@@ -3,6 +3,8 @@ import 'package:frontend/screens/login.dart';
 import 'package:frontend/screens/appointments.dart';
 import 'package:frontend/screens/doctors.dart';
 import 'package:frontend/screens/hospitals.dart';
+import 'package:frontend/screens/radiologies.dart';
+import 'package:frontend/screens/pathologies.dart';
 import 'package:frontend/screens/dashboard.dart';
 import 'package:frontend/screens/register.dart';
 import 'package:frontend/util/authentication.dart';
@@ -37,8 +39,10 @@ class _MyAppState extends State<MyApp>
         '/doctors': (context) => Doctors(),
         '/register': (context) => Register(),
         '/appointments': (context) => Appointments(),
-        '/hospitals': (context) => Hospitals()
-      }
+        '/hospitals': (context) => Hospitals(),
+        '/radiologies': (context) => Radiologies(),
+        '/pathologies': (context) => Pathologies(),
+  }
     );
   }
 }

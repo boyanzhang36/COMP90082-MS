@@ -72,7 +72,7 @@ class _HospitalsState extends State<Hospitals> {
                   context,
                   MaterialPageRoute(
                   builder: (context) =>
-                  HospitalDetail(element)));
+                  hospitaldetail(element)));
                 }
             )
           )).toList()

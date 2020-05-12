@@ -36,10 +36,10 @@ class _RegisterState extends State<Register> {
         firstDate: new DateTime(1900),
         lastDate: new DateTime.now(),
         builder: (context, child) {
-            return Theme(
-              child: child,
-              data: ThemeData.light(),
-            );
+          return Theme(
+            child: child,
+            data: ThemeData.light(),
+          );
         });
 
     if (result == null) return;
@@ -64,12 +64,12 @@ class _RegisterState extends State<Register> {
         child: _isLoading
             ? Center(child: CircularProgressIndicator())
             : ListView(
-                children: <Widget>[
-                  headerSection(),
-                  textSection(),
-                  buttonSection(),
-                ],
-              ),
+          children: <Widget>[
+            headerSection(),
+            textSection(),
+            buttonSection(),
+          ],
+        ),
       ),
     );
   }
@@ -132,25 +132,25 @@ class _RegisterState extends State<Register> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 40.0,
-      padding: EdgeInsets.symmetric(horizontal: 15.0),
+      padding: EdgeInsets.symmetric(horizontal: 30.0),
       margin: EdgeInsets.only(top: 15.0),
       child: RaisedButton(
         onPressed: (emailController.text == "" ||
-                passwordController.text == "" ||
-                surnameController.text == ""  ||
-                firstNameController.text =="" ||
-                dobController.text=="") ? null
+            passwordController.text == "" ||
+            surnameController.text == ""  ||
+            firstNameController.text =="" ||
+            dobController.text=="") ? null
             : () {
-                setState(() {
-                  _isLoading = true;
-                });
-                register(emailController.text, surnameController.text, firstNameController.text, dobController.text, passwordController.text);
-              },
+          setState(() {
+            _isLoading = true;
+          });
+          register(emailController.text, surnameController.text, firstNameController.text, dobController.text, passwordController.text);
+        },
         elevation: 0.0,
         color: Colors.purple,
         child:
-            Text("Register new user", style: TextStyle(color: Colors.white70)),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        Text("Register", style: TextStyle(color: Colors.white70)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
   }
@@ -163,7 +163,7 @@ class _RegisterState extends State<Register> {
           TextFormField(
             controller: emailController,
             cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               icon: Icon(Icons.email, color: Colors.white70),
               hintText: "Email",
@@ -175,7 +175,7 @@ class _RegisterState extends State<Register> {
           TextFormField(
             controller: firstNameController,
             cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               icon: Icon(Icons.person, color: Colors.white70),
               hintText: "First Name",
@@ -187,7 +187,7 @@ class _RegisterState extends State<Register> {
           TextFormField(
             controller: surnameController,
             cursorColor: Colors.white,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               icon: Icon(Icons.calendar_view_day, color: Colors.white70),
               hintText: "Surname",
@@ -198,41 +198,41 @@ class _RegisterState extends State<Register> {
           ),
           Container(
               child: Row(children: <Widget>[
-            Expanded(child: new TextFormField(
-              enabled: false,
-                decoration: InputDecoration(
-                  icon: Icon(Icons.calendar_today, color: Colors.white70),
-                  hintText: "dob",
-                  border: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white70)),
-                  hintStyle: TextStyle(color: Colors.white70),
+                Expanded(child: new TextFormField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.calendar_today, color: Colors.white70),
+                      hintText: "Date of Birth",
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white70)),
+                      hintStyle: TextStyle(color: Colors.white70),
+                    ),
+                    controller: dobController,
+                    keyboardType: null,
+                    onTap: (() {
+                      _chooseDate(
+                          context,
+                          (dobController.text.isNotEmpty)
+                              ? dobController.text
+                              : "1991-01-25");
+                    }))),
+                new IconButton(
+                  icon: new Icon(Icons.more_horiz),
+                  tooltip: 'Choose date',
+                  onPressed: (() {
+                    _chooseDate(
+                        context,
+                        (dobController.text.isNotEmpty)
+                            ? dobController.text
+                            : "1991-01-25");
+                  }),
                 ),
-                controller: dobController,
-                keyboardType: null,
-                onTap: (() {
-                  _chooseDate(
-                      context,
-                      (dobController.text.isNotEmpty)
-                          ? dobController.text
-                          : "1991-01-25");
-                }))),
-            new IconButton(
-              icon: new Icon(Icons.more_horiz),
-              tooltip: 'Choose date',
-              onPressed: (() {
-                _chooseDate(
-                    context,
-                    (dobController.text.isNotEmpty)
-                        ? dobController.text
-                        : "1991-01-25");
-              }),
-            ),
-          ])),
+              ])),
           TextFormField(
             controller: passwordController,
             cursorColor: Colors.white,
             obscureText: true,
-            style: TextStyle(color: Colors.white70),
+            style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
               icon: Icon(Icons.lock, color: Colors.white70),
               hintText: "Password",
@@ -246,13 +246,20 @@ class _RegisterState extends State<Register> {
 
   Container headerSection() {
     return Container(
-      margin: EdgeInsets.only(top: 50.0),
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-      child: Text("Medical heal app",
-          style: TextStyle(
-              color: Colors.white70,
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold)),
+        margin: EdgeInsets.only(top: 120.0),
+        padding: EdgeInsets.only(left: 40.0, right: 20.0),
+        child: Row(children: <Widget>[
+          Text("My Medical Secretary",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white70,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold
+            ),
+          ),
+          Image.asset('assets/images/logo.jpg'),
+          //Image.file('../../assets/images/logo.jpg'),
+        ])
     );
   }
 }
