@@ -35,23 +35,8 @@ class _resourcedetailState extends State<resourcedetail>
           builder:(BuildContext context){
             return new Column(
                 children:<Widget>[
-                  Container(
-                    height: 80.0,
-                    child: Wrap(
-                      spacing: 4.0,
-                      runSpacing: 4.0,
-                      alignment: WrapAlignment.start,
-                      children: <Widget>[
-                        Icon(Icons.book,color: Colors.green, size: 45,),
-                        Text(_resourceState.name,
-                          style: TextStyle(fontSize: 25.0, fontFamily: "Arial",color:Colors.black, height: 1.5 ),
-                        ),
-                      ],
-                    ),
-                  ),
                   new Expanded(
                     child: Container(
-
                       padding: const EdgeInsets.all(8.0),
                       color: Color.fromARGB(255, 196, 218, 234),
                       child: Table(
@@ -60,25 +45,33 @@ class _resourcedetailState extends State<resourcedetail>
                           1: FixedColumnWidth(300.0),
                         },
                         children: [
-                          //url
+                          //name
                           TableRow(
                               children: [
                                 ListTile(
-                                  title: Text("",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-
-                                ),
-                                ListTile(
-                                    title: Text(_resourceState.website,
+                                    title: Text(_resourceState.name,
                                         style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
                                    // trailing: Icon(Icons.location_on),
                                     onTap: () {
                                       launchURL("https:"+_resourceState.website);
                                     }
                                 )
-
                               ]
                           ),
+                          //website
+                          TableRow(
+                              children: [
+                                ListTile(
+                                    title: Text(_resourceState.website,
+                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                    // trailing: Icon(Icons.location_on),
+                                    onTap: () {
+                                      launchURL("https:"+_resourceState.website);
+                                    }
+                                )
+                              ]
+                          ),
+
                         ],
                       ),
                     ),
