@@ -79,8 +79,6 @@ class _ResourcesState extends State<Resources> {
                 )
             )).toList()
         )
-
     );
-
   }
 }
