@@ -5,6 +5,8 @@ import 'package:frontend/screens/doctors.dart';
 import 'package:frontend/screens/hospitals.dart';
 import 'package:frontend/screens/radiologies.dart';
 import 'package:frontend/screens/pathologies.dart';
+import 'package:frontend/screens/radiologies.dart';
+import 'package:frontend/screens/resources.dart';
 import 'package:frontend/screens/dashboard.dart';
 import 'package:frontend/screens/register.dart';
 import 'package:frontend/util/authentication.dart';
@@ -43,6 +45,20 @@ class _MyAppState extends State<MyApp>
         '/radiologies': (context) => Radiologies(),
         '/pathologies': (context) => Pathologies(),
   }
+        title: "Medical heal app",
+        debugShowCheckedModeBanner: false,
+        home: new MainPage(),
+        //theme: ThemeData(
+        //  accentColor: Colors.white70
+        //),
+        routes: {
+          '/doctors': (context) => Doctors(),
+          '/register': (context) => Register(),
+          '/appointments': (context) => Appointments(),
+          '/hospitals': (context) => Hospitals(),
+          '/radiologies': (context) => Radiologies(),
+          '/resources': (context) => Resources(),
+        }
     );
   }
 }
@@ -78,7 +94,7 @@ class _MainPageState extends State<MainPage> {
           case ConnectionState.active:
           case ConnectionState.waiting:
             return CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue));
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.blue));
           case ConnectionState.done:
             if (snapshot.hasError)
               return Text('Error: ${snapshot.error}');

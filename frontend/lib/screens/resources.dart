@@ -3,24 +3,24 @@ import 'dart:convert';
 import 'package:frontend/util/serverDetails.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/util/authentication.dart';
-import 'package:frontend/components/radiology.dart';
-import 'package:frontend/screens/radiologydetail.dart';
+import 'package:frontend/components/resource.dart';
+import 'package:frontend/screens/resourcedetail.dart';
 
-class Radiologies extends StatefulWidget {
+class Resources extends StatefulWidget {
   @override
-  _RadiologiesState createState() => _RadiologiesState();
+  _ResourcesState createState() => _ResourcesState();
 }
 
-class _RadiologiesState extends State<Radiologies> {
-  List<Radiology> _radiologies = List<Radiology>();
+class _ResourcesState extends State<Resources> {
+  List<Resource> _resources = List<Resource>();
 
   @override
   void initState() {
     super.initState();
-    getRaiologies();
+    getResources();
   }
 
-  getRaiologies() async {
+  getResources() async {
     String currentToken = await Authentication.getCurrentToken();
     print(currentToken);
     if (currentToken == null) {
@@ -44,7 +44,7 @@ class _RadiologiesState extends State<Radiologies> {
         if (jsonResponse != null) {
           setState(() {
             for (var doc in jsonResponse) {
-              _radiologies.add(Radiology.fromJson(doc));
+              _resources.add(Resource.fromJson(doc));
             }
           });
         }
@@ -55,9 +55,9 @@ class _RadiologiesState extends State<Radiologies> {
   @override
   build(context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Radiologies")),
+        appBar: AppBar(title: Text("Resources")),
         body: ListView(
-            children: _radiologies.map((element) => Container(
+            children: _resources.map((element) => Container(
                 decoration: BoxDecoration(
                   border: Border.all(width: 0.8),
                   borderRadius: BorderRadius.circular(12.0),
@@ -65,7 +65,7 @@ class _RadiologiesState extends State<Radiologies> {
                 margin:
                 const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
-                    leading: Icon(Icons.healing,size: 30.0, color: Colors.teal),
+                    //leading: Icon(Icons.healing,size: 30.0, color: Colors.teal),
                     title: Text(element.name,style: TextStyle(color: Colors.blueGrey.withOpacity(1.0),
                       fontWeight: FontWeight.bold,)),
                     trailing: Icon(Icons.arrow_right),
@@ -74,13 +74,11 @@ class _RadiologiesState extends State<Radiologies> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  radiologydetail(element)));
+                                  resourcedetail(element)));
                     }
                 )
             )).toList()
         )
-
     );
-
   }
 }
