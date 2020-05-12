@@ -22,7 +22,7 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBaorder: true,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(1.0),
           child: AppBar(
@@ -70,10 +70,10 @@ class _DashBoardState extends State<DashBoard> {
                             Navigator.pushNamed(context, '/hospitals');
                           }),
                           _buildCard("RADIOLOGY", Icons.healing, Colors.lightBlue[400], onTap: () {
-                            Navigator.of(context).pushNamed("radiology");
+                            Navigator.of(context).pushNamed("/radiologies");
                           }),
                           _buildCard("PATHOLOGY", Icons.loupe, Colors.blueGrey, onTap: () {
-                            Navigator.of(context).pushNamed("pathology");//indigo[400]
+                            Navigator.of(context).pushNamed("/pathologies");//indigo[400]
                           }),
                           //_buildCard("PATHOLOGY", FontAwesomeIcons.ambulance, Colors.teal, onTap: (){Navigator.of(context).pushNamed("ambulance");}),
 
@@ -86,7 +86,7 @@ class _DashBoardState extends State<DashBoard> {
                       //padding: EdgeInsets.symmetric(horizontal: 30.0),
                       //margin: EdgeInsets.only(top: 15.0),
                       child: _buildBar("RESOURCE", Icons.book, Colors.tealAccent[700], onTap: () {
-                        Navigator.of(context).pushNamed("resource");
+                        Navigator.of(context).pushNamed('/resources');
                       })
                   ),
                   Container(

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:frontend/components/appointment.dart';
 import 'package:frontend/screens/appointmentdetail.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class Appointments extends StatefulWidget {
   @override
@@ -25,6 +26,9 @@ class _AppointmentsState extends State<Appointments>
     _events = Map<DateTime, List>();
     final _selectedDay = DateTime.now();
     _calendarController = CalendarController();
+
+
+
 
     getAppointments();
     _animationController = AnimationController(
@@ -101,13 +105,26 @@ class _AppointmentsState extends State<Appointments>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Appointments")),
-        body: Column(children: <Widget>[
-          _buildTableCalendarWithBuilders(),
-          const SizedBox(height: 8.0),
-          const SizedBox(height: 8.0),
-          Expanded(child: _buildEventList())
-        ]));
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(45.0),
+          child: AppBar(
+              centerTitle: true,
+              title: Text("Appointments",
+                  style:TextStyle(color: Colors.white
+            )
+          )),
+        ),
+        body: new Builder(
+          builder:(BuildContext context){
+            return new Column(children: <Widget>[
+              _buildTableCalendarWithBuilders(),
+              const SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
+              //_buildEventList()
+              Expanded(child: _buildEventList())
+            ]);
+          })
+    );
   }
 
   Widget _buildTableCalendar() {
@@ -267,8 +284,25 @@ class _AppointmentsState extends State<Appointments>
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               child: (event is Appointment)
                   ? ListTile(
-                      title: Text("Appointment " + event.title),
-                      trailing: Icon(Icons.arrow_right),
+                      leading:Column(
+                          children:<Widget>[
+                            //Show Weekday, Month and day of Appiontment
+                            Text(DateFormat('EE').format(event.date) + '  '+ DateFormat.MMMd().format(event.date),
+                                style: TextStyle(color: Colors.blue.withOpacity(1.0),
+                                                  fontWeight: FontWeight.bold,)),
+                            //Show Start Time of Appointment
+                            Text(DateFormat.jm().format(event.date),
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontWeight: FontWeight.bold,
+                                                  height: 1.5,)),
+                            //Show End Time of Appointment
+                            Text(DateFormat.jm().format(event.date),
+                                style: TextStyle(color: Colors.black.withOpacity(0.6)),),
+                          ]
+                      ),//Text(DateFormat.Hm().format(event.date)),//DateFormat.Hm().format(now)
+                      title: Text(event.title),
+                      //trailing: Icon(Icons.arrow_right),
                       onTap: () {
                         Navigator.push(
                             context,
