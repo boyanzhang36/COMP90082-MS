@@ -149,7 +149,7 @@ class _RegisterState extends State<Register> {
         elevation: 0.0,
         color: Colors.purple,
         child:
-        Text("Register", style: TextStyle(color: Colors.white70)),
+            Text("Register", style: TextStyle(color: Colors.white70)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       ),
     );
@@ -198,36 +198,36 @@ class _RegisterState extends State<Register> {
           ),
           Container(
               child: Row(children: <Widget>[
-                Expanded(child: new TextFormField(
-                    enabled: false,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.calendar_today, color: Colors.white70),
-                      hintText: "Date of Birth",
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white70)),
-                      hintStyle: TextStyle(color: Colors.white70),
-                    ),
-                    controller: dobController,
-                    keyboardType: null,
-                    onTap: (() {
-                      _chooseDate(
-                          context,
-                          (dobController.text.isNotEmpty)
-                              ? dobController.text
-                              : "1991-01-25");
-                    }))),
-                new IconButton(
-                  icon: new Icon(Icons.more_horiz),
-                  tooltip: 'Choose date',
-                  onPressed: (() {
-                    _chooseDate(
-                        context,
-                        (dobController.text.isNotEmpty)
-                            ? dobController.text
-                            : "1991-01-25");
-                  }),
+            Expanded(child: new TextFormField(
+                enabled: false,
+                decoration: InputDecoration(
+                  icon: Icon(Icons.calendar_today, color: Colors.white70),
+                  hintText: "Date of Birth",
+                  border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white70)),
+                  hintStyle: TextStyle(color: Colors.white70),
                 ),
-              ])),
+                controller: dobController,
+                keyboardType: null,
+                onTap: (() {
+                  _chooseDate(
+                      context,
+                      (dobController.text.isNotEmpty)
+                          ? dobController.text
+                          : "1991-01-25");
+                }))),
+            new IconButton(
+              icon: new Icon(Icons.more_horiz),
+              tooltip: 'Choose date',
+              onPressed: (() {
+                _chooseDate(
+                    context,
+                    (dobController.text.isNotEmpty)
+                        ? dobController.text
+                        : "1991-01-25");
+              }),
+            ),
+          ])),
           TextFormField(
             controller: passwordController,
             cursorColor: Colors.white,

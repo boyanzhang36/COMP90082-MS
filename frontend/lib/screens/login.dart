@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/util/serverDetails.dart';
 import 'package:frontend/util/firebase.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -16,6 +18,10 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+
+  final TextEditingController resetPasswordEmailPasswordController = new TextEditingController();
+  final TextEditingController newPasswordController = new TextEditingController();
+  final TextEditingController confirmPasswordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
           color: Colors.purple,
           child: Text("LOGIN", style: TextStyle(color: Colors.white70, fontSize: 17)),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
       //Register user button
@@ -117,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
           color: Colors.purple,
           child: Text("REGISTER", style: TextStyle(color: Colors.white70, fontSize: 17)),
           shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
@@ -184,10 +191,10 @@ class _LoginPageState extends State<LoginPage> {
               //icon: Icon(Icons.lock, color: Colors.white70),
               hintText: "Password",
               border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
-                borderRadius: const BorderRadius.all(
-                  const Radius.circular(13.0),
-                ),
+                  borderSide: BorderSide(color: Colors.black),
+                  borderRadius: const BorderRadius.all(
+                      const Radius.circular(13.0),
+                  ),
               ),
               hintStyle: TextStyle(color: Colors.grey),
               contentPadding: const EdgeInsets.only(left: 20.0),
@@ -221,6 +228,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   createAlertDialog1(BuildContext context) {
+
     return showDialog<void>(
       context: context,
       // false = user must tap button, true = tap outside dialog
@@ -234,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(children: <Widget> [
                 Text('Please contact your clinic'),
-                Text('ph: 039xxxxxxx'),
+                Text('ph: 0415181703'),
               ],)
           ),
           actions: <Widget>[
@@ -246,9 +254,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             FlatButton(
               child: Text('Call'),
-              onPressed: () {
-                // Call the number
-              },
+              onPressed: () => launch("tel://0415181703"),
             ),
           ],
         );
@@ -266,22 +272,70 @@ class _LoginPageState extends State<LoginPage> {
             child: Text('Forgot password?', style: TextStyle(color: Colors.grey, fontSize: 17)),
           ),
           content: Container(
-              height: 120.0,
+              height: 180.0,
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(children: <Widget> [
                 Text('Please enter your email to reset'),
                 Text('your password.'),
                 Container(
                   height: 30.0,
-                  margin: EdgeInsets.only(top: 20.0, bottom: 0.0),
+                  margin: EdgeInsets.only(top: 10.0, bottom: 0.0),
                   padding: EdgeInsets.only(left: 0.0),
                   child: TextFormField(
-                    controller: emailController,
+                    controller: resetPasswordEmailPasswordController,
                     cursorColor: Colors.black,
                     style: TextStyle(color: Colors.black, fontSize: 15),
                     decoration: InputDecoration(
                       //icon: Icon(Icons.email, color: Colors.white70),
-                      hintText: "Email",
+                      hintText: "Email...",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(5.0),
+                        ),
+                      ),
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding: const EdgeInsets.only(left: 20.0),
+                      filled: true,
+                      fillColor: Colors.white70,
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 30.0,
+                  margin: EdgeInsets.only(top: 10.0, bottom: 0.0),
+                  padding: EdgeInsets.only(left: 0.0),
+                  child: TextFormField(
+                    controller: newPasswordController,
+                    cursorColor: Colors.black,
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                    decoration: InputDecoration(
+                      //icon: Icon(Icons.email, color: Colors.white70),
+                      hintText: "New password...",
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(5.0),
+                        ),
+                      ),
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding: const EdgeInsets.only(left: 20.0),
+                      filled: true,
+                      fillColor: Colors.white70,
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 30.0,
+                  margin: EdgeInsets.only(top: 10.0, bottom: 0.0),
+                  padding: EdgeInsets.only(left: 0.0),
+                  child: TextFormField(
+                    controller: confirmPasswordController,
+                    cursorColor: Colors.black,
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                    decoration: InputDecoration(
+                      //icon: Icon(Icons.email, color: Colors.white70),
+                      hintText: "Confirm password...",
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                         borderRadius: const BorderRadius.all(
@@ -307,7 +361,7 @@ class _LoginPageState extends State<LoginPage> {
             FlatButton(
               child: Text('Send'),
               onPressed: () {
-                // Call the number
+                // Send the email
               },
             ),
           ],
@@ -315,5 +369,7 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
+
+
 
 }
