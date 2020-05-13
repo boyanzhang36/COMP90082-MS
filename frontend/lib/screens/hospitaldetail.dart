@@ -26,6 +26,7 @@ class _hospitaldetailState extends State<hospitaldetail>
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
             leading: BackButton(color: Colors.black),
+            centerTitle: true,
             title: Text("Hospital Details", style: TextStyle(color: Colors.black)),
             backgroundColor: Colors.white,
             brightness: Brightness.light,
@@ -51,112 +52,108 @@ class _hospitaldetailState extends State<hospitaldetail>
                       ],
                     ))
                   ),
-                  new Expanded(
-                    child: Container(
-
-                      padding: const EdgeInsets.all(8.0),
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: new BoxDecoration(
                       color: Color.fromARGB(255, 196, 218, 234),
-                      child: Table(
-                        columnWidths: const {
-                          0: FixedColumnWidth(140.0),
-                          1: FixedColumnWidth(300.0),
-                        },
-                        children: [
-                          //address
-                          TableRow(
-                              children: [
-                                SizedBox(
-                                  height: 50.0,
-                                  child: ListTile(
-                                    title: Text("Address:",
-                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),),
+                    child: Table(
+                      columnWidths: const {
+                        0: FixedColumnWidth(140.0),
+                        1: FixedColumnWidth(225.0),
+                      },
+                      children: [
+                        //address
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Address:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
-                                  ),
-                                ),
-                                SizedBox(
-                                    height: 50.0,
-                                    child: ListTile(
-                                        title: Text(_hospitalState.address,
-                                            style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                        trailing: Icon(Icons.location_on),
-                                        onTap: () {
-                                          launchURL("https://www.google.com/maps/search/"+_hospitalState.address);
-                                        }
-                                    )
-                                )
-
-                              ]
-                          ),
-                          //phone
-                          TableRow(
-                              children: [
-                                ListTile(
-                                  title: Text("Phone:",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-
-                                ),
-                                ListTile(
-                                    title: Text(_hospitalState.contact,
-                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                    trailing: Icon(Icons.phone),
-                                    onTap: () {
-                                      _callPhone();
-                                    }
-                                )
-
-
-                              ]
-                          ),
-                          //fax
-                          TableRow(
-                              children: [
-                                ListTile(
-                                  title: Text("Fax:",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-                                ),
-                                ListTile(
-                                  title: Text(_hospitalState.fax,
+                              ),
+                              ListTile(
+                                  title: Text(_hospitalState.address,
                                       style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                )
-                              ]
-                          ),
-                          //website
-                          TableRow(
-                              children: [
-                                ListTile(
-                                  title: Text("Website:",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-                                ),
-                                ListTile(
-                                    title: Text(_hospitalState.website,
-                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                    trailing: Icon(Icons.public),
-                                    onTap: () {
-                                      launchURL('https://'+_hospitalState.website);
-                                    }
-                                )
+                                  trailing: Icon(Icons.location_on),
+                                  onTap: () {
+                                    launchURL("https://www.google.com/maps/search/"+_hospitalState.address);
+                                  }
+                              )
+                            ]
+                        ),
+                        //phone
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Phone:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
-
-                              ]
-                          ),
-                          //type
-                          TableRow(
-                              children: [
-                                ListTile(
-                                  title: Text("Type:",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-                                ),
-                                ListTile(
-                                  title: Text(_hospitalState.type,
+                              ),
+                              ListTile(
+                                  title: Text(_hospitalState.contact,
                                       style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                )
-                              ]
-                          ),
+                                  trailing: Icon(Icons.phone),
+                                  onTap: () {
+                                    _callPhone();
+                                  }
+                              )
 
-                        ],
-                      ),
+
+                            ]
+                        ),
+                        //fax
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Fax:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text(_hospitalState.fax,
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //website
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Website:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                  title: Text(_hospitalState.website,
+                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                  trailing: Icon(Icons.public),
+                                  onTap: () {
+                                    launchURL('https://'+_hospitalState.website);
+                                  }
+                              )
+
+
+                            ]
+                        ),
+                        //type
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Type:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text(_hospitalState.type,
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+
+                      ],
                     ),
-                  ),
+                  )
+//                  new Expanded(
+//                    child: ,
+//                  ),
                 ]);
           }),
     );

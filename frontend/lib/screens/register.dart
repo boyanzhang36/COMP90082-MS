@@ -54,10 +54,21 @@ class _RegisterState extends State<Register> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
         .copyWith(statusBarColor: Colors.transparent));
     return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            leading: BackButton(color: Colors.black),
+            title: Text("Register", style: TextStyle(color: Colors.black)),
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+//          backgroundColor: Color(0x44000000),
+            elevation: 0.5,
+          )
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: [Colors.blue, Colors.teal],
+              colors: [Colors.white, Color.fromARGB(255, 20, 54, 91)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter),
         ),
@@ -112,10 +123,13 @@ class _RegisterState extends State<Register> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: ListTile(
-          title: Text(response.statusCode.toString()),
-          subtitle: Text(messageToUser),
-        ),
+//        content: ListTile(
+////          title: Text(response.statusCode.toString()),
+//          title: Text("Error message"),
+//          subtitle: Text(json.decode(messageToUser)['message']),
+//        ),
+        title: Text("Message"),
+        content: Text(json.decode(messageToUser)['message']),
         actions: <Widget>[
           FlatButton(
               child: Text('Ok'),
@@ -147,7 +161,7 @@ class _RegisterState extends State<Register> {
           register(emailController.text, surnameController.text, firstNameController.text, dobController.text, passwordController.text);
         },
         elevation: 0.0,
-        color: Colors.purple,
+        color: Color.fromARGB(255, 135, 193, 218),
         child:
             Text("Register", style: TextStyle(color: Colors.white70)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

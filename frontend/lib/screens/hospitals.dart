@@ -80,7 +80,8 @@ class _HospitalsState extends State<Hospitals> {
               const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             child: ListTile(
                 leading: Icon(Icons.local_hospital,size: 30.0, color: Colors.teal),
-                title: Text(element.name),
+                title: Text(element.name,style: TextStyle(color: Colors.blueGrey.withOpacity(1.0),
+                  fontWeight: FontWeight.bold,)),
                 trailing: Icon(Icons.arrow_right),
                 onTap: () {
                   Navigator.push(

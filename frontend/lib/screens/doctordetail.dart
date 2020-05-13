@@ -17,6 +17,7 @@ class doctordetail extends StatelessWidget{
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
             leading: BackButton(color: Colors.black),
+            centerTitle: true,
             title: Text("Doctors Details", style: TextStyle(color: Colors.black)),
             backgroundColor: Colors.white,
             brightness: Brightness.light,
@@ -53,80 +54,67 @@ class doctordetail extends StatelessWidget{
                           ],
                         ))
                   ),
-                  new Expanded(
-                        child: Container(
-
-                          padding: const EdgeInsets.all(8.0),
-                          color: Color.fromARGB(255, 196, 218, 234),
-                              child: Table(
-                                columnWidths: const {
-                                  0: FixedColumnWidth(130.0),
-                                  1: FixedColumnWidth(300.0),
-                                  },
-                                children: [
-                                    TableRow(
-                                      children: [
-                                        SizedBox(
-                                          height: 40.0,
-                                          child:
-                                          Text("ID:",
-                                            style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
-                                        ),
-                                          Text(_doctor.id,
-                                          style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
-                                        )]
-                                  ),
-                                    TableRow(
-                                      children: [
-                                        SizedBox(
-                                          height: 40.0,
-                                          child: Text("Address:",
-                                            style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
-                                        ),
-                                        Text(_doctor.address,
-                                          style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
-                                        )
-                                      ]
-                                  ),
-                                    TableRow(
-                                      children: [
-                                        SizedBox(
-                                          height: 40.0,
-                                          child: Text("Contact:",
-                                            style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
-                                        ),
-                                        Text(_doctor.contact,
-                                          style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
-                                        )]
-                                  ),
-                                    TableRow(
-                                      children: [
-                                        SizedBox(
-                                          height: 40.0,
-                                          child: Text("Email:",
-                                            style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
-                                        ),
-                                        Text(_doctor.email,
-                                          style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
-                                        )
-                                      ]
-                                  ),
-                                    TableRow(
-                                      children: [
-                                        SizedBox(
-                                          height: 40.0,
-                                          child: Text("Expertise:",
-                                            style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
-                                        ),
-                                        Text(_doctor.expertise,
-                                          style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
-                                        )]
-                                  ),
-
-                          ],
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: new BoxDecoration(
+                      color: Color.fromARGB(255, 196, 218, 234),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),),
+                    child: Table(
+                      columnWidths: const {
+                        0: FixedColumnWidth(140.0),
+                        1: FixedColumnWidth(225.0),
+                      },
+                      children: [
+                        TableRow(
+                            children: [
+                              Text("ID:",
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text(_doctor.id,
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                              )]
                         ),
-                  ),
-                  ),
+                        TableRow(
+                            children: [
+                              Text("Address:",
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text(_doctor.address,
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                              )
+                            ]
+                        ),
+                        TableRow(
+                            children: [
+                              Text("Contact:",
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text(_doctor.contact,
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                              )]
+                        ),
+                        TableRow(
+                            children: [
+                              Text("Email:",
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text(_doctor.email,
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                              )
+                            ]
+                        ),
+                        TableRow(
+                            children: [
+                              Text("Expertise:",
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text(_doctor.expertise,
+                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                              )]
+                        ),
+
+                      ],
+                    ),
+                  )
+//                  new Expanded(
+//                        child:,
+//                  ),
                 ]);
           }),
     );

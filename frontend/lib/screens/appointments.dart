@@ -308,7 +308,7 @@ class _AppointmentsState extends State<Appointments>
                           ]
                       ),//Text(DateFormat.Hm().format(event.date)),//DateFormat.Hm().format(now)
                       title: Text(event.title),
-                      //trailing: Icon(Icons.arrow_right),
+                      trailing: Icon(Icons.arrow_right),
                       onTap: () {
                         Navigator.push(
                             context,

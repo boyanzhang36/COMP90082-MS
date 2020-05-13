@@ -98,6 +98,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
 //                      builder: (context) => Appointments()));
 //            },
 //  ),
+          centerTitle: true,
           title: Text("Appointment Details", style: TextStyle(color: Colors.black)),
           backgroundColor: Colors.white,
           brightness: Brightness.light,
@@ -117,10 +118,15 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
         )
     ),
       body:
-      Container( color: Color.fromARGB(255, 196, 218, 234),
+      Container(
+
         child: (_appointmentState is Appointment) ? _detailListView() : null,
-        margin: const EdgeInsets.all(5.0),
-        padding: const EdgeInsets.all(5.0),
+        margin: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
+        decoration: new BoxDecoration(
+          color: Color.fromARGB(255, 196, 218, 234),
+          borderRadius: BorderRadius.all(Radius.circular(4.0)),
+          ),
       ),
 //        bottomNavigationBar:,
 //        bottomSheet:  _buttonBar(),
@@ -272,28 +278,34 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                           ),
                         ),
                         RaisedButton(
+                          textColor: Colors.white,
+                          color: Color.fromARGB(255, 135, 193, 218),
                           onPressed: _save,
-                          child: Text('Save'),
+                          child: Text('SAVE'),
                         )
                       ])
                       :
                   (!flag)?
                   Column(
                       children: <Widget>[
-
                         Text(_appointmentState.userNote.toString(),
                             style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.black, height:1.5 )
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             RaisedButton(
+                                textColor: Colors.white,
+                                color: Color.fromARGB(255, 135, 193, 218),
                                 onPressed: _edit,
-                                child: Text('Edit')
+                                child: Text('EDIT')
 
                             ),
                             RaisedButton(
+                                textColor: Colors.white,
+                                color: Color.fromARGB(255, 135, 193, 218),
                                 onPressed: _delete,
-                                child: Text('Delete')
+                                child: Text('DELETE')
                             )
                           ],
                         )
@@ -311,20 +323,24 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                             hintText: "Add your personal user note here...",
                           ),
                         ),
-                        Row(children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
                           RaisedButton(
+                            textColor: Colors.white,
+                            color: Color.fromARGB(255, 135, 193, 218),
                             onPressed: _save,
-                            child: Text('Save'),
+                            child: Text('SAVE'),
                           ),
                           RaisedButton(
+                            textColor: Colors.white,
+                            color: Color.fromARGB(255, 135, 193, 218),
                             onPressed: _cancel,
-                            child: Text('Cancel'),
+                            child: Text('CANCEL'),
                           )
                         ],)
 
                       ])
-
-
               ),
 
             ],
@@ -348,25 +364,22 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                     style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
                     textAlign: TextAlign.left,)
                       :
-                  Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Row(children: <Widget>[
-                        Text(_appointmentState.status.toString(),
-                          style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
-                          textAlign: TextAlign.left,)
-                      ],),
-                      Row(
-                        children: <Widget>[
-                          RaisedButton(
-                              onPressed: _confirm,
-                              child: Text('Confirm')
-                          ),
+                      Container(
+                          color: Colors.white,
+                          child: Text(_appointmentState.status.toString(),
+                        style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+                        textAlign: TextAlign.left,)),
 
-                        ],
-                      )
-
-                    ],
-                  )
+                      RaisedButton(
+                          textColor: Colors.white,
+                          color: Color.fromARGB(255, 135, 193, 218),
+                          onPressed: _confirm,
+                          child: Text('CONFIRM')
+                      ),
+                    ],)
 
               )
             ],
@@ -381,7 +394,8 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
           context: context,
           builder: (context) => AlertDialog(
               title: Text("Error message"),
-              content: Text("Can't save empty user note!")
+              content: Text("Can't save empty user note!"),
+
           )
       );
     }

@@ -26,6 +26,7 @@ class _radiologydetailState extends State<radiologydetail>
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
             leading: BackButton(color: Colors.black),
+            centerTitle: true,
             title: Text("Radiology Details", style: TextStyle(color: Colors.black)),
             backgroundColor: Colors.white,
             brightness: Brightness.light,
@@ -51,95 +52,98 @@ class _radiologydetailState extends State<radiologydetail>
                       ],
                     ))
                   ),
-                  new Expanded(
-                    child: Container(
-
-                      padding: const EdgeInsets.all(8.0),
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: new BoxDecoration(
                       color: Color.fromARGB(255, 196, 218, 234),
-                      child: Table(
-                        columnWidths: const {
-                          0: FixedColumnWidth(140.0),
-                          1: FixedColumnWidth(300.0),
-                        },
-                        children: [
-                          //address
-                          TableRow(
-                              children: [
-                                ListTile(
-                                  title: Text("Address:",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),),
+                    child: Table(
+                      columnWidths: const {
+                        0: FixedColumnWidth(140.0),
+                        1: FixedColumnWidth(225.0),
+                      },
+                      children: [
+                        //address
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Address:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
-                                ),
-                                ListTile(
-                                    title: Text(_radiologyState.address,
-                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                    trailing: Icon(Icons.location_on),
-                                    onTap: () {
-                                      launchURL("https://www.google.com/maps/search/"+_radiologyState.address);
-                                    }
-                                )
-
-                              ]
-                          ),
-                          //phone
-                          TableRow(
-                              children: [
-                                ListTile(
-                                  title: Text("Phone:",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-
-                                ),
-                                ListTile(
-                                    title: Text(_radiologyState.contact,
-                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                    trailing: Icon(Icons.phone),
-                                    onTap: () {
-                                      _callPhone();
-                                    }
-                                )
-
-
-                              ]
-                          ),
-                          //fax
-                          TableRow(
-                              children: [
-                                ListTile(
-                                  title: Text("Fax:",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-                                ),
-                                ListTile(
-                                  title: Text(_radiologyState.fax,
+                              ),
+                              ListTile(
+                                  title: Text(_radiologyState.address,
                                       style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                )
-                              ]
-                          ),
-                          //website
-                          TableRow(
-                              children: [
-                                ListTile(
-                                  title: Text("Website:",
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-                                ),
-                                ListTile(
-                                    title: Text(_radiologyState.website,
-                                        style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-                                    trailing: Icon(Icons.public),
-                                    onTap: () {
-                                      launchURL('https://'+_radiologyState.website);
-                                    }
-                                )
+                                  trailing: Icon(Icons.location_on),
+                                  onTap: () {
+                                    launchURL("https://www.google.com/maps/search/"+_radiologyState.address);
+                                  }
+                              )
+
+                            ]
+                        ),
+                        //phone
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Phone:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                  title: Text(_radiologyState.contact,
+                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                  trailing: Icon(Icons.phone),
+                                  onTap: () {
+                                    _callPhone();
+                                  }
+                              )
 
 
-                              ]
-                          ),
-                          //type
+                            ]
+                        ),
+                        //fax
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Fax:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text(_radiologyState.fax,
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //website
+                        TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Website:",
+                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                  title: Text(_radiologyState.website,
+                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                  trailing: Icon(Icons.public),
+                                  onTap: () {
+                                    launchURL('https://'+_radiologyState.website);
+                                  }
+                              )
 
 
-                        ],
-                      ),
+                            ]
+                        ),
+                        //type
+
+
+                      ],
                     ),
                   ),
+//                  new Expanded(
+//                    child:
+//                  ),
                 ]);
           }),
     );

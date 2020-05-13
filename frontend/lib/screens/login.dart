@@ -20,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = new TextEditingController();
 
   final TextEditingController resetPasswordEmailPasswordController = new TextEditingController();
+  final TextEditingController oldPasswordController = new TextEditingController();
   final TextEditingController newPasswordController = new TextEditingController();
-  final TextEditingController confirmPasswordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: [Colors.blue, Colors.teal],
+              colors: [Colors.white, Color.fromARGB(255, 20, 54, 91)],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter),
         ),
@@ -87,6 +87,54 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  changePassword(String email, String pass, String new_pass) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String url = ServerDetails.ip +
+        ':' +
+        ServerDetails.port +
+        ServerDetails.api +
+        'user/password';
+    Map<String, String> headers = {"Content-type": "application/json"};
+    var data = jsonEncode({
+      'email': email,
+      'password': pass,
+      'new_password': new_pass
+    });
+    print(url);
+    var jsonResponse = null;
+    var response = await http.put(url, headers: headers, body: data);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      jsonResponse = json.decode(response.body);
+      if (jsonResponse != null) {
+        setState(() {
+          showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                  title: Text("Message"),
+                  content: Text(json.decode(response.body)['message'])
+              )
+          );
+        });
+        resetPasswordEmailPasswordController.clear();
+        oldPasswordController.clear();
+        newPasswordController.clear();
+      }
+    } else {
+      setState(() {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                title: Text("Error message"),
+                content: Text(json.decode(response.body)['message'])
+            )
+        );
+      });
+      print(response.headers);
+      print(response.body);
+    }
+  }
+
   Column buttonSection() {
     return Column(children: <Widget>[
       Container(
@@ -104,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
             signIn(emailController.text, passwordController.text);
           },
           elevation: 0.0,
-          color: Colors.purple,
+          color: Color.fromARGB(255, 135, 193, 218),
           child: Text("LOGIN", style: TextStyle(color: Colors.white70, fontSize: 17)),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -120,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: (){Navigator.of(context).pushNamed("/register");
           },
           elevation: 0.0,
-          color: Colors.purple,
+          color: Color.fromARGB(255, 135, 193, 218),
           child: Text("REGISTER", style: TextStyle(color: Colors.white70, fontSize: 17)),
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -241,7 +289,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(children: <Widget> [
                 Text('Please contact your clinic'),
-                Text('ph: 0415181703'),
+                Text('Ph: 0415181703'),
               ],)
           ),
           actions: <Widget>[
@@ -274,8 +322,16 @@ class _LoginPageState extends State<LoginPage> {
               height: 180.0,
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(children: <Widget> [
-                Text('Please enter your email to reset'),
-                Text('your password.'),
+//                Text('Please enter your email and'),
+//                Text('password to reset.'),
+                Wrap(children: <Widget>[
+                  Center(
+                    child: Text('Please enter your email and')
+                  ),
+                  Center(
+                      child: Text('password to reset.')
+                  )
+                ],),
                 Container(
                   height: 30.0,
                   margin: EdgeInsets.only(top: 10.0, bottom: 0.0),
@@ -305,12 +361,13 @@ class _LoginPageState extends State<LoginPage> {
                   margin: EdgeInsets.only(top: 10.0, bottom: 0.0),
                   padding: EdgeInsets.only(left: 0.0),
                   child: TextFormField(
-                    controller: newPasswordController,
+                    controller: oldPasswordController,
                     cursorColor: Colors.black,
+                    obscureText: true,
                     style: TextStyle(color: Colors.black, fontSize: 15),
                     decoration: InputDecoration(
                       //icon: Icon(Icons.email, color: Colors.white70),
-                      hintText: "New password...",
+                      hintText: "Old password...",
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                         borderRadius: const BorderRadius.all(
@@ -329,12 +386,13 @@ class _LoginPageState extends State<LoginPage> {
                   margin: EdgeInsets.only(top: 10.0, bottom: 0.0),
                   padding: EdgeInsets.only(left: 0.0),
                   child: TextFormField(
-                    controller: confirmPasswordController,
+                    controller: newPasswordController,
                     cursorColor: Colors.black,
+                    obscureText: true,
                     style: TextStyle(color: Colors.black, fontSize: 15),
                     decoration: InputDecoration(
                       //icon: Icon(Icons.email, color: Colors.white70),
-                      hintText: "Confirm password...",
+                      hintText: "New password...",
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.black),
                         borderRadius: const BorderRadius.all(
@@ -354,13 +412,17 @@ class _LoginPageState extends State<LoginPage> {
             FlatButton(
               child: Text('Cancel'),
               onPressed: () {
-                Navigator.of(dialogContext).pop(); // Dismiss alert dialog
+                Navigator.of(dialogContext).pop();
+                resetPasswordEmailPasswordController.clear();
+                oldPasswordController.clear();
+                newPasswordController.clear();// Dismiss alert dialog
               },
             ),
             FlatButton(
               child: Text('Send'),
               onPressed: () {
-                // Send the email
+                changePassword(resetPasswordEmailPasswordController.text,
+                    oldPasswordController.text, newPasswordController.text);
               },
             ),
           ],
@@ -368,7 +430,5 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
-
-
 
 }

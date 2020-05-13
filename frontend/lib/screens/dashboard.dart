@@ -22,7 +22,7 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //extendBodyBehindAppBaorder: true,
+      //extendBodyBehindAppBoarder: true,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(1.0),
           child: AppBar(
@@ -46,47 +46,50 @@ class _DashBoardState extends State<DashBoard> {
       body:   new Builder(
           builder:(BuildContext context){
             return new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children:<Widget>[
                   Container(
                       height: 90.0,
-                      child: _buildBar("APPOINTMENT", Icons.date_range, Colors.lightBlue[400], onTap: () {
+                      child: _buildBar("APPOINTMENT", Icons.date_range, Color.fromARGB(255, 73, 204, 252), onTap: () {
                         Navigator.pushNamed(context, '/appointments');//icon used to be event
                       })
                   ),
                   new Expanded(
-                      child: GridView.count(
-                        //shrinkWrap: true,
-                        //padding: const EdgeInsets.all(8),
-                        //crossAxisSpacing: 1,
-                        //mainAxisSpacing: 5,
-                        crossAxisCount: 2,
-                        //gridDelegate:
-                        //SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                        children: <Widget>[
-                          _buildCard("DOCTORS", Icons.people, Colors.blueGrey, onTap: () {
-                            Navigator.pushNamed(context, '/doctors');
-                          }),
-                          _buildCard("HOSPITALS", Icons.local_hospital, Colors.tealAccent[700], onTap: () {
-                            Navigator.pushNamed(context, '/hospitals');
-                          }),
-                          _buildCard("RADIOLOGY", Icons.healing, Colors.lightBlue[400], onTap: () {
-                            Navigator.of(context).pushNamed("/radiologies");
-                          }),
-                          _buildCard("PATHOLOGY", Icons.loupe, Colors.blueGrey, onTap: () {
-                            Navigator.of(context).pushNamed("/pathologies");//indigo[400]
-                          }),
-                          //_buildCard("PATHOLOGY", FontAwesomeIcons.ambulance, Colors.teal, onTap: (){Navigator.of(context).pushNamed("ambulance");}),
+                      child: Center(
+                        child: GridView.count(
+                          //shrinkWrap: true,
+                          //padding: const EdgeInsets.all(8),
+                          //crossAxisSpacing: 1,
+                          //mainAxisSpacing: 5,
+                          crossAxisCount: 2,
+                          //gridDelegate:
+                          //SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                          children: <Widget>[
+                            _buildCard("DOCTORS", Icons.people, Color.fromARGB(255, 72, 124, 171), onTap: () {
+                              Navigator.pushNamed(context, '/doctors');
+                            }),
+                            _buildCard("HOSPITALS", Icons.local_hospital, Color.fromARGB(255, 71, 207, 203), onTap: () {
+                              Navigator.pushNamed(context, '/hospitals');
+                            }),
+                            _buildCard("RADIOLOGY", Icons.healing, Color.fromARGB(255, 73, 204, 252), onTap: () {
+                              Navigator.of(context).pushNamed("/radiologies");
+                            }),
+                            _buildCard("PATHOLOGY", Icons.loupe, Color.fromARGB(255, 72, 124, 171), onTap: () {
+                              Navigator.of(context).pushNamed("/pathologies");//indigo[400]
+                            }),
+                            //_buildCard("PATHOLOGY", FontAwesomeIcons.ambulance, Colors.teal, onTap: (){Navigator.of(context).pushNamed("ambulance");}),
 
-                          //          _buildCard("Medical History", Icons.library_books, Colors.deepPurpleAccent, onTap: (){Navigator.of(context).pushNamed("history");}),
-                          //          _buildCard("Ask A doctor", Icons.chat, Colors.indigo, onTap: (){Navigator.of(context).pushNamed("support");}),
-                        ],
+                            //          _buildCard("Medical History", Icons.library_books, Colors.deepPurpleAccent, onTap: (){Navigator.of(context).pushNamed("history");}),
+                            //          _buildCard("Ask A doctor", Icons.chat, Colors.indigo, onTap: (){Navigator.of(context).pushNamed("support");}),
+                          ],
+                        ),
                       )),
                   Container(
                       height: 90.0,
                       //padding: EdgeInsets.symmetric(horizontal: 30.0),
                       //margin: EdgeInsets.only(top: 15.0),
-                      child: _buildBar("RESOURCE", Icons.book, Colors.tealAccent[700], onTap: () {
-                        Navigator.of(context).pushNamed("resource");
+                      child: _buildBar("RESOURCE", Icons.book,Color.fromARGB(255, 71, 207, 203), onTap: () {
+                        Navigator.of(context).pushNamed("/resources");
                       })
                   ),
                   Container(
