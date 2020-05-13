@@ -124,7 +124,6 @@ class _LoginPageState extends State<LoginPage> {
           child: Text("REGISTER", style: TextStyle(color: Colors.white70, fontSize: 17)),
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
         ),
       ),
       Center(
