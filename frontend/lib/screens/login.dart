@@ -258,19 +258,21 @@ class _LoginPageState extends State<LoginPage> {
     return Container(
         margin: EdgeInsets.only(top: 120.0),
         padding: EdgeInsets.only(left: 40.0, right: 20.0),
-        child: Row(children: <Widget>[
-          Text("My Medical Secretary",
+        child: Container(child:  Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+          Text("My Medical Secretary ",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontFamily: "Arial",
                 color: Colors.white70,
-                fontSize: 30.0,
+                fontSize: 25.0,
                 fontWeight: FontWeight.bold
             ),
           ),
           Image.asset('assets/images/logo.png', scale: 2.5),
           //Image.file('../../assets/images/logo.jpg'),
-        ])
+        ]))
     );
   }
 

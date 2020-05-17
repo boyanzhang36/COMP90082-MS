@@ -27,8 +27,10 @@ class _DashBoardState extends State<DashBoard> {
           preferredSize: Size.fromHeight(1.0),
           child: AppBar(
             //backgroundColor: Colors.transparent,
-            backgroundColor: Color(0x44000000),
-            elevation: 0,
+//            backgroundColor: Color(0x44000000),
+            backgroundColor: Colors.white,
+            brightness: Brightness.light,
+            elevation: 0.5,
             //title: Text("Medical secretary", style: TextStyle(color: Colors.white)),
             // actions: <Widget>[
             //  FlatButton(
