@@ -36,7 +36,7 @@ class _pathologydetailState extends State<pathologydetail>
       ),
       body:   new Builder(
           builder:(BuildContext context){
-            return new Column(
+            return new ListView(
                 children:<Widget>[
                   Container(
                     height: 80.0,
@@ -61,7 +61,7 @@ class _pathologydetailState extends State<pathologydetail>
                     child: Table(
                       columnWidths: const {
                         0: FixedColumnWidth(140.0),
-                        1: FixedColumnWidth(225.0),
+                        1: FlexColumnWidth(1.0),
                       },
                       children: [
                         //address

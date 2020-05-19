@@ -16,11 +16,11 @@ public class DataManager {
     private static final Logger log = LogManager.getLogger();
     // JDBC driver name and databse URL
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_URL = "jdbc:mysql://frank.czb2g0pebcye.ap-southeast-2.rds.amazonaws.com:3306/medsec?useSSL=false";
+    private static final String DB_URL = "jdbc:mysql://localhost:8889/medsec?useSSL=false";
 
     // Databse credentials
-    private static final String USER = "frank";
-    private static final String PASSWORD = "^xt*E8kE78vrZJPW";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
 
     private static DataManager instance = null;
     private static Connection connection;
