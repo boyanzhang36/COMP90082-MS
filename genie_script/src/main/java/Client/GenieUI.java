@@ -1,5 +1,7 @@
 package Client;
 
+import SocketConnection.QueryCommand;
+
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
@@ -37,7 +39,8 @@ public class GenieUI {
     private static final String CLIENT_KEY_PATH = "/client_ks.jks";
     private static final String TRUST_SERVER_KEY_PATH = "/serverTrust_ks.jks";
 
-    public static String GENIE_INSTALL_PATH = "";
+    public static QueryCommand COMMAND = null;
+    public static String FILE_UPLOAD_PATH = "";
 
     private JPanel panelMain;
 
@@ -65,7 +68,7 @@ public class GenieUI {
         // Default set ip and port
         ipField.setText(IP);
         portField.setText(String.valueOf(PORT));
-        pathTextArea.setText(GENIE_INSTALL_PATH);
+        pathTextArea.setText(FILE_UPLOAD_PATH);
         updateIntervalHours.setValue(12);
         updateIntervalHours.setMinimumSize(new Dimension(1,1));
 
@@ -98,10 +101,24 @@ public class GenieUI {
         pathButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GENIE_INSTALL_PATH = pathTextArea.getText();
-                System.out.println("Path has been set to : " + GENIE_INSTALL_PATH);
+                COMMAND = QueryCommand.APPOINTMENT;
+                FILE_UPLOAD_PATH = pathTextArea.getText();
+                System.out.println("Command has been set to : " + COMMAND);
+                System.out.println("Path has been set to : " + FILE_UPLOAD_PATH);
             }
         });
+
+        /*******TODO: Add a new button for patients*********/
+//        pathButton1.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                COMMAND = QueryCommand.PATIENT;
+//                FILE_UPLOAD_PATH = pathTextArea.getText();
+//                System.out.println("Command has been set to : " + COMMAND);
+//                System.out.println("Path has been set to : " + FILE_UPLOAD_PATH);
+//            }
+//        });
+
         // Create new socket and send update
         sendUpdateButton.addActionListener(new ActionListener() {
             @Override

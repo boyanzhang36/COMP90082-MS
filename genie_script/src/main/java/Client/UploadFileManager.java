@@ -3,7 +3,6 @@ package Client;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.*;
 
@@ -11,27 +10,29 @@ import java.io.*;
 public class UploadFileManager {
 
     private static String UPLOAD_PATH = null;
+    private static Element htmlTable = null;
 
-    protected UploadFileManager(){
-        System.out.println(GenieUI.GENIE_INSTALL_PATH);
+    protected UploadFileManager(String uploadPath){
 
-        this.UPLOAD_PATH = "C:/Users/HWK/Desktop/t.html";
+        this.UPLOAD_PATH = uploadPath;
 
     }
 
-    public void readExcelFile() {
+    public Element readHtmlFile() {
 
         try {
+
             File htmlFile = new File(UPLOAD_PATH);
             Document doc = Jsoup.parse(htmlFile, "UTF-8");
-            Element table = doc.select("table").get(0);
-            System.out.println(table);
+
+            htmlTable = doc.select("table").get(0);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-
+        return htmlTable;
 
     }
+
 }
