@@ -14,7 +14,7 @@ import java.net.Socket;
  */
 public class QueryManager {
 
-    private final String GENIE_IP = "13.236.71.140";
+    private final String GENIE_IP = "10.160.36.46";
     private final int GENIE_PORT = 19812;
     private Socket echoSocket;
 
@@ -46,7 +46,7 @@ public class QueryManager {
     public boolean login() throws IOException, IllegalAccessException,
             NoSuchFieldException, InstantiationException {
         System.out.println("GENIE-LOGIN executing");
-        out.write("001 Login\r\nUser-name:test\r\nUser-password:test\r\nProtocol-version:13.0\r\n\r\n");
+        out.write("001 Login\r\nUser-name:Wenkai\r\nUser-password:123\r\nProtocol-version:13.0\r\n\r\n");
         out.flush();
 
         StringBuilder output = new StringBuilder();
