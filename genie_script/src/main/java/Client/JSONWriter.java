@@ -45,7 +45,8 @@ public class JSONWriter {
             commands.add(QueryCommand.APPOINTMENT);
             // Update File data
 //            commands.add(QueryCommand.FILE);
-            sendGENIEData(commands, connectionSocket);
+            //sendGENIEData(commands, connectionSocket);
+            excelToJSON(connectionSocket);
             sendDisconnect(connectionSocket);
         }
 
@@ -85,6 +86,13 @@ public class JSONWriter {
                 e.printStackTrace();
             }
         }
+
+        private void excelToJSON(Socket connectionSocket){
+            UploadFileManager uploadExcel = new UploadFileManager();
+            uploadExcel.readExcelFile();
+        }
+
+        /*************************************NOT USED**********************************************/
 
     /**
      * Generate path for file
