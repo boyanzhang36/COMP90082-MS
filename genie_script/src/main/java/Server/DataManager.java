@@ -47,10 +47,10 @@ public class DataManager {
 
     public void processPatient(JSONObject patient) {
         try {
-            int patientId = Integer.parseInt((String) patient.get("Id"));
+            int patientId = Integer.parseInt((String) patient.get("PatientId"));
             // search the patient ID firstly to check if it exists in DB
             stm = connection.createStatement();
-            String query = "SELECT Id FROM Patient WHERE id = " + patientId;
+            String query = "SELECT id FROM User WHERE id = " + patientId;
             ResultSet resultSet = stm.executeQuery(query);
             if (resultSet.next()) {
                 do {
@@ -75,12 +75,12 @@ public class DataManager {
     Assume they only change their address or email
     */
     public void updatePatient(JSONObject patient) {
-        int patientId = Integer.parseInt((String) patient.get("Id"));
-        String email = (String) patient.get("EmailAddress");
-        String street = (String) patient.get("AddressLine1");
+        int patientId = Integer.parseInt((String) patient.get("PatientId"));
+        String email = (String) patient.get("Email");
+        String street = (String) patient.get("Street");
         String suburb = (String) patient.get("Suburb");
         String state = (String) patient.get("State");
-        String query = "UPDATE Patient SET email='" + email + "', street='"
+        String query = "UPDATE User SET email='" + email + "', street='"
                 + street +"', suburb='" + suburb + "', state='" + state + "'" +
                 "WHERE id= " + patientId;
         try {
@@ -95,19 +95,19 @@ public class DataManager {
     Insert new patient
      */
     public void insertPatient(JSONObject patient) throws ParseException{
-        int patientId = Integer.parseInt((String) patient.get("Id"));
-        String surname = (String) patient.get("Surname");
+        int patientId = Integer.parseInt((String) patient.get("PatientId"));
+        String surname = (String) patient.get("SurName");
         String firstName = (String) patient.get("FirstName");
         //String middleName = (String) patient.get("MiddleName");
         String dob = (String) patient.get("DOB");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date dataStr = format.parse(dob);
         java.sql.Date dateDB = new java.sql.Date(dataStr.getTime());
-        String email = (String) patient.get("EmailAddress");
-        String street = (String) patient.get("AddressLine1");
+        String email = (String) patient.get("Email");
+        String street = (String) patient.get("Street");
         String suburb = (String) patient.get("Suburb");
         String state = (String) patient.get("State");
-        String query = "INSERT INTO Patient (id, surname, firstname, dob, email, street, suburb, state) " +
+        String query = "INSERT INTO User (id, surname, firstname, dob, email, street, suburb, state) " +
                     "VALUES(?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
