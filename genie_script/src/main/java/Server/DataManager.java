@@ -140,10 +140,10 @@ public class DataManager {
 
     public void processAppointment(JSONObject appointment) {
         try {
-            int apptId = Integer.parseInt((String) appointment.get("Id"));
+            int apptId = Integer.parseInt((String) appointment.get("id"));
             // search the patient ID firstly to check if it exists in DB
             stm = connection.createStatement();
-            String query = "SELECT Id FROM Appointment WHERE id = " + apptId;
+            String query = "SELECT id FROM Appointment WHERE id = " + apptId;
             ResultSet resultSet = stm.executeQuery(query);
             if (resultSet.next()) {
                 do {
@@ -168,22 +168,23 @@ public class DataManager {
     }
 
     public void updateAppt(JSONObject appointment) throws ParseException{
-        int apptId = Integer.parseInt((String) appointment.get("Id"));
-        String title = (String) appointment.get("Name");
+        int apptId = Integer.parseInt((String) appointment.get("id"));
+        String title = (String) appointment.get("name");
         //String dateChange = (String) appointment.get("LastUpdated");
-        String date = (String) appointment.get("StartDate");
+        String date = (String) appointment.get("data");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date dataStr;
         dataStr = format.parse(date);
         java.sql.Date dateAppt = new java.sql.Date(dataStr.getTime());
-        String note = (String) appointment.get("Note");
-        int status = Integer.parseInt((String) appointment.get("Status"));
-        int duration = Integer.parseInt((String) appointment.get("ApptDuration"));
-        Boolean isCancelled = Boolean.valueOf((String) appointment.get("Cancelled")) ;
-        int patientId = Integer.parseInt((String) appointment.get("PT_Id_Fk"));
+        String note = (String) appointment.get("note");
+        int status = Integer.parseInt((String) appointment.get("status"));
+        int duration = Integer.parseInt((String) appointment.get("duration"));
+//        Boolean isCancelled = Boolean.valueOf((String) appointment.get("is_cancelled")) ;
+        int patientId = Integer.parseInt((String) appointment.get("pid"));
         String query = "UPDATE Appointment SET title='" + title + "', date='" + dateAppt + "', note='" + note +
                 "', status='" + status + "', duration='" + duration +
-                "', is_cancelled='" + isCancelled + "', pid='" + patientId +  "'" +
+//                "', is_cancelled='" + isCancelled +
+                "', uid='" + patientId +  "'" +
                 "WHERE id= " + apptId;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -194,26 +195,26 @@ public class DataManager {
     }
 
     public void insertAppt(JSONObject appointment) throws ParseException{
-        int apptId = Integer.parseInt((String) appointment.get("Id"));
-        String title = (String) appointment.get("Name");
-        String dataCreate = (String) appointment.get("CreationDate");
+        int apptId = Integer.parseInt((String) appointment.get("id"));
+        String title = (String) appointment.get("name");
+        String dataCreate = (String) appointment.get("data_create");
         //String dateChange = (String) appointment.get("LastUpdated");
-        String date = (String) appointment.get("StartDate");
+        String date = (String) appointment.get("date");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date dataStr;
         dataStr = format.parse(dataCreate);
         java.sql.Date dateCreated = new java.sql.Date(dataStr.getTime());
         dataStr = format.parse(date);
         java.sql.Date dateAppt = new java.sql.Date(dataStr.getTime());
-        String detail = (String) appointment.get("Comment");
-        String note = (String) appointment.get("Note");
-        int status = Integer.parseInt((String) appointment.get("Status"));
-        int duration = Integer.parseInt((String) appointment.get("ApptDuration"));
-        Boolean isCancelled = Boolean.valueOf((String) appointment.get("Cancelled")) ;
-        int patientId = Integer.parseInt((String) appointment.get("PT_Id_Fk"));
+        String detail = (String) appointment.get("detail");
+        String note = (String) appointment.get("note");
+        String status = (String) appointment.get("status");
+        int duration = Integer.parseInt((String) appointment.get("duration"));
+//        Boolean isCancelled = Boolean.valueOf((String) appointment.get("Cancelled")) ;
+        int patientId = Integer.parseInt((String) appointment.get("pid"));
         String query = "INSERT INTO Appointment (id, title, date_create, date, detail, note, " +
-                "status, duration, is_cancelled, pid) " +
-                "VALUES(?,?,?,?,?,?,?,?,?,?)";
+                "status, duration, uid) " +
+                "VALUES(?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,apptId);
@@ -222,10 +223,10 @@ public class DataManager {
             preparedStatement.setDate(4,dateAppt);
             preparedStatement.setString(5,detail);
             preparedStatement.setString(6,note);
-            preparedStatement.setInt(7,status);
+            preparedStatement.setString(7,status);
             preparedStatement.setInt(8,duration);
-            preparedStatement.setBoolean(9,isCancelled);
-            preparedStatement.setInt(10,patientId);
+//            preparedStatement.setBoolean(9,isCancelled);
+            preparedStatement.setInt(9,patientId);
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();

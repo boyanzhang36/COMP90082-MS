@@ -101,11 +101,11 @@ public class JSONWriter {
             htmlTrs = htmlTable.select("tr");
 
             Elements tdHeads = htmlTrs.get(0).select("td");
-            JSONObject msg = new JSONObject();
-            msg.put("command", command.toString());
-            JSONArray jsonObjectDoc = new JSONArray();
-            for (int i = 1; i < htmlTrs.size(); i++){
 
+//            JSONArray jsonObjectDoc = new JSONArray();
+            for (int i = 1; i < htmlTrs.size(); i++){
+                JSONObject msg = new JSONObject();
+                msg.put("command", command.toString());
 
                 JSONObject jsonObject = new JSONObject();
                 Elements tds = htmlTrs.get(i).select("td");
@@ -117,14 +117,14 @@ public class JSONWriter {
                     jsonObject.put(pHead.text(), pContent.text());
 
                 }
-                jsonObjectDoc.add(jsonObject);
-
+//                jsonObjectDoc.add(jsonObject);
+                msg.put("doc", jsonObject);
+                System.out.println(msg);
+                dos.writeUTF(msg + "\n");
+                dos.flush();
 
             }
-            msg.put("doc", jsonObjectDoc);
-            System.out.println(msg);
-            dos.writeUTF(msg + "\n");
-            dos.flush();
+
 
         }
 
