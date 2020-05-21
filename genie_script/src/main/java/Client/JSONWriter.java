@@ -50,7 +50,7 @@ public class JSONWriter {
             // Update File data
 //            commands.add(QueryCommand.FILE);
             //sendGENIEData(commands, connectionSocket);
-            htmlToJSON(connectionSocket, QueryCommand.APPOINTMENT, "C:/Users/HWK/Desktop/t.html");
+            htmlToJSON(connectionSocket, QueryCommand.APPOINTMENT, "src/main/resources/test.html");
 //            htmlToJSON(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
             sendDisconnect(connectionSocket);
         }
@@ -101,10 +101,12 @@ public class JSONWriter {
             htmlTrs = htmlTable.select("tr");
 
             Elements tdHeads = htmlTrs.get(0).select("td");
-
+            JSONObject msg = new JSONObject();
+            msg.put("command", command.toString());
+            JSONArray jsonObjectDoc = new JSONArray();
             for (int i = 1; i < htmlTrs.size(); i++){
-                JSONObject msg = new JSONObject();
-                msg.put("command", command.toString());
+
+
                 JSONObject jsonObject = new JSONObject();
                 Elements tds = htmlTrs.get(i).select("td");
                 for (int j = 0; j < tds.size(); j++){
@@ -115,13 +117,14 @@ public class JSONWriter {
                     jsonObject.put(pHead.text(), pContent.text());
 
                 }
-                msg.put("doc", jsonObject);
-                System.out.println(msg);
-                dos.writeUTF(msg + "\n");
-                dos.flush();
+                jsonObjectDoc.add(jsonObject);
+
 
             }
-
+            msg.put("doc", jsonObjectDoc);
+            System.out.println(msg);
+            dos.writeUTF(msg + "\n");
+            dos.flush();
 
         }
 
