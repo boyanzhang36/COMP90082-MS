@@ -171,13 +171,13 @@ public class DataManager {
         int apptId = Integer.parseInt((String) appointment.get("id"));
         String title = (String) appointment.get("name");
         //String dateChange = (String) appointment.get("LastUpdated");
-        String date = (String) appointment.get("data");
+        String date = (String) appointment.get("date");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date dataStr;
         dataStr = format.parse(date);
         java.sql.Date dateAppt = new java.sql.Date(dataStr.getTime());
         String note = (String) appointment.get("note");
-        int status = Integer.parseInt((String) appointment.get("status"));
+        String status = (String) appointment.get("status");
         int duration = Integer.parseInt((String) appointment.get("duration"));
 //        Boolean isCancelled = Boolean.valueOf((String) appointment.get("is_cancelled")) ;
         int patientId = Integer.parseInt((String) appointment.get("pid"));
