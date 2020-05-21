@@ -50,8 +50,8 @@ public class JSONWriter {
             // Update File data
 //            commands.add(QueryCommand.FILE);
             //sendGENIEData(commands, connectionSocket);
-            htmlToJSON(connectionSocket, QueryCommand.APPOINTMENT, "src/main/resources/test.html");
-//            htmlToJSON(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
+//            htmlToJSON(connectionSocket, QueryCommand.APPOINTMENT, "src/main/resources/test.html");
+            htmlToJSON(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
             sendDisconnect(connectionSocket);
         }
 

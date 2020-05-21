@@ -41,6 +41,6 @@ public enum QueryCommand {
                 return qc;
             }
         }
-        return QueryCommand.DISCONNECTION;
+        return null;
     };
 }

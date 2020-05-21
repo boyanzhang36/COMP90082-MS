@@ -43,7 +43,7 @@ public class GenieUI {
     public static String FILE_UPLOAD_PATH = "";
     public static String PATIENT_FILE_UPLOAD_PATH = "";
     public static String APPOINTMENT_FILE_UPLOAD_PATH = "";
-    public static QueryCommand COMMAND = QueryCommand.DISCONNECTION;
+    public static QueryCommand COMMAND = null;
 
     private JPanel panelMain;
 
@@ -71,7 +71,7 @@ public class GenieUI {
         // Default set ip and port
         ipField.setText(IP);
         portField.setText(String.valueOf(PORT));
-        pathTextArea1.setText(PATIENT_FILE_UPLOAD_PATH);
+        pathTextArea1.setText(FILE_UPLOAD_PATH);
         updateIntervalHours.setValue(12);
         updateIntervalHours.setMinimumSize(new Dimension(1,1));
 
@@ -114,7 +114,7 @@ public class GenieUI {
                     System.out.println("Upload "+ file.getName() +" File");
                     //Determine the command type
                     QueryCommand type = QueryCommand.getCommandName(file.getName());
-                    if (type!=QueryCommand.DISCONNECTION){
+                    if (type!=null){
                         COMMAND = type;
                         pathTextArea1.setText(file.getAbsolutePath());
                         //String content = IpaService.getIpaInfoMap(file.toString());
