@@ -1,5 +1,7 @@
 package Client;
 
+import SocketConnection.QueryCommand;
+
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
@@ -11,6 +13,7 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -37,7 +40,10 @@ public class GenieUI {
     private static final String CLIENT_KEY_PATH = "/client_ks.jks";
     private static final String TRUST_SERVER_KEY_PATH = "/serverTrust_ks.jks";
 
-    public static String GENIE_INSTALL_PATH = "";
+    public static String FILE_UPLOAD_PATH = "";
+    public static String PATIENT_FILE_UPLOAD_PATH = "";
+    public static String APPOINTMENT_FILE_UPLOAD_PATH = "";
+    public static QueryCommand COMMAND = QueryCommand.DISCONNECTION;
 
     private JPanel panelMain;
 
@@ -48,8 +54,8 @@ public class GenieUI {
     private JButton updatePortButton;
     private JTextArea consoleTextArea;
     private JScrollPane consoleScrollPane;
-    private JTextField pathTextArea;
-    private JButton pathButton;
+    private JTextField pathTextArea1;
+    private JButton filePathButton1;
     private JSpinner updateIntervalHours;
 
     public GenieUI() {
@@ -65,7 +71,7 @@ public class GenieUI {
         // Default set ip and port
         ipField.setText(IP);
         portField.setText(String.valueOf(PORT));
-        pathTextArea.setText(GENIE_INSTALL_PATH);
+        pathTextArea1.setText(PATIENT_FILE_UPLOAD_PATH);
         updateIntervalHours.setValue(12);
         updateIntervalHours.setMinimumSize(new Dimension(1,1));
 
@@ -94,12 +100,42 @@ public class GenieUI {
                 System.out.println("Port has been set to : " + PORT);
             }
         });
-        // Update IP button
-        pathButton.addActionListener(new ActionListener() {
+        // Update Patient File Path button
+        filePathButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GENIE_INSTALL_PATH = pathTextArea.getText();
-                System.out.println("Path has been set to : " + GENIE_INSTALL_PATH);
+                JFileChooser jfc = new JFileChooser();
+//						 jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );
+                // Display the file dialog
+                jfc.showSaveDialog(panelMain);
+                try {
+                    // Use File class to obtain the file from selection
+                    File file = jfc.getSelectedFile();//
+                    System.out.println("Upload "+ file.getName() +" File");
+                    //Determine the command type
+                    QueryCommand type = QueryCommand.getCommandName(file.getName());
+                    if (type!=QueryCommand.DISCONNECTION){
+                        COMMAND = type;
+                        pathTextArea1.setText(file.getAbsolutePath());
+                        //String content = IpaService.getIpaInfoMap(file.toString());
+                        //consoleTextArea.setText("abcabc");
+                    }else{
+                        JPanel panel1 = new JPanel();
+                        JOptionPane.showMessageDialog(panel1,
+                                "Invalid files in the current selection.\n" +
+                                        "Please upload the file named with one of the QueryCommand:\n"+
+                                        "'Appointment', 'Patient' or 'File'",
+                                "Warn", JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (Exception e2) {
+                    JPanel panel2 = new JPanel();
+                    JOptionPane.showMessageDialog(panel2,
+                            "There are no files in the current selection.",
+                            "Warn", JOptionPane.WARNING_MESSAGE);
+                }
+                FILE_UPLOAD_PATH = pathTextArea1.getText();
+                System.out.println("Command has been set to : " + COMMAND);
+                System.out.println("Path has been set to : " + FILE_UPLOAD_PATH);
             }
         });
         // Create new socket and send update
@@ -118,6 +154,7 @@ public class GenieUI {
                 }
             }
         });
+
     }
 
     /**

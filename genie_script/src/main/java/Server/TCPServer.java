@@ -7,10 +7,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.KeyStore;
 
 /**
  * TCPServer handles JSON GENIE Data sent from the script
@@ -20,6 +25,15 @@ public class TCPServer implements Runnable{
     private static final int PORT = 11111;
     private static boolean flag = false;
     private static final Logger log = LogManager.getLogger();
+    private static final Path PATH = Paths.get
+            ("src/main/resources/").toAbsolutePath();
+    private static final String GENIE_DB_NAME = "TestData/appointment.json";
+    private static final String CLIENT_KEY_STORE_PASSWORD = "client";
+    private static final String CLIENT_TRUST_KEY_STORE_PASSWORD = "client";
+    private static final String CLIENT_KEY_PATH = "/client_ks.jks";
+    private static final String TRUST_SERVER_KEY_PATH = "/serverTrust_ks.jks";
+
+    public static String GENIE_INSTALL_PATH = "";
     DataManager dataManager = DataManager.getInstance();
     Socket connectionSocket;
 
@@ -57,7 +71,25 @@ public class TCPServer implements Runnable{
     public static void main(String argv[]) throws Exception
     {
         System.out.println("Threaded Server Running");
-        ServerSocket serverSocket = new ServerSocket(PORT);
+
+        KeyStore ks = KeyStore.getInstance("JKS");
+        ks.load(new FileInputStream(PATH + CLIENT_KEY_PATH), CLIENT_KEY_STORE_PASSWORD.toCharArray());
+        KeyStore tks = KeyStore.getInstance("JKS");
+        tks.load(new FileInputStream(PATH + TRUST_SERVER_KEY_PATH), CLIENT_TRUST_KEY_STORE_PASSWORD.toCharArray());
+
+
+        KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+        kmf.init(ks, CLIENT_KEY_STORE_PASSWORD.toCharArray());
+
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+        tmf.init(tks);
+
+        SSLContext context = SSLContext.getInstance("SSL");
+
+        context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+
+        SSLServerSocketFactory ssf = context.getServerSocketFactory();
+        SSLServerSocket serverSocket = (SSLServerSocket) ssf.createServerSocket(PORT);
 
         while(true)
         {

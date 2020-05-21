@@ -96,7 +96,7 @@ public class JSONWriter {
      */
     public File fetch(String pSurname, String pFName, int pID,
                              String fRName) {
-        String fPath = GenieUI.GENIE_INSTALL_PATH + "/Images/" +
+        String fPath = GenieUI.FILE_UPLOAD_PATH + "/Images/" +
                 pSurname.charAt(0) + "/" +
                 pSurname + pFName.charAt(0) + Integer.toString(pID) + "/" +
                 fRName;
