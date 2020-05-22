@@ -232,4 +232,309 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
+    public void processPathology(JSONObject pathology) {
+        try {
+            int pathologyId = Integer.parseInt((String) pathology.get("id"));
+            // search the patient ID firstly to check if it exists in DB
+            stm = connection.createStatement();
+            String query = "SELECT id FROM Pathology WHERE id = " + pathologyId;
+            ResultSet resultSet = stm.executeQuery(query);
+            if (resultSet.next()) {
+                do {
+                    log.info("find the pathology" + pathologyId + ". Begin to update!");
+                    try {
+                        updatePathology(pathology);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } while (resultSet.next());
+            } else {
+                log.info("Cannot find it, it should be a new one. Begin to insert!");
+                try {
+                    insertPathology(pathology);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePathology(JSONObject pathology) throws ParseException{
+        int pathologyId = Integer.parseInt((String) pathology.get("id"));
+        String name = (String) pathology.get("pathologyname");
+        //String dateChange = (String) appointment.get("LastUpdated");
+        String address = (String) pathology.get("address");
+        String phone = (String) pathology.get("phone");
+        String fax = (String) pathology.get("fax");
+//        Boolean isCancelled = Boolean.valueOf((String) appointment.get("is_cancelled")) ;
+//        String openhours = (String) pathology.get("openhours");
+        String website = (String) pathology.get("website");
+        String query = "UPDATE Pathology SET name='" + name + "', address='" + address + "', contact='" + phone +
+                "', fax='" + fax + "', website='" + website +
+//                "', is_cancelled='" + isCancelled +
+//                "', uid='" + patientId +  "'" +
+                "WHERE id= " + pathologyId;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertPathology(JSONObject pathology) throws ParseException{
+        int pathologyId = Integer.parseInt((String) pathology.get("id"));
+        String name = (String) pathology.get("pathologyname");
+        String address = (String) pathology.get("address");
+        String phone = (String) pathology.get("phone");
+        String fax = (String) pathology.get("fax");
+        //        String openhours = (String) pathology.get("openhours");
+        String website = (String) pathology.get("website");
+        String query = "INSERT INTO Pathology (id, name, contact, address, fax, website) " +
+                "VALUES(?,?,?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,pathologyId);
+            preparedStatement.setString(2,name);
+            preparedStatement.setString(3,address);
+            preparedStatement.setString(4,phone);
+            preparedStatement.setString(5,fax);
+            preparedStatement.setString(6,website);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void processRadiology(JSONObject radiology) {
+        try {
+            int radiologyId = Integer.parseInt((String) radiology.get("id"));
+            // search the patient ID firstly to check if it exists in DB
+            stm = connection.createStatement();
+            String query = "SELECT id FROM Radiology WHERE id = " + radiologyId;
+            ResultSet resultSet = stm.executeQuery(query);
+            if (resultSet.next()) {
+                do {
+                    log.info("find the radiology" + radiologyId + ". Begin to update!");
+                    try {
+                        updateRadiology(radiology);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } while (resultSet.next());
+            } else {
+                log.info("Cannot find it, it should be a new one. Begin to insert!");
+                try {
+                    insertRadiology(radiology);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateRadiology(JSONObject radiology) throws ParseException{
+        int radiologyId = Integer.parseInt((String) radiology.get("id"));
+        String name = (String) radiology.get("radiologyname");
+        //String dateChange = (String) appointment.get("LastUpdated");
+        String address = (String) radiology.get("address");
+        String phone = (String) radiology.get("phone");
+        String fax = (String) radiology.get("fax");
+//        Boolean isCancelled = Boolean.valueOf((String) appointment.get("is_cancelled")) ;
+//        String openhours = (String) pathology.get("openhours");
+        String website = (String) radiology.get("website");
+        String query = "UPDATE Radiology SET name='" + name + "', address='" + address + "', contact='" + phone +
+                "', fax='" + fax + "', website='" + website +
+//                "', is_cancelled='" + isCancelled +
+//                "', uid='" + patientId +  "'" +
+                "WHERE id= " + radiologyId;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertRadiology(JSONObject radiology) throws ParseException{
+        int radiologyId = Integer.parseInt((String) radiology.get("id"));
+        String name = (String) radiology.get("radiologyname");
+        String address = (String) radiology.get("address");
+        String phone = (String) radiology.get("phone");
+        String fax = (String) radiology.get("fax");
+        //        String openhours = (String) pathology.get("openhours");
+        String website = (String) radiology.get("website");
+        String query = "INSERT INTO Radiology (id, name, contact, address, fax, website) " +
+                "VALUES(?,?,?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,radiologyId);
+            preparedStatement.setString(2,name);
+            preparedStatement.setString(3,address);
+            preparedStatement.setString(4,phone);
+            preparedStatement.setString(5,fax);
+            preparedStatement.setString(6,website);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void processDoctor(JSONObject doctor) {
+        try {
+            int doctorId = Integer.parseInt((String) doctor.get("id"));
+            // search the patient ID firstly to check if it exists in DB
+            stm = connection.createStatement();
+            String query = "SELECT id FROM Doctor WHERE id = " + doctorId;
+            ResultSet resultSet = stm.executeQuery(query);
+            if (resultSet.next()) {
+                do {
+                    log.info("find the doctor" + doctorId + ". Begin to update!");
+                    try {
+                        updateDoctor(doctor);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } while (resultSet.next());
+            } else {
+                log.info("Cannot find it, it should be a new one. Begin to insert!");
+                try {
+                    insertDoctor(doctor);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateDoctor(JSONObject doctor) throws ParseException{
+        int doctorId = Integer.parseInt((String) doctor.get("id"));
+        String name = (String) doctor.get("doctorname");
+        //String dateChange = (String) appointment.get("LastUpdated");
+        String address = (String) doctor.get("address");
+        String phone = (String) doctor.get("phone");
+        String fax = (String) doctor.get("fax");
+        String email = (String) doctor.get("email");
+//        String openhours = (String) pathology.get("openhours");
+        String website = (String) doctor.get("website");
+        String query = "UPDATE Doctor SET name='" + name + "', address='" + address + "', contact='" + phone +
+                "', fax='" + fax + "', website='" + website + "', email='" + email +
+//                "', is_cancelled='" + isCancelled +
+//                "', uid='" + patientId +  "'" +
+                "WHERE id= " + doctorId;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertDoctor(JSONObject doctor) throws ParseException{
+        int doctorId = Integer.parseInt((String) doctor.get("id"));
+        String name = (String) doctor.get("doctorname");
+        String address = (String) doctor.get("address");
+        String phone = (String) doctor.get("phone");
+        String fax = (String) doctor.get("fax");
+        //        String openhours = (String) pathology.get("openhours");
+        String website = (String) doctor.get("website");
+        String email = (String) doctor.get("email");
+        String query = "INSERT INTO Doctor (id, name, contact, address, fax, website, email) " +
+                "VALUES(?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,doctorId);
+            preparedStatement.setString(2,name);
+            preparedStatement.setString(3,address);
+            preparedStatement.setString(4,phone);
+            preparedStatement.setString(5,fax);
+            preparedStatement.setString(6,website);
+            preparedStatement.setString(7,email);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void processHospital(JSONObject hospital) {
+        try {
+            int hospitalId = Integer.parseInt((String) hospital.get("id"));
+            stm = connection.createStatement();
+            String query = "SELECT id FROM Hospital WHERE id = " + hospitalId;
+            ResultSet resultSet = stm.executeQuery(query);
+            if (resultSet.next()) {
+                do {
+                    log.info("find the hospital" + hospitalId + ". Begin to update!");
+                    try {
+                        updateHospital(hospital);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } while (resultSet.next());
+            } else {
+                log.info("Cannot find it, it should be a new one. Begin to insert!");
+                try {
+                    insertHospital(hospital);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateHospital(JSONObject hospital) throws ParseException{
+        int hospitalId = Integer.parseInt((String) hospital.get("id"));
+        String name = (String) hospital.get("hospitalname");
+        //String dateChange = (String) appointment.get("LastUpdated");
+        String address = (String) hospital.get("address");
+        String phone = (String) hospital.get("phone");
+        String fax = (String) hospital.get("fax");
+//        Boolean isCancelled = Boolean.valueOf((String) appointment.get("is_cancelled")) ;
+//        String openhours = (String) pathology.get("openhours");
+        String website = (String) hospital.get("website");
+        String query = "UPDATE Hospital SET name='" + name + "', address='" + address + "', contact='" + phone +
+                "', fax='" + fax + "', website='" + website +
+//                "', is_cancelled='" + isCancelled +
+//                "', uid='" + patientId +  "'" +
+                "WHERE id= " + hospitalId;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertHospital(JSONObject hospital) throws ParseException{
+        int hospitalId = Integer.parseInt((String) hospital.get("id"));
+        String name = (String) hospital.get("hospitalname");
+        String address = (String) hospital.get("address");
+        String phone = (String) hospital.get("phone");
+        String fax = (String) hospital.get("fax");
+        //        String openhours = (String) pathology.get("openhours");
+        String website = (String) hospital.get("website");
+        String query = "INSERT INTO Hospital (id, name, contact, address, fax, website) " +
+                "VALUES(?,?,?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,hospitalId);
+            preparedStatement.setString(2,name);
+            preparedStatement.setString(3,address);
+            preparedStatement.setString(4,phone);
+            preparedStatement.setString(5,fax);
+            preparedStatement.setString(6,website);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
