@@ -8,8 +8,12 @@ public enum QueryCommand {
     AUTHENTICATION("Authentication",1),
     APPOINTMENT("Appointment",2),
     PATIENT("Patient",3),
-    FILE("File",4),
-    DISCONNECTION("Disconnection",5);
+    DOCTOR("Doctor",4),
+    HOSPITAL("Hospital",5),
+    PATHOLOGY("Pathology",6),
+    RADIOLOGY("Radiology",7),
+    FILE("File",8),
+    DISCONNECTION("Disconnection",9);
 
     private String name;
     private int index;

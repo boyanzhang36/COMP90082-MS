@@ -114,6 +114,14 @@ public class TCPServer implements Runnable{
             return userHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.APPOINTMENT.toString()))
             return apptHandler((JSONObject) json.get("doc"));
+        else if (command.equals(QueryCommand.DOCTOR.toString()))
+            return doctorHandler((JSONObject) json.get("doc"));
+        else if (command.equals(QueryCommand.HOSPITAL.toString()))
+            return hospitalHandler((JSONObject) json.get("doc"));
+        else if (command.equals(QueryCommand.PATHOLOGY.toString()))
+            return pathologyHandler((JSONObject) json.get("doc"));
+        else if (command.equals(QueryCommand.RADIOLOGY.toString()))
+            return radiologyHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.FILE.toString()))
             return fileHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.DISCONNECTION.toString()))
@@ -148,6 +156,30 @@ public class TCPServer implements Runnable{
     }
 
     public boolean apptHandler(JSONObject appointment) {
+        System.out.println(appointment.toJSONString());
+        dataManager.processAppointment(appointment);
+        return false;
+    }
+
+    public boolean doctorHandler(JSONObject appointment) {
+        System.out.println(appointment.toJSONString());
+        dataManager.processAppointment(appointment);
+        return false;
+    }
+
+    public boolean hospitalHandler(JSONObject appointment) {
+        System.out.println(appointment.toJSONString());
+        dataManager.processAppointment(appointment);
+        return false;
+    }
+
+    public boolean pathologyHandler(JSONObject appointment) {
+        System.out.println(appointment.toJSONString());
+        dataManager.processAppointment(appointment);
+        return false;
+    }
+
+    public boolean radiologyHandler(JSONObject appointment) {
         System.out.println(appointment.toJSONString());
         dataManager.processAppointment(appointment);
         return false;

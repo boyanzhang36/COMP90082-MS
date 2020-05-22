@@ -4,13 +4,9 @@ import SocketConnection.QueryCommand;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManagerFactory;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultCaret;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -19,10 +15,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.nio.file.*;
-import java.security.Key;
 import java.security.KeyStore;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class GenieUI {
     private static int PORT = 11111;
@@ -54,9 +47,8 @@ public class GenieUI {
     private JButton updatePortButton;
     private JTextArea consoleTextArea;
     private JScrollPane consoleScrollPane;
-    private JTextField pathTextArea1;
-    private JButton filePathButton1;
-    private JSpinner updateIntervalHours;
+    private JTextField pathTextArea;
+    private JButton filePathButton;
 
     public GenieUI() {
         // Set print stream to output textarea
@@ -71,19 +63,19 @@ public class GenieUI {
         // Default set ip and port
         ipField.setText(IP);
         portField.setText(String.valueOf(PORT));
-        pathTextArea1.setText(FILE_UPLOAD_PATH);
-        updateIntervalHours.setValue(12);
-        updateIntervalHours.setMinimumSize(new Dimension(1,1));
-
-        updateIntervalHours.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                DELAY_UPDATE =
-                        60 * 60 * 1000 * (Integer)updateIntervalHours.getValue();
-                System.out.println("New Delay Set, please manually update for" +
-                        " change");
-            }
-        });
+        pathTextArea.setText(FILE_UPLOAD_PATH);
+//        updateIntervalHours.setValue(12);
+//        updateIntervalHours.setMinimumSize(new Dimension(1,1));
+//
+//        updateIntervalHours.addChangeListener(new ChangeListener() {
+//            @Override
+//            public void stateChanged(ChangeEvent e) {
+//                DELAY_UPDATE =
+//                        60 * 60 * 1000 * (Integer)updateIntervalHours.getValue();
+//                System.out.println("New Delay Set, please manually update for" +
+//                        " change");
+//            }
+//        });
         // Update IP button
         updateIPButton.addActionListener(new ActionListener() {
             @Override
@@ -101,7 +93,7 @@ public class GenieUI {
             }
         });
         // Update Patient File Path button
-        filePathButton1.addActionListener(new ActionListener() {
+        filePathButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser jfc = new JFileChooser();
@@ -116,7 +108,7 @@ public class GenieUI {
                     QueryCommand type = QueryCommand.getCommandName(file.getName());
                     if (type!=null){
                         COMMAND = type;
-                        pathTextArea1.setText(file.getAbsolutePath());
+                        pathTextArea.setText(file.getAbsolutePath());
                         //String content = IpaService.getIpaInfoMap(file.toString());
                         //consoleTextArea.setText("abcabc");
                     }else{
@@ -124,7 +116,7 @@ public class GenieUI {
                         JOptionPane.showMessageDialog(panel1,
                                 "Invalid files in the current selection.\n" +
                                         "Please upload the file named with one of the QueryCommand:\n"+
-                                        "'Appointment', 'Patient' or 'File'",
+                                        "'Appointment', 'Patient', 'Doctor', 'Hospital', 'Pathology', 'Radiology' or 'File'",
                                 "Warn", JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (Exception e2) {
@@ -133,7 +125,7 @@ public class GenieUI {
                             "There are no files in the current selection.",
                             "Warn", JOptionPane.WARNING_MESSAGE);
                 }
-                FILE_UPLOAD_PATH = pathTextArea1.getText();
+                FILE_UPLOAD_PATH = pathTextArea.getText();
                 System.out.println("Command has been set to : " + COMMAND);
                 System.out.println("Path has been set to : " + FILE_UPLOAD_PATH);
             }
