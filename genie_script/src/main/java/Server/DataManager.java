@@ -275,7 +275,8 @@ public class DataManager {
         String query = "UPDATE Pathology SET name='" + name + "', address='" + address + "', contact='" + phone +
                 "', fax='" + fax + "', website='" + website +
 //                "', is_cancelled='" + isCancelled +
-//                "', uid='" + patientId +  "'" +
+//                "', uid='" + patientId +
+                "'" +
                 "WHERE id= " + pathologyId;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -351,7 +352,8 @@ public class DataManager {
         String query = "UPDATE Radiology SET name='" + name + "', address='" + address + "', contact='" + phone +
                 "', fax='" + fax + "', website='" + website +
 //                "', is_cancelled='" + isCancelled +
-//                "', uid='" + patientId +  "'" +
+//                "', uid='" + patientId +
+                "'" +
                 "WHERE id= " + radiologyId;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -427,7 +429,8 @@ public class DataManager {
         String query = "UPDATE Doctor SET name='" + name + "', address='" + address + "', contact='" + phone +
                 "', fax='" + fax + "', website='" + website + "', email='" + email +
 //                "', is_cancelled='" + isCancelled +
-//                "', uid='" + patientId +  "'" +
+//                "', uid='" + patientId +
+                "'" +
                 "WHERE id= " + doctorId;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -504,7 +507,8 @@ public class DataManager {
         String query = "UPDATE Hospital SET name='" + name + "', address='" + address + "', contact='" + phone +
                 "', fax='" + fax + "', website='" + website +
 //                "', is_cancelled='" + isCancelled +
-//                "', uid='" + patientId +  "'" +
+//                "', uid='" + patientId +
+                "'" +
                 "WHERE id= " + hospitalId;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);

@@ -161,27 +161,27 @@ public class TCPServer implements Runnable{
         return false;
     }
 
-    public boolean doctorHandler(JSONObject appointment) {
-        System.out.println(appointment.toJSONString());
-        dataManager.processAppointment(appointment);
+    public boolean doctorHandler(JSONObject doctor) {
+        System.out.println(doctor.toJSONString());
+        dataManager.processDoctor(doctor);
         return false;
     }
 
-    public boolean hospitalHandler(JSONObject appointment) {
-        System.out.println(appointment.toJSONString());
-        dataManager.processAppointment(appointment);
+    public boolean hospitalHandler(JSONObject hospital) {
+        System.out.println(hospital.toJSONString());
+        dataManager.processHospital(hospital);
         return false;
     }
 
-    public boolean pathologyHandler(JSONObject appointment) {
-        System.out.println(appointment.toJSONString());
-        dataManager.processAppointment(appointment);
+    public boolean pathologyHandler(JSONObject pathology) {
+        System.out.println(pathology.toJSONString());
+        dataManager.processPathology(pathology);
         return false;
     }
 
-    public boolean radiologyHandler(JSONObject appointment) {
-        System.out.println(appointment.toJSONString());
-        dataManager.processAppointment(appointment);
+    public boolean radiologyHandler(JSONObject radiology) {
+        System.out.println(radiology.toJSONString());
+        dataManager.processRadiology(radiology);
         return false;
     }
 
