@@ -118,9 +118,8 @@ public class GenieUI {
                                         "Please upload the file named with one of the QueryCommand:\n"+
                                         "'Appointment', 'Patient', 'Doctor', 'Hospital', 'Pathology', 'Radiology' or 'File'",
                                 "Warn", JOptionPane.WARNING_MESSAGE);
-                        pathTextArea.setText("");
                         COMMAND = null;
-                        FILE_UPLOAD_PATH = pathTextArea.getText();
+                        pathTextArea.setText("");
 
                     }
                 } catch (Exception e2) {
@@ -128,9 +127,9 @@ public class GenieUI {
                     JOptionPane.showMessageDialog(panel2,
                             "There are no files in the current selection.",
                             "Warn", JOptionPane.WARNING_MESSAGE);
-                    pathTextArea.setText("");
                     COMMAND = null;
-                    FILE_UPLOAD_PATH = pathTextArea.getText();
+                    pathTextArea.setText("");
+
                 }
                 FILE_UPLOAD_PATH = pathTextArea.getText();
                 System.out.println("Command has been set to : " + COMMAND);
