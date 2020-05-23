@@ -28,7 +28,8 @@ public class UploadFileManager {
             htmlTable = doc.select("table").get(0);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("File not found!");
+//            e.printStackTrace();
         }
 
         return htmlTable;

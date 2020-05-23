@@ -15,7 +15,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.KeyStore;
+import java.security.*;
+import java.security.cert.CertificateException;
 
 /**
  * TCPServer handles JSON GENIE Data sent from the script
@@ -23,7 +24,7 @@ import java.security.KeyStore;
 public class TCPServer implements Runnable{
 
     private static final int PORT = 11111;
-    private static boolean flag = false;
+    private volatile boolean flag = false;
     private static final Logger log = LogManager.getLogger();
     private static final Path PATH = Paths.get
             ("src/main/resources/").toAbsolutePath();
@@ -55,15 +56,40 @@ public class TCPServer implements Runnable{
             DataInputStream dataInputStream = new DataInputStream(in);
             try {
                 dataManager.ConnectionDB();
+//                while (true){
+//                    if(Thread.currentThread().isInterrupted()){
+//                        System.out.println("Yes,I am interruted,but I am still running");
+//                        return;
+//
+//                    }else{
+//                        System.out.println("not yet interrupted");
+//                    }
+//                }
+//                System.out.println("Previous: "+flag);
                 while(!flag && (msg = dataInputStream.readUTF()) != null) {
-//                     String data = SymmetricEncrypt.getInstance().decrypt(msg);
+//                    System.out.println(msg);
+//                    msg = dataInputStream.readUTF();
+//                        String data = SymmetricEncrypt.getInstance().decrypt(msg);
                     flag = processData(msg);
+//                    System.out.println(flag);
+//                    if(dataInputStream.available() > 0){
+//
+//                    }
+
                 }
-                connectionSocket.close();
-                System.out.println("Client Disconnected");
+                Thread.currentThread().interrupt();
+                if (Thread.currentThread().isInterrupted())
+                {
+                    log.info(Thread.currentThread().getName() +" is closed");
+                }
+//                System.out.println(Thread.currentThread().getName());
+
+//                connectionSocket.close();
+//                System.out.println("Client Disconnected");
             } catch (SocketException e) {
                 System.out.println("closed connection");
-            } connectionSocket.close();
+            }
+            connectionSocket.close();
         }catch(Exception e){
             e.printStackTrace();}
     }
@@ -72,25 +98,8 @@ public class TCPServer implements Runnable{
     {
         System.out.println("Threaded Server Running");
 
-        KeyStore ks = KeyStore.getInstance("JKS");
-        ks.load(new FileInputStream(PATH + CLIENT_KEY_PATH), CLIENT_KEY_STORE_PASSWORD.toCharArray());
-        KeyStore tks = KeyStore.getInstance("JKS");
-        tks.load(new FileInputStream(PATH + TRUST_SERVER_KEY_PATH), CLIENT_TRUST_KEY_STORE_PASSWORD.toCharArray());
-
-
-        KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-        kmf.init(ks, CLIENT_KEY_STORE_PASSWORD.toCharArray());
-
-        TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-        tmf.init(tks);
-
-        SSLContext context = SSLContext.getInstance("SSL");
-
-        context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
-
-        SSLServerSocketFactory ssf = context.getServerSocketFactory();
-        SSLServerSocket serverSocket = (SSLServerSocket) ssf.createServerSocket(PORT);
-
+        SSLServerSocket serverSocket = initialSSLServerSocket();
+//        ServerSocket serverSocket = new ServerSocket(PORT);
         while(true)
         {
             Socket sock = serverSocket.accept();
@@ -99,7 +108,45 @@ public class TCPServer implements Runnable{
             // Multi-threading, possibly not needed but better to have
             Thread serverThread = new Thread(server);
             serverThread.start();
+
+//            int nbRunning = 0;
+//            for (Thread t : Thread.getAllStackTraces().keySet()) {
+//                if (t.getState()==Thread.State.RUNNABLE) nbRunning++;
+//            }
+//            System.out.println("Total: " + nbRunning);
+
+//            serverThread.sleep(3000);
+//            serverThread.interrupt();
+//            serverThread.sleep(200);
+//            serverThread.interrupt();
+
         }
+    }
+
+    public static SSLServerSocket initialSSLServerSocket() {
+        try {
+            KeyStore ks = KeyStore.getInstance("JKS");
+            ks.load(new FileInputStream(PATH + CLIENT_KEY_PATH), CLIENT_KEY_STORE_PASSWORD.toCharArray());
+            KeyStore tks = KeyStore.getInstance("JKS");
+            tks.load(new FileInputStream(PATH + TRUST_SERVER_KEY_PATH), CLIENT_TRUST_KEY_STORE_PASSWORD.toCharArray());
+
+
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+            kmf.init(ks, CLIENT_KEY_STORE_PASSWORD.toCharArray());
+
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+            tmf.init(tks);
+
+            SSLContext context = SSLContext.getInstance("SSL");
+
+            context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+
+            SSLServerSocketFactory ssf = context.getServerSocketFactory();
+            return (SSLServerSocket) ssf.createServerSocket(PORT);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean processData(String data) {

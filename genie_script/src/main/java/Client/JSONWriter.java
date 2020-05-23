@@ -42,11 +42,11 @@ public class JSONWriter {
         public void sendUpdateData(Socket connectionSocket) throws
                 Exception {
             sendAuthentication(connectionSocket);
-            ArrayList<QueryCommand> commands = new ArrayList<>();
+//            ArrayList<QueryCommand> commands = new ArrayList<>();
             // Update Patient data
-            commands.add(QueryCommand.PATIENT);
+//            commands.add(QueryCommand.PATIENT);
             // Update Appointment data
-            commands.add(QueryCommand.APPOINTMENT);
+//            commands.add(QueryCommand.APPOINTMENT);
             // Update File data
 //            commands.add(QueryCommand.FILE);
             //sendGENIEData(commands, connectionSocket);
@@ -92,40 +92,45 @@ public class JSONWriter {
             }
         }
 
-        private void htmlToJSON(Socket connectionSocket, QueryCommand command, String uploadPath) throws IOException {
-            OutputStream os = connectionSocket.getOutputStream();
-            DataOutputStream dos = new DataOutputStream(os);
+        private void htmlToJSON(Socket connectionSocket, QueryCommand command, String uploadPath) {
 
-            UploadFileManager uploadHtml = new UploadFileManager(uploadPath);
-            htmlTable = uploadHtml.readHtmlFile();
-            htmlTrs = htmlTable.select("tr");
+            try {
+                OutputStream os = connectionSocket.getOutputStream();
+                DataOutputStream dos = new DataOutputStream(os);
+                UploadFileManager uploadHtml = new UploadFileManager(uploadPath);
+                htmlTable = uploadHtml.readHtmlFile();
+                htmlTrs = htmlTable.select("tr");
 
-            Elements tdHeads = htmlTrs.get(0).select("td");
+                Elements tdHeads = htmlTrs.get(0).select("td");
 
 //            JSONArray jsonObjectDoc = new JSONArray();
-            for (int i = 1; i < htmlTrs.size(); i++){
-                JSONObject msg = new JSONObject();
-                msg.put("command", command.toString());
+                for (int i = 1; i < htmlTrs.size(); i++){
+                    JSONObject msg = new JSONObject();
+                    msg.put("command", command.toString());
 
-                JSONObject jsonObject = new JSONObject();
-                Elements tds = htmlTrs.get(i).select("td");
-                for (int j = 0; j < tds.size(); j++){
+                    JSONObject jsonObject = new JSONObject();
+                    Elements tds = htmlTrs.get(i).select("td");
+                    for (int j = 0; j < tds.size(); j++){
 
-                    Element pHead = tdHeads.get(j).select("p").get(0);
-                    Element pContent = tds.get(j).select("p").get(0);
+                        Element pHead = tdHeads.get(j).select("p").get(0);
+                        Element pContent = tds.get(j).select("p").get(0);
 
-                    jsonObject.put(pHead.text(), pContent.text());
+                        jsonObject.put(pHead.text(), pContent.text());
+
+                    }
+//                jsonObjectDoc.add(jsonObject);
+                    msg.put("doc", jsonObject);
+                    System.out.println(msg);
+                    dos.writeUTF(msg + "\n");
+                    dos.flush();
 
                 }
-//                jsonObjectDoc.add(jsonObject);
-                msg.put("doc", jsonObject);
-                System.out.println(msg);
-                dos.writeUTF(msg + "\n");
-                dos.flush();
-
+            } catch (NullPointerException e) {
+                System.out.println("File content not found!");
+//                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-
         }
 
         /*************************************NOT USED**********************************************/
