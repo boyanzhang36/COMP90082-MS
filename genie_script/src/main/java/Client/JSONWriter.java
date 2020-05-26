@@ -17,8 +17,6 @@ import java.util.ArrayList;
 public class JSONWriter {
 
         private static JSONWriter instance = null;
-        private static Element htmlTable = null;
-        private static Elements htmlTrs = null;
         private final String AUTH_JSON =
                 "src/main/resources/TestData/authentication_client.json";
 
@@ -51,7 +49,15 @@ public class JSONWriter {
 //            commands.add(QueryCommand.FILE);
             //sendGENIEData(commands, connectionSocket);
 //            htmlToJSON(connectionSocket, QueryCommand.APPOINTMENT, "src/main/resources/test.html");
-            htmlToJSON(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
+            if (GenieUI.FILE_EXTENSION == "html" && GenieUI.COMMAND != QueryCommand.FILE){
+                sendHtml(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
+            }
+            else if (GenieUI.FILE_EXTENSION == "xls" && GenieUI.COMMAND != QueryCommand.FILE){
+                sendExcel(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
+            }
+            else if (GenieUI.COMMAND == QueryCommand.FILE){
+                sendFile(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
+            }
             sendDisconnect(connectionSocket);
         }
 
@@ -92,14 +98,17 @@ public class JSONWriter {
             }
         }
 
-        private void htmlToJSON(Socket connectionSocket, QueryCommand command, String uploadPath) {
+        /**
+         * Extract html file data and send from client to the server
+         */
+        private void sendHtml(Socket connectionSocket, QueryCommand command, String uploadPath) {
 
             try {
                 OutputStream os = connectionSocket.getOutputStream();
                 DataOutputStream dos = new DataOutputStream(os);
                 UploadFileManager uploadHtml = new UploadFileManager(uploadPath);
-                htmlTable = uploadHtml.readHtmlFile();
-                htmlTrs = htmlTable.select("tr");
+                Element htmlTable = uploadHtml.readHtmlFile();
+                Elements htmlTrs = htmlTable.select("tr");
 
                 Elements tdHeads = htmlTrs.get(0).select("td");
 
@@ -133,16 +142,79 @@ public class JSONWriter {
             }
         }
 
+        /**
+        * Extract excel file data and send from client to the server
+        */
+        private void sendExcel(Socket connectionSocket, QueryCommand command, String uploadPath){}
+
+        /**
+        * Send file data from client to the server
+        */
+        private void sendFile(Socket connectionSocket, QueryCommand command, String uploadPath){
+
+            try {
+                OutputStream os = connectionSocket.getOutputStream();
+                DataOutputStream dos = new DataOutputStream(os);
+
+                UploadFileManager uploadedFile = new UploadFileManager(uploadPath);
+                File myFile = uploadedFile.readFile();
+
+                JSONObject msg = new JSONObject();
+                JSONObject jsonObject = new JSONObject();
+
+                msg.put("command", command.toString());
+                jsonObject.put("FileName", myFile.getName());
+                jsonObject.put("FileSize", myFile.length());
+                msg.put("doc", jsonObject);
+                System.out.println(msg);
+                dos.writeUTF(msg + "\n");
+                dos.flush();
+
+                sendData(connectionSocket, myFile);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        /**
+        * Send file as byte stream through socket
+        */
+        private void sendData(Socket connectionSocket, File myFile) throws IOException {
+            //Send file
+            byte[] mybytearray = new byte[(int) myFile.length()];
+
+            FileInputStream fis = new FileInputStream(myFile);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+
+            DataInputStream dis = new DataInputStream(bis);
+            dis.readFully(mybytearray, 0, mybytearray.length);
+
+            OutputStream os = connectionSocket.getOutputStream();
+
+            //Sending file name and file size to the server
+            DataOutputStream dos = new DataOutputStream(os);
+//          dos.writeUTF(myFile.getName());
+//          dos.writeLong(mybytearray.length);
+            dos.write(mybytearray, 0, mybytearray.length);
+            dos.flush();
+
+            //dos.close();
+        }
+
+
+
         /*************************************NOT USED**********************************************/
 
-//    /**
-//     * Generate path for file
-//     * @param pSurname
-//     * @param pFName
-//     * @param pID
-//     * @param fRName
-//     * @return
-//     */
+    /**
+     * Generate path for file
+     * @param pSurname
+     * @param pFName
+     * @param pID
+     * @param fRName
+     * @return
+     */
 //    public File fetch(String pSurname, String pFName, int pID,
 //                             String fRName) {
 //        String fPath = GenieUI.GENIE_INSTALL_PATH + "/Images/" +
@@ -151,37 +223,11 @@ public class JSONWriter {
 //                fRName;
 //        return new File(fPath);
 //    }
-//
-//    /**
-//     * Send file as byte stream through socket
-//     */
-//    private void sendFile(Socket connectionSocket, File myFile) throws IOException {
-//        //Send file
-//        byte[] mybytearray = new byte[(int) myFile.length()];
-//
-//        FileInputStream fis = new FileInputStream(myFile);
-//        BufferedInputStream bis = new BufferedInputStream(fis);
-//
-//        DataInputStream dis = new DataInputStream(bis);
-//        dis.readFully(mybytearray, 0, mybytearray.length);
-//
-//        OutputStream os = connectionSocket.getOutputStream();
-//
-//        //Sending file name and file size to the server
-//        DataOutputStream dos = new DataOutputStream(os);
-////        dos.writeUTF(myFile.getName());
-////        dos.writeLong(mybytearray.length);
-//        dos.write(mybytearray, 0, mybytearray.length);
-//        dos.flush();
-//
-//        //dos.close();
-//
-//    }
-//
-//    /**
-//     * Send GENIE data from client to the server
-//     *
-//     */
+
+    /**
+     * Send GENIE data from client to the server
+     *
+     */
 //    private long sendGENIEData(ArrayList<QueryCommand> commands, Socket connectionSocket) throws Exception {
 //        OutputStream os = connectionSocket.getOutputStream();
 //        DataOutputStream dos = new DataOutputStream(os);

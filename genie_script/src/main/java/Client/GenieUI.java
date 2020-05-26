@@ -33,10 +33,12 @@ public class GenieUI {
     private static final String CLIENT_KEY_PATH = "/client_ks.jks";
     private static final String TRUST_SERVER_KEY_PATH = "/serverTrust_ks.jks";
 
+    public static QueryCommand COMMAND = null;
     public static String FILE_UPLOAD_PATH = "";
+    public static String FILE_EXTENSION = null;
     public static String PATIENT_FILE_UPLOAD_PATH = "";
     public static String APPOINTMENT_FILE_UPLOAD_PATH = "";
-    public static QueryCommand COMMAND = null;
+
 
     private JPanel panelMain;
 
@@ -104,31 +106,53 @@ public class GenieUI {
                     // Use File class to obtain the file from selection
                     File file = jfc.getSelectedFile();//
                     System.out.println("Upload "+ file.getName() +" File");
+                    String fileName = file.getName();
+                    String fileExtention = fileName.substring(fileName.lastIndexOf(".") + 1).trim();
                     //Determine the command type
                     QueryCommand type = QueryCommand.getCommandName(file.getName());
                     if (type!=null){
-                        COMMAND = type;
-                        pathTextArea.setText(file.getAbsolutePath());
-                        //String content = IpaService.getIpaInfoMap(file.toString());
-                        //consoleTextArea.setText("abcabc");
+
+                        if (type==QueryCommand.FILE || fileExtention=="html" || fileExtention=="xls")
+                        {
+                            COMMAND = type;
+                            pathTextArea.setText(file.getAbsolutePath());
+                            FILE_EXTENSION = fileExtention;
+                            //String content = IpaService.getIpaInfoMap(file.toString());
+                            //consoleTextArea.setText("abcabc");
+                        }
+                        else{
+                            JPanel panel1 = new JPanel();
+                            JOptionPane.showMessageDialog(panel1,
+                                    "Invalid files in the current selection.\n" +
+                                            "Please upload the file with '.html', '.xls' extension for uploading the Genie data\n" +
+                                            "or named with 'File' for uploading re" +
+                                            "ports to users",
+                                    "Warn", JOptionPane.WARNING_MESSAGE);
+                            COMMAND = null;
+                            pathTextArea.setText("");
+                            FILE_EXTENSION = null;
+                        }
+
                     }else{
-                        JPanel panel1 = new JPanel();
-                        JOptionPane.showMessageDialog(panel1,
+                        JPanel panel2 = new JPanel();
+                        JOptionPane.showMessageDialog(panel2,
                                 "Invalid files in the current selection.\n" +
                                         "Please upload the file named with one of the QueryCommand:\n"+
                                         "'Appointment', 'Patient', 'Doctor', 'Hospital', 'Pathology', 'Radiology' or 'File'",
                                 "Warn", JOptionPane.WARNING_MESSAGE);
                         COMMAND = null;
                         pathTextArea.setText("");
+                        FILE_EXTENSION = null;
 
                     }
                 } catch (Exception e2) {
-                    JPanel panel2 = new JPanel();
-                    JOptionPane.showMessageDialog(panel2,
+                    JPanel panel3 = new JPanel();
+                    JOptionPane.showMessageDialog(panel3,
                             "There are no files in the current selection.",
                             "Warn", JOptionPane.WARNING_MESSAGE);
                     COMMAND = null;
                     pathTextArea.setText("");
+                    FILE_EXTENSION = null;
 
                 }
                 FILE_UPLOAD_PATH = pathTextArea.getText();
