@@ -109,10 +109,11 @@ public class GenieUI {
                     String fileName = file.getName();
                     String fileExtention = fileName.substring(fileName.lastIndexOf(".") + 1).trim();
                     //Determine the command type
+                    System.out.print("fileExtention"+fileExtention);
                     QueryCommand type = QueryCommand.getCommandName(file.getName());
                     if (type!=null){
 
-                        if (type==QueryCommand.FILE || fileExtention=="html" || fileExtention=="xls")
+                        if (type==QueryCommand.FILE || fileExtention.equals("html") || fileExtention.equals("xls"))
                         {
                             COMMAND = type;
                             pathTextArea.setText(file.getAbsolutePath());
