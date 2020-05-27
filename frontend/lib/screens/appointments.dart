@@ -19,6 +19,8 @@ class _AppointmentsState extends State<Appointments>
   Map<DateTime, List> _events;
   List _selectedEvents;
   AnimationController _animationController;
+  int _flag = 0;
+  Map<DateTime, Appointment> _eventsCheck;
 
   @override
   void initState() {
@@ -26,6 +28,7 @@ class _AppointmentsState extends State<Appointments>
     _events = Map<DateTime, List>();
     final _selectedDay = DateTime.now();
     _calendarController = CalendarController();
+    _eventsCheck = Map<DateTime, Appointment>();
 
 
 
@@ -73,7 +76,7 @@ class _AppointmentsState extends State<Appointments>
             for (var doc in jsonResponse) {
               Appointment temp = Appointment.fromJson(doc);
               print("TEMP" + temp.date.toString());
-
+              //print("TEMP" + temp.duration.toString());
               if (_events[temp.date] == null) {
                 print("deb1" + temp.date.toString());
                 _events[temp.date] = List()..add(temp);
@@ -285,6 +288,7 @@ class _AppointmentsState extends State<Appointments>
               decoration: BoxDecoration(
                 border: Border.all(width: 0.8),
                 borderRadius: BorderRadius.circular(12.0),
+                //color:event.status=='UNCONFIRMED' ? Colors.blueGrey:null,
               ),
               margin:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -303,13 +307,40 @@ class _AppointmentsState extends State<Appointments>
                                 style: TextStyle(fontWeight: FontWeight.bold,
                                                   height: 1.5,)),
                             //Show End Time of Appointment
-                            Text(DateFormat.jm().format(event.date.add(Duration(minutes: 60))),
+                            Text(DateFormat.jm().format(event.date.add(Duration(minutes: event.duration ?? 0))),
                                 style: TextStyle(color: Colors.black.withOpacity(0.6)),),
                           ]
                       ),//Text(DateFormat.Hm().format(event.date)),//DateFormat.Hm().format(now)
                       title: Text(event.title),
-                      trailing: Icon(Icons.arrow_right),
+                      trailing: event.status=='UNCONFIRMED' ?
+                        Column(
+                            children:<Widget>[
+                              //event.status=='CONFIRMED' ?
+                              Icon(
+                                  Icons.error,
+                                  color:Colors.pink,
+                                  //size:25.0,
+                                  semanticLabel: 'Unconfirmed Appointment'),//:Container(width:0,height:0),
+                              Icon(Icons.arrow_right),
+                            ]):Icon(Icons.arrow_right),
+                      //event.status=='UNCONFIRMED' ? Icon(Icons.arrow_right):null,
                       onTap: () {
+                        setState((){
+                          //if(_eventsCheck[event.date]==null){
+                            //_flag = 1;
+                            //_eventsCheck[event.date] = List()..add(event);
+                          //}else{
+                          //if(event.date!=null) {
+                         // _eventsCheck.addEntries();
+                            //event == _eventsCheck[event.date]
+                              //  ? _flag = 0
+                              //  : _flag = 1;
+                            //_eventsCheck = event;
+                            //_eventsCheck[event.date].add(event);
+                            //}
+                          //}
+                          //event.title == _eventsCheck[event.date].title
+                        });
                         Navigator.push(
                             context,
                             MaterialPageRoute(

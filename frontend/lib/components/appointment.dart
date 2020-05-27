@@ -6,6 +6,7 @@ class Appointment {
   final String title;
   final String note;
   final String userNote;
+  final int duration;
   final String status;
 
   Appointment(
@@ -14,6 +15,7 @@ class Appointment {
         this.title,
         this.note,
         this.userNote,
+        this.duration,
         this.status});
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class Appointment {
         title: json['title'],
         note: json['note'],
         userNote: json['user_note'],
+        duration: json['duration'] as int,
         status: json['status']
     );
   }
