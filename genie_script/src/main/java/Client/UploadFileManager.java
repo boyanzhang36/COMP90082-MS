@@ -11,6 +11,7 @@ public class UploadFileManager {
 
     private static String UPLOAD_PATH = null;
     private static Element htmlTable = null;
+    private static Element csvTable = null;
 
     protected UploadFileManager(String uploadPath){
 
@@ -33,6 +34,24 @@ public class UploadFileManager {
         }
 
         return htmlTable;
+
+    }
+
+    public Element readCsvFile() {
+
+        try {
+
+            File csvFile = new File(UPLOAD_PATH);
+            Document doc = Jsoup.parse(csvFile, "UTF-8");
+
+            csvTable = doc.select("table").get(0);
+
+        } catch (IOException e) {
+            System.out.println("File not found!");
+//            e.printStackTrace();
+        }
+
+        return csvTable;
 
     }
 
