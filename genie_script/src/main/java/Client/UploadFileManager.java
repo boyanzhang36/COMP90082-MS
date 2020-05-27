@@ -10,21 +10,21 @@ import java.io.*;
 public class UploadFileManager {
 
     private static String UPLOAD_PATH = null;
-    private static Element htmlTable = null;
-    private static Element csvTable = null;
+    private static File uploadedFile = null;
 
     protected UploadFileManager(String uploadPath){
 
         this.UPLOAD_PATH = uploadPath;
+        this.uploadedFile = new File(this.UPLOAD_PATH);
 
     }
 
     public Element readHtmlFile() {
 
-        try {
+        Element htmlTable = null;
 
-            File htmlFile = new File(UPLOAD_PATH);
-            Document doc = Jsoup.parse(htmlFile, "UTF-8");
+        try {
+            Document doc = Jsoup.parse(uploadedFile, "UTF-8");
 
             htmlTable = doc.select("table").get(0);
 
@@ -34,25 +34,14 @@ public class UploadFileManager {
         }
 
         return htmlTable;
-
     }
 
-    public Element readCsvFile() {
+    public File readExcelFile(){
+        return null;
+    }
 
-        try {
-
-            File csvFile = new File(UPLOAD_PATH);
-            Document doc = Jsoup.parse(csvFile, "UTF-8");
-
-            csvTable = doc.select("table").get(0);
-
-        } catch (IOException e) {
-            System.out.println("File not found!");
-//            e.printStackTrace();
-        }
-
-        return csvTable;
-
+    public File readFile(){
+        return uploadedFile;
     }
 
 }

@@ -6,13 +6,13 @@ package SocketConnection;
  */
 public enum QueryCommand {
     AUTHENTICATION("Authentication",1),
-    APPOINTMENT("Appointment",2),
-    PATIENT("Patient",3),
-    DOCTOR("Doctor",4),
-    HOSPITAL("Hospital",5),
-    PATHOLOGY("Pathology",6),
-    RADIOLOGY("Radiology",7),
-    FILE("File",8),
+    FILE("File",2),
+    APPOINTMENT("Appointment",3),
+    PATIENT("Patient",4),
+    DOCTOR("Doctor",5),
+    HOSPITAL("Hospital",6),
+    PATHOLOGY("Pathology",7),
+    RADIOLOGY("Radiology",8),
     DISCONNECTION("Disconnection",9);
 
     private String name;

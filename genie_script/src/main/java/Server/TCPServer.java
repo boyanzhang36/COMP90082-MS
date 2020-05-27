@@ -75,7 +75,6 @@ public class TCPServer implements Runnable{
 //                    if(dataInputStream.available() > 0){
 //
 //                    }
-
                 }
                 Thread.currentThread().interrupt();
                 if (Thread.currentThread().isInterrupted())
@@ -83,7 +82,6 @@ public class TCPServer implements Runnable{
                     log.info(Thread.currentThread().getName() +" is closed");
                 }
 //                System.out.println(Thread.currentThread().getName());
-
 //                connectionSocket.close();
 //                System.out.println("Client Disconnected");
             } catch (SocketException e) {
