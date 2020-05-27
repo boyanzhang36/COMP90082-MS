@@ -231,27 +231,8 @@ public class TCPServer implements Runnable{
     }
 
     public boolean fileHandler(JSONObject file) {
-        int bytesRead = 0;
-        int current = 0;
-        InputStream in = null;
-
-        try {
-            in = connectionSocket.getInputStream();
-            DataInputStream clientData = new DataInputStream(in);
-            String fileName = (String)file.get("FileName");
-            OutputStream output = new FileOutputStream(fileName);
-            long size = (long)file.get("FileSize");
-            byte[] buffer = new byte[1024];
-            while (size > 0 && (bytesRead = clientData.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1)
-            {
-                output.write(buffer, 0, bytesRead);
-                size -= bytesRead;
-            }
-            output.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return true;
+        dataManager.processFile(file, connectionSocket);
+        return false;
     }
 
 }

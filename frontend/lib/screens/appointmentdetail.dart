@@ -1,12 +1,24 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:frontend/components/appointment.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/appointmentfile.dart';
 import 'package:frontend/util/authentication.dart';
 import 'package:frontend/util/serverDetails.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share/share.dart';
+
+import 'dart:async';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
+import 'package:path_provider/path_provider.dart';
+
+//flutter_full_pdf_viewer Source: https://pub.dev/packages/flutter_full_pdf_viewer#-example-tab-
 
 class AppointmentDetail extends StatefulWidget {
 
@@ -24,6 +36,10 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
   Appointment _appointmentState;
   var flag = false;
   var sendmsg;
+  var pdfTitle;
+  var pdfLink;
+  String pathPDF = "";
+  var _file;
   Animation<double> animation;
   AnimationController controller;
 
@@ -32,6 +48,15 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
 
     saveController = TextEditingController();
     getAppointmentDetails();
+    if (_appointmentState1.id.toString() != null)
+      {
+        pdfTitle = "Click this link to see the form";
+//        getPdfLink();
+      }
+    else{
+      pdfTitle = "No file at present";
+    }
+
     controller = new AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
 
@@ -78,6 +103,42 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
         }
       } else {
         print(response.body);
+      }
+    }
+  }
+
+  Future<File> getPdfLink() async{
+    String currentToken = await Authentication.getCurrentToken();
+    print(currentToken);
+    if (currentToken == null) {
+      print('bouncing');
+      Authentication.bounceUser(context);
+    }else {
+      String auth = "Bearer " + currentToken;
+      String url = ServerDetails.ip +
+          ':' +
+          ServerDetails.port +
+          ServerDetails.api +
+          'file/' +
+          _appointmentState1.pid.toString();
+      print(url);
+      Map<String, String> headers = {"Authorization": auth};
+      final filename = url.substring(url.lastIndexOf("/") + 1);
+      var request = await HttpClient().getUrl(Uri.parse(url));
+      request.headers.add("Authorization", auth);
+      var response = await request.close();
+//      var response = await http.get(url, headers: headers);
+//      print(response.body);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var bytes = await consolidateHttpClientResponseBytes(response);
+        String dir = (await getApplicationDocumentsDirectory()).path;
+        File file = new File('$dir/$filename');
+        if (file != null) {
+          await file.writeAsBytes(bytes);
+          return file;
+        }
+      } else {
       }
     }
   }
@@ -247,7 +308,28 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Text("pdflink", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height:1.5 ),),
+              Container(child:
+                _appointmentState1.pid != null?
+                GestureDetector(
+                  child: Text(pdfTitle.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial", decoration: TextDecoration.underline,color:Colors.grey, height:1.5 ),),
+                  onTap: (){
+                    getPdfLink().then((f) {
+                      setState(() {
+                        pathPDF = f.path;
+                        print(pathPDF);
+                      });
+                    });
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                appointmentfile(pathPDF)));
+                  },
+                )
+                : Text(pdfTitle.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height:1.5 ),),
+                ),
+
+//              Text("pdflink", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height:1.5 ),),
             ],
           ),
           Row(
@@ -274,7 +356,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                           controller: saveController,
                           decoration: InputDecoration(
 //                            labelText: "Note",
-                            hintText: "Add your personal user note here...",
+                            hintText: "Add your personal note here...",
                           ),
                         ),
                         RaisedButton(
@@ -320,7 +402,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                           controller: saveController,
                           decoration: InputDecoration(
 //                            labelText: "Note",
-                            hintText: "Add your personal user note here...",
+                            hintText: "Add your personal note here...",
                           ),
                         ),
                         Row(
@@ -557,6 +639,8 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
       }
     }
   }
+
+
 
 //  _unconfirmed(){
 //

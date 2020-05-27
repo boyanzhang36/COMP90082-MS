@@ -1,5 +1,7 @@
 package Server;
 
+import java.io.*;
+import java.net.Socket;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +45,138 @@ public class DataManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void processFile(JSONObject file, Socket connectionSocket){
+        try {
+//            int id = Integer.parseInt((String) file.get("id"));
+            String fileName = (String)file.get("FileName");
+            int id = Integer.parseInt(fileName.substring(fileName.lastIndexOf("-") + 1,
+                    fileName.lastIndexOf(".")).trim());
+            // search the patient ID firstly to check if it exists in DB
+            stm = connection.createStatement();
+            String query = "SELECT id FROM File WHERE id = " + id;
+            ResultSet resultSet = stm.executeQuery(query);
+            if (resultSet.next()) {
+                do {
+                    log.info("find the file " + id + ". Begin to update!");
+                    updateFile(file, connectionSocket);
+                } while (resultSet.next());
+            } else {
+                log.info("Cannot find it, it should be a new one. Begin to insert!");
+                try {
+                    insertFile(file, connectionSocket);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateFile(JSONObject file, Socket connectionSocket) {
+        int bytesRead = 0;
+        int current = 0;
+        InputStream in = null;
+
+        try {
+            in = connectionSocket.getInputStream();
+            DataInputStream clientData = new DataInputStream(in);
+            String fileName = (String) file.get("FileName");
+            OutputStream output = new FileOutputStream(fileName);
+
+            long size = (long) file.get("FileSize");
+            byte[] buffer = new byte[1024];
+
+
+            while (size > 0 && (bytesRead = clientData.read(buffer, 0, (int) Math.min(buffer.length, size))) != -1) {
+
+                output.write(buffer, 0, bytesRead);
+                size -= bytesRead;
+            }
+            output.close();
+
+
+            int id = Integer.parseInt(fileName.substring(fileName.lastIndexOf("-") + 1,
+                    fileName.lastIndexOf(".")).trim());
+            String title = fileName;
+            File tempFile = new File(fileName);
+            InputStream link = new FileInputStream(tempFile);
+            String pid = String.valueOf(id);
+            String query = "UPDATE File SET title = ?"+ ", link = ?"
+                    + ", pid = ? " +
+                    "WHERE id = ?";
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, title);
+                preparedStatement.setBlob(2, link);
+                preparedStatement.setString(3,pid);
+                preparedStatement.setInt(4,id);
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            link.close();
+            tempFile.delete();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertFile(JSONObject file, Socket connectionSocket) throws ParseException{
+        int bytesRead = 0;
+        int current = 0;
+        InputStream in = null;
+
+        try {
+            in = connectionSocket.getInputStream();
+            DataInputStream clientData = new DataInputStream(in);
+            String fileName = (String)file.get("FileName");
+            OutputStream output = new FileOutputStream(fileName);
+
+            long size = (long)file.get("FileSize");
+            byte[] buffer = new byte[1024];
+
+
+            while (size > 0 && (bytesRead = clientData.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1)
+            {
+
+                output.write(buffer, 0, bytesRead);
+                size -= bytesRead;
+            }
+            output.close();
+//            int id = Integer.parseInt((String) file.get("id"));
+            int id = Integer.parseInt(fileName.substring(fileName.lastIndexOf("-") + 1,
+                    fileName.lastIndexOf(".")).trim());
+            String title = fileName;
+            File tempFile = new File(fileName);
+            InputStream link = new FileInputStream(tempFile);
+            String pid = String.valueOf(id);
+            String query = "INSERT INTO File (id, title, link, pid) " +
+                    "VALUES(?,?,?,?)";
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setInt(1,id);
+                preparedStatement.setString(2, title);
+                preparedStatement.setBlob(3, link);
+                preparedStatement.setString(4,pid);
+                preparedStatement.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            link.close();
+            tempFile.delete();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void processPatient(JSONObject patient) {
