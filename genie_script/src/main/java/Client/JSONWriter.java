@@ -1,6 +1,10 @@
 package Client;
 
 import SocketConnection.QueryCommand;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.ss.usermodel.CellType;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -49,10 +53,10 @@ public class JSONWriter {
 //            commands.add(QueryCommand.FILE);
             //sendGENIEData(commands, connectionSocket);
 //            htmlToJSON(connectionSocket, QueryCommand.APPOINTMENT, "src/main/resources/test.html");
-            if (GenieUI.FILE_EXTENSION == "html" && GenieUI.COMMAND != QueryCommand.FILE){
+            if (GenieUI.FILE_EXTENSION.equals("html") && GenieUI.COMMAND != QueryCommand.FILE){
                 sendHtml(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
             }
-            else if (GenieUI.FILE_EXTENSION == "xls" && GenieUI.COMMAND != QueryCommand.FILE){
+            else if (GenieUI.FILE_EXTENSION.equals("xls") && GenieUI.COMMAND != QueryCommand.FILE){
                 sendExcel(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
             }
             else if (GenieUI.COMMAND == QueryCommand.FILE){
@@ -145,7 +149,48 @@ public class JSONWriter {
         /**
         * Extract excel file data and send from client to the server
         */
-        private void sendExcel(Socket connectionSocket, QueryCommand command, String uploadPath){}
+        private void sendExcel(Socket connectionSocket, QueryCommand command, String uploadPath){
+
+            try {
+                OutputStream os = connectionSocket.getOutputStream();
+                DataOutputStream dos = new DataOutputStream(os);
+                UploadFileManager uploadExcel = new UploadFileManager(uploadPath);
+                HSSFSheet excelSheet = uploadExcel.readExcelFile();
+                HSSFRow excelHeads = excelSheet.getRow(0);
+
+                int rowNumber = excelSheet.getLastRowNum();
+                System.out.println(rowNumber);
+                for (int i = 1; i < rowNumber + 1; i++){
+                    JSONObject msg = new JSONObject();
+                    msg.put("command", command.toString());
+
+                    JSONObject jsonObject = new JSONObject();
+                    HSSFRow excelRow = excelSheet.getRow(i);
+                    int cellNumber = excelRow.getLastCellNum();
+                    for (int j = 0; j < cellNumber; j++){
+                        HSSFCell excelHead = excelHeads.getCell(j);
+                        HSSFCell excelCellContent = excelRow.getCell(j);
+
+                        excelHead.setCellType(CellType.STRING);
+                        excelCellContent.setCellType(CellType.STRING);
+
+                        jsonObject.put(excelHead.getStringCellValue(), excelCellContent.getStringCellValue());
+
+                    }
+
+                    msg.put("doc", jsonObject);
+                    System.out.println(msg);
+                    dos.writeUTF(msg + "\n");
+                    dos.flush();
+
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
         /**
         * Send file data from client to the server

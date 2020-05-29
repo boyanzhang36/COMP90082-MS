@@ -1,5 +1,7 @@
 package Client;
 
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -36,8 +38,23 @@ public class UploadFileManager {
         return htmlTable;
     }
 
-    public File readExcelFile(){
-        return null;
+    public HSSFSheet readExcelFile(){
+
+        HSSFWorkbook workbook = null;
+        HSSFSheet excelsheet = null;
+
+        try {
+            FileInputStream inputExcel = new FileInputStream(uploadedFile);
+            workbook = new HSSFWorkbook(inputExcel);
+            excelsheet = workbook.getSheetAt(0);
+
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return excelsheet;
     }
 
     public File readFile(){
