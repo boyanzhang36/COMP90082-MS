@@ -11,7 +11,8 @@ public class SocketServerListener implements ServletContextListener {
         System.out.println("Starting up!");
         /** initialize the server socket port */
         try {
-            SocketServer.init(PORT);
+//            SocketServer.init(PORT);
+            TCPServer.initialSSLServerSocket(PORT);
         } catch (Exception e) {
             e.printStackTrace();
         }

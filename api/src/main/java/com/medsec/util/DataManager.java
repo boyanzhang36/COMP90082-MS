@@ -1,15 +1,13 @@
-package Server;
-
-import java.io.*;
-import java.net.Socket;
-import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+package com.medsec.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
-import static java.lang.Math.toIntExact;
+
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 /**
  * DataManager that reads JSON and store into MYSQL DB
  */
@@ -24,13 +22,13 @@ public class DataManager {
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
-    private static DataManager instance = null;
+    private static com.medsec.util.DataManager instance = null;
     private static Connection connection;
     private static Statement stm;
 
-    public static DataManager getInstance() {
+    public static com.medsec.util.DataManager getInstance() {
         if (instance == null) {
-            instance = new DataManager();
+            instance = new com.medsec.util.DataManager();
         }
         return instance;
     }
@@ -47,7 +45,7 @@ public class DataManager {
         }
     }
 
-    public void processFile(JSONObject file){
+    public void processFile(JSONObject file, String eachFilePath){
         try {
 //            int id = Integer.parseInt((String) file.get("id"));
             String fileName = (String)file.get("FileName");
@@ -60,12 +58,12 @@ public class DataManager {
             if (resultSet.next()) {
                 do {
                     log.info("find the file " + id + ". Begin to update!");
-                    updateFile(file);
+                    updateFile(file, eachFilePath);
                 } while (resultSet.next());
             } else {
                 log.info("Cannot find it, it should be a new one. Begin to insert!");
                 try {
-                    insertFile(file);
+                    insertFile(file, eachFilePath);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -75,12 +73,13 @@ public class DataManager {
         }
     }
 
-    public void updateFile(JSONObject file) {
+    public void updateFile(JSONObject file, String eachFilePath) {
         String fileName = (String)file.get("FileName");
         int id = Integer.parseInt(fileName.substring(fileName.lastIndexOf("-") + 1,
                 fileName.lastIndexOf(".")).trim());
         String title = fileName;
-        String link = fileName;
+        String link = eachFilePath.replaceAll("\\\\", "\\\\\\\\");
+        System.out.println(link);
         String pid = String.valueOf(id);
         String query = "UPDATE File SET title='" + title + "', link='"
                 + link +"', pid='" + pid + "'" +
@@ -93,13 +92,13 @@ public class DataManager {
         }
     }
 
-    public void insertFile(JSONObject file) throws ParseException{
+    public void insertFile(JSONObject file, String eachFilePath) throws ParseException{
         String fileName = (String)file.get("FileName");
 //        int id = Integer.parseInt((String) file.get("id"));
         int id = Integer.parseInt(fileName.substring(fileName.lastIndexOf("-") + 1,
                 fileName.lastIndexOf(".")).trim());
         String title = fileName;
-        String link = fileName;
+        String link = eachFilePath.replaceAll("\\\\", "\\\\\\\\");
         String pid = String.valueOf(id);
         String query = "INSERT INTO File (id, title, link, pid) " +
                 "VALUES(?,?,?,?)";
@@ -173,7 +172,7 @@ public class DataManager {
         String dob = (String) patient.get("DOB");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date dataStr = format.parse(dob);
-        java.sql.Date dateDB = new java.sql.Date(dataStr.getTime());
+        Date dateDB = new Date(dataStr.getTime());
         String email = (String) patient.get("Email");
         String street = (String) patient.get("Street");
         String suburb = (String) patient.get("Suburb");
@@ -246,7 +245,7 @@ public class DataManager {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date dataStr;
         dataStr = format.parse(date);
-        java.sql.Date dateAppt = new java.sql.Date(dataStr.getTime());
+        Date dateAppt = new Date(dataStr.getTime());
         String note = (String) appointment.get("note");
         String status = (String) appointment.get("status");
         int duration = Integer.parseInt((String) appointment.get("duration"));
@@ -274,9 +273,9 @@ public class DataManager {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date dataStr;
         dataStr = format.parse(dataCreate);
-        java.sql.Date dateCreated = new java.sql.Date(dataStr.getTime());
+        Date dateCreated = new Date(dataStr.getTime());
         dataStr = format.parse(date);
-        java.sql.Date dateAppt = new java.sql.Date(dataStr.getTime());
+        Date dateAppt = new Date(dataStr.getTime());
         String detail = (String) appointment.get("detail");
         String note = (String) appointment.get("note");
         String status = (String) appointment.get("status");

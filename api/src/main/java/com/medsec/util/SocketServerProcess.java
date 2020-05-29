@@ -14,8 +14,7 @@ import java.net.Socket;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
+@Deprecated
 public class SocketServerProcess implements Runnable {
 
     private Socket connectedSocket;

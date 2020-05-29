@@ -1,46 +1,122 @@
-package Server;
+package com.medsec.util;
 
-import Client.JSONWriter;
-import SocketConnection.QueryCommand;
-import SocketConnection.SymmetricEncrypt;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import javax.net.ssl.*;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.*;
-import java.security.cert.CertificateException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.security.KeyStore;
 
 /**
  * TCPServer handles JSON GENIE Data sent from the script
  */
 public class TCPServer implements Runnable{
 
-    private static final int PORT = 11111;
-    private volatile boolean flag = false;
+//    private static final int PORT = 11111;
+
     private static final Logger log = LogManager.getLogger();
-    private static final Path PATH = Paths.get
-            ("src/main/resources/").toAbsolutePath();
-    private static final String GENIE_DB_NAME = "TestData/appointment.json";
+//    private static final Path PATH = Paths.get
+//            ("src/main/resources/").toAbsolutePath();
+//    private static final String GENIE_DB_NAME = "TestData/appointment.json";
     private static final String CLIENT_KEY_STORE_PASSWORD = "client";
     private static final String CLIENT_TRUST_KEY_STORE_PASSWORD = "client";
     private static final String CLIENT_KEY_PATH = "/client_ks.jks";
     private static final String TRUST_SERVER_KEY_PATH = "/serverTrust_ks.jks";
 
     public static String GENIE_INSTALL_PATH = "";
-    DataManager dataManager = DataManager.getInstance();
-    Socket connectionSocket;
 
-    public TCPServer(Socket s){
+    SSLServerSocket serverSocket;
+
+    public TCPServer(SSLServerSocket s){
+            this.serverSocket = s;
+    }
+
+    public void run()
+    {
+        System.out.println("Threaded Server Running");
+//        ServerSocket serverSocket = new ServerSocket(PORT);
+        while(true)
+        {
+            try {
+            Socket sock = serverSocket.accept();
+//            com.medsec.util.TCPServer server = new com.medsec.util.TCPServer(sock);
+            TCPServerProcess s = new TCPServerProcess(sock);
+            // Multi-threading, possibly not needed but better to have
+            Thread serverThread = new Thread(s);
+            serverThread.start();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            int nbRunning = 0;
+//            for (Thread t : Thread.getAllStackTraces().keySet()) {
+//                if (t.getState()==Thread.State.RUNNABLE) nbRunning++;
+//            }
+//            System.out.println("Total: " + nbRunning);
+
+//            serverThread.sleep(3000);
+//            serverThread.interrupt();
+//            serverThread.sleep(200);
+//            serverThread.interrupt();
+
+        }
+    }
+
+    public static void initialSSLServerSocket(int PORT) {
+        try {
+            KeyStore ks = KeyStore.getInstance("JKS");
+            ks.load(TCPServer.class.getResourceAsStream(CLIENT_KEY_PATH), CLIENT_KEY_STORE_PASSWORD.toCharArray());
+            KeyStore tks = KeyStore.getInstance("JKS");
+            tks.load(TCPServer.class.getResourceAsStream(TRUST_SERVER_KEY_PATH), CLIENT_TRUST_KEY_STORE_PASSWORD.toCharArray());
+
+
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+            kmf.init(ks, CLIENT_KEY_STORE_PASSWORD.toCharArray());
+
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+            tmf.init(tks);
+
+            SSLContext context = SSLContext.getInstance("SSL");
+
+            context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+
+            SSLServerSocketFactory ssf = context.getServerSocketFactory();
+//            SSLServerSocket serverSocket = initialSSLServerSocket(PORT);
+            SSLServerSocket s = (SSLServerSocket) ssf.createServerSocket(PORT);
+            TCPServer socketServer = new TCPServer(s);
+            Thread serverThread = new Thread(socketServer);
+            serverThread.start();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+}
+
+class TCPServerProcess implements Runnable{
+    private static final Logger log = LogManager.getLogger();
+    private volatile boolean flag = false;
+    Socket connectionSocket;
+    DataManager dataManager = DataManager.getInstance();
+    ServletContext sc = null;
+
+
+    public TCPServerProcess(Socket s){
         try{
             System.out.println("Client Connected");
             connectionSocket = s;
@@ -94,62 +170,7 @@ public class TCPServer implements Runnable{
             e.printStackTrace();}
     }
 
-    public static void main(String argv[]) throws Exception
-    {
-        System.out.println("Threaded Server Running");
-
-        SSLServerSocket serverSocket = initialSSLServerSocket();
-//        ServerSocket serverSocket = new ServerSocket(PORT);
-        while(true)
-        {
-            Socket sock = serverSocket.accept();
-            TCPServer server = new TCPServer(sock);
-
-            // Multi-threading, possibly not needed but better to have
-            Thread serverThread = new Thread(server);
-            serverThread.start();
-
-//            int nbRunning = 0;
-//            for (Thread t : Thread.getAllStackTraces().keySet()) {
-//                if (t.getState()==Thread.State.RUNNABLE) nbRunning++;
-//            }
-//            System.out.println("Total: " + nbRunning);
-
-//            serverThread.sleep(3000);
-//            serverThread.interrupt();
-//            serverThread.sleep(200);
-//            serverThread.interrupt();
-
-        }
-    }
-
-    public static SSLServerSocket initialSSLServerSocket() {
-        try {
-            KeyStore ks = KeyStore.getInstance("JKS");
-            ks.load(new FileInputStream(PATH + CLIENT_KEY_PATH), CLIENT_KEY_STORE_PASSWORD.toCharArray());
-            KeyStore tks = KeyStore.getInstance("JKS");
-            tks.load(new FileInputStream(PATH + TRUST_SERVER_KEY_PATH), CLIENT_TRUST_KEY_STORE_PASSWORD.toCharArray());
-
-
-            KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-            kmf.init(ks, CLIENT_KEY_STORE_PASSWORD.toCharArray());
-
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-            tmf.init(tks);
-
-            SSLContext context = SSLContext.getInstance("SSL");
-
-            context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
-
-            SSLServerSocketFactory ssf = context.getServerSocketFactory();
-            return (SSLServerSocket) ssf.createServerSocket(PORT);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public boolean processData(String data) {
+    public boolean processData(String data) throws IOException {
         JSONObject json = JSONReader.getInstance().parse(data);
         String command = (String) json.get("command");
 
@@ -180,7 +201,10 @@ public class TCPServer implements Runnable{
     public boolean authenticationHandler(String secretAuthenticate) {
         try {
             JSONParser parser = new JSONParser();
-            Object obj = parser.parse(new FileReader("src/main/resources/TestData/authentication_server.json"));
+//            Object obj = parser.parse(new FileReader("target/classes/TestData/authentication_server.json"));
+//            System.out.println(TCPServer.class.getResource("/TestData/authentication_server.json").getPath());
+            Object obj = parser.parse(new FileReader(TCPServer.class.getResource("/TestData/authentication_server.json").getPath()));
+            System.out.println(TCPServer.class.getResource("/TestData/authentication_server.json").getPath());
             JSONObject authentication = (JSONObject) obj;
             String secret = (String) authentication.get("secret");
             if (secret.equals(secretAuthenticate)) {
@@ -232,16 +256,35 @@ public class TCPServer implements Runnable{
         return false;
     }
 
-    public boolean fileHandler(JSONObject file) {
+    public boolean fileHandler(JSONObject file) throws IOException {
         int bytesRead = 0;
         int current = 0;
         InputStream in = null;
+//        String path = System.getProperty("user.dir");
+
+        String resoucePath=TCPServer.class.getResource("/").getPath();
+        String webappsDir=(new File(resoucePath,"../../")).getCanonicalPath();
+//        String path = TCPServer.class.getResource("\\").getPath();
+        String fileName = (String)file.get("FileName");
+        String pid = fileName.substring(fileName.lastIndexOf("-") + 1,
+                fileName.lastIndexOf(".")).trim();
+        String eachFilePath = "\\result\\" + pid + "\\" + fileName;
+        String filePath = webappsDir + eachFilePath;
+//        System.out.println("#############################"+webappsDir);
+        System.out.println(eachFilePath);
+        System.out.println(filePath);
 
         try {
             in = connectionSocket.getInputStream();
+            File newFile = new File(filePath);
+            if (!newFile.exists()){
+                newFile.getParentFile().getParentFile().mkdir();
+                newFile.getParentFile().mkdir();
+                newFile.createNewFile();
+            }
             DataInputStream clientData = new DataInputStream(in);
-            String fileName = (String)file.get("FileName");
-            OutputStream output = new FileOutputStream(fileName);
+//            String fileName = (String)file.get("FileName");
+            OutputStream output = new FileOutputStream(filePath);
 
             long size = (long)file.get("FileSize");
             byte[] buffer = new byte[1024];
@@ -253,12 +296,13 @@ public class TCPServer implements Runnable{
                 output.write(buffer, 0, bytesRead);
                 size -= bytesRead;
             }
+            output.flush();
             output.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        dataManager.processFile(file);
+        dataManager.processFile(file, eachFilePath);
         return false;
     }
 

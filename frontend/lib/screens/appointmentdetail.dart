@@ -56,6 +56,12 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
     else{
       pdfTitle = "No file at present";
     }
+    getPdfLink().then((f) {
+      setState(() {
+        pathPDF = f.path;
+        print(pathPDF);
+      });
+    });
 
     controller = new AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
@@ -313,12 +319,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                 GestureDetector(
                   child: Text(pdfTitle.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial", decoration: TextDecoration.underline,color:Colors.grey, height:1.5 ),),
                   onTap: (){
-                    getPdfLink().then((f) {
-                      setState(() {
-                        pathPDF = f.path;
-                        print(pathPDF);
-                      });
-                    });
                     Navigator.push(
                         context,
                         MaterialPageRoute(

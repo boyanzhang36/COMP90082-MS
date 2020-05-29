@@ -9,7 +9,7 @@ import java.security.KeyStore;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
-
+@Deprecated
 public class SocketServer implements Runnable {
 
     /** key file for ssl connection */
