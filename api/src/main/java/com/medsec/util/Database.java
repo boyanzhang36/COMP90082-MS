@@ -217,6 +217,23 @@ public class Database {
         return mapper.selectOneDoctor(doctorID);
     }
 
+	//new doctor list
+    public List<Doctor> listUserDoctors(
+            String uid,
+            @Nullable String since,
+            @Nullable String until,
+            @Nullable AppointmentStatus status){
+
+        try {
+
+            DoctorMapper mapper=session.getMapper(DoctorMapper.class);
+            return mapper.getDoctorsByUserId(uid, since, until, status);
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }	
+	
     public void deleteDoctor(String doctorID){
         DoctorMapper mapper=session.getMapper(DoctorMapper.class);
         mapper.deleteDoctor(doctorID);

@@ -4,6 +4,7 @@ import com.medsec.entity.Doctor;
 import com.medsec.entity.Hospital;
 import com.medsec.entity.Pathology;
 import com.medsec.entity.Radiology;
+import com.medsec.entity.Appointment;
 import com.medsec.filter.Secured;
 import com.medsec.util.ArgumentException;
 import com.medsec.util.Database;
@@ -12,8 +13,11 @@ import com.medsec.util.UserRole;
 import org.glassfish.jersey.server.JSONP;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -147,7 +151,35 @@ public class GeneralInformationAPI {
         db.close();
         return Response.ok(doctor).build();
     }
+	
+	//new doctor list
+    @GET
+    @Path("generalInformation/userDoctors")
+    @Secured({UserRole.PATIENT,UserRole.ADMIN})
+    @JSONP(queryParam = "callback")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listUserDoctors(
+            @Context SecurityContext sc,
+            @QueryParam("since") String since,
+            @QueryParam("until") String until,
+            @QueryParam("is_confirmed") Boolean is_confirmed) {
 
+        String uid = sc.getUserPrincipal().getName();
+        List<Doctor> results = retrieveUserDoctors(uid, since, until, is_confirmed);
+
+        return Response.ok(results).build();
+    }	
+	
+    private List <Doctor> retrieveUserDoctors(String uid, String since, String until, Boolean is_confirmed) {
+
+        AppointmentStatus status = null;
+        if (is_confirmed != null)
+            status = is_confirmed ? AppointmentStatus.CONFIRMED : AppointmentStatus.UNCONFIRMED;
+
+        Database db = new Database();
+        return db.listUserDoctors(uid, since, until, status);
+    }
+	
     @DELETE
     @Path("generalInformation/deleteDoctor/{doctorID}")
     @Secured(UserRole.ADMIN)
