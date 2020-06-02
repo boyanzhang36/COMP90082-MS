@@ -32,7 +32,7 @@ class _ResourcesState extends State<Resources> {
           ':' +
           ServerDetails.port +
           ServerDetails.api +
-          'generalInformation/radiologies';
+          'me/resources';
       print(url);
       Map<String, String> headers = {"Authorization": auth};
       print(headers);
@@ -60,7 +60,7 @@ class _ResourcesState extends State<Resources> {
           child: AppBar(
             leading: BackButton(color: Colors.black),
             centerTitle: true,
-            title: Text("Resources",
+            title: Text("Resource",
                 style:TextStyle(color: Colors.black
                 )
             ),
@@ -79,7 +79,7 @@ class _ResourcesState extends State<Resources> {
                 margin:
                 const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                 child: ListTile(
-                    //leading: Icon(Icons.healing,size: 30.0, color: Colors.teal),
+                    leading: Icon(Icons.book,size: 30.0, color: Colors.teal),
                     title: Text(element.name,style: TextStyle(color: Colors.blueGrey.withOpacity(1.0),
                       fontWeight: FontWeight.bold,)),
                     trailing: Icon(Icons.arrow_right),
@@ -93,6 +93,8 @@ class _ResourcesState extends State<Resources> {
                 )
             )).toList()
         )
+
     );
+
   }
 }

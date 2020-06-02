@@ -55,4 +55,34 @@ public class Pathology {
     public void setWebsite(String website) {
         this.website = website;
     }
+
+    public Pathology id(final String id) {
+        this.id = id;
+        return this;
+    }
+
+    public Pathology name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Pathology contact(final String contact) {
+        this.contact = contact;
+        return this;
+    }
+
+    public Pathology address(final String address) {
+        this.address = address;
+        return this;
+    }
+
+    public Pathology fax(final String fax) {
+        this.fax = fax;
+        return this;
+    }
+
+    public Pathology website(final String website) {
+        this.website = website;
+        return this;
+    }
 }

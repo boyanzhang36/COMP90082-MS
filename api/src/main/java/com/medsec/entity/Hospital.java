@@ -64,4 +64,39 @@ public class Hospital {
     public void setType(String type) {
         this.type = type;
     }
+
+    public Hospital id(final String id) {
+        this.id = id;
+        return this;
+    }
+
+    public Hospital name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Hospital contact(final String contact) {
+        this.contact = contact;
+        return this;
+    }
+
+    public Hospital address(final String address) {
+        this.address = address;
+        return this;
+    }
+
+    public Hospital fax(final String fax) {
+        this.fax = fax;
+        return this;
+    }
+
+    public Hospital website(final String website) {
+        this.website = website;
+        return this;
+    }
+
+    public Hospital type(final String type) {
+        this.type = type;
+        return this;
+    }
 }

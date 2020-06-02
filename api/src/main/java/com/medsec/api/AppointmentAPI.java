@@ -103,7 +103,7 @@ public class AppointmentAPI {
         if (requestRole != UserRole.ADMIN && !requestUid.equals(appointment.getUid()))
             return Response.status(Response.Status.FORBIDDEN).entity(null).build();
 
-        db.updateAppointmentStatus(id, AppointmentStatus.CONFIRMED);
+        db.updateAppointmentStatus(id, "CONFIRMED");
 
         db.close();
 
@@ -119,7 +119,7 @@ public class AppointmentAPI {
             Appointment requestAppointment) {
 
         try{
-            AppointmentStatus status = requestAppointment.getStatus();
+            String status = requestAppointment.getStatus();
             if (status == null)
                 throw new ArgumentException();
 

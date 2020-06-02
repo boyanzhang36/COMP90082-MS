@@ -74,6 +74,7 @@ public class ConfigListener implements ServletContextListener{
             configuration.addMapper(DoctorMapper.class);
             configuration.addMapper(PathologyMapper.class);
             configuration.addMapper(RadiologyMapper.class);
+            configuration.addMapper(ResourceMapper.class);
             configuration.addMapper(NotificationTokenMapper.class);
             configuration.addMapper(FileMapper.class);
 

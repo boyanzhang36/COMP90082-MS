@@ -13,7 +13,8 @@ public enum QueryCommand {
     HOSPITAL("Hospital",6),
     PATHOLOGY("Pathology",7),
     RADIOLOGY("Radiology",8),
-    DISCONNECTION("Disconnection",9);
+    RESOURCE("Resource",9),
+    DISCONNECTION("Disconnection",10);
 
     private String name;
     private int index;

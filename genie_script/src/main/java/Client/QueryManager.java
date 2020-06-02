@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-
+@Deprecated
 /**
  * Handles Query between client and GENIE DB
  */

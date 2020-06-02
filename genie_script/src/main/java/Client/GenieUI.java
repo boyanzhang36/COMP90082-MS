@@ -109,11 +109,13 @@ public class GenieUI {
                     String fileName = file.getName();
                     String fileExtention = fileName.substring(fileName.lastIndexOf(".") + 1).trim();
                     //Determine the command type
-                    System.out.print("fileExtention"+fileExtention);
+//                    System.out.print("fileExtention"+fileExtention);
                     QueryCommand type = QueryCommand.getCommandName(file.getName());
                     if (type!=null){
 
-                        if (type==QueryCommand.FILE || fileExtention.equals("html") || fileExtention.equals("xls"))
+                        if ((type==QueryCommand.FILE && fileExtention.equals("pdf"))
+                                || (type!=QueryCommand.FILE && fileExtention.equals("html"))
+                                || (type!=QueryCommand.FILE && fileExtention.equals("xls")))
                         {
                             COMMAND = type;
                             pathTextArea.setText(file.getAbsolutePath());
@@ -126,12 +128,12 @@ public class GenieUI {
                             JOptionPane.showMessageDialog(panel1,
                                     "Invalid files in the current selection.\n" +
                                             "Please upload the file with '.html', '.xls' extension for uploading the Genie data\n" +
-                                            "or named with 'File' for uploading re" +
-                                            "ports to users",
+                                            "or with '.pdf' extension named with 'File' for uploading reports to users.",
                                     "Warn", JOptionPane.WARNING_MESSAGE);
                             COMMAND = null;
                             pathTextArea.setText("");
                             FILE_EXTENSION = null;
+                            System.out.println("Upload Failed");
                         }
 
                     }else{
@@ -139,12 +141,12 @@ public class GenieUI {
                         JOptionPane.showMessageDialog(panel2,
                                 "Invalid files in the current selection.\n" +
                                         "Please upload the file named with one of the QueryCommand:\n"+
-                                        "'Appointment', 'Patient', 'Doctor', 'Hospital', 'Pathology', 'Radiology' or 'File'",
+                                        "'Appointment', 'Patient', 'Doctor', 'Hospital', 'Pathology', 'Radiology','Resource', or 'File'",
                                 "Warn", JOptionPane.WARNING_MESSAGE);
                         COMMAND = null;
                         pathTextArea.setText("");
                         FILE_EXTENSION = null;
-
+                        System.out.println("Upload Failed");
                     }
                 } catch (Exception e2) {
                     JPanel panel3 = new JPanel();
@@ -154,7 +156,7 @@ public class GenieUI {
                     COMMAND = null;
                     pathTextArea.setText("");
                     FILE_EXTENSION = null;
-
+                    System.out.println("Upload Failed");
                 }
                 FILE_UPLOAD_PATH = pathTextArea.getText();
                 System.out.println("Command has been set to : " + COMMAND);
@@ -165,15 +167,24 @@ public class GenieUI {
         sendUpdateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Send Update");
-                try {
-                    Socket clientSocket = initSSLSocket();
+                if (COMMAND != null) {
+                    System.out.println("Send Update");
+                    try {
+                        Socket clientSocket = initSSLSocket();
 //                    Socket clientSocket = new Socket(IP, PORT);
-                    TCPClient tcpClient = new TCPClient(clientSocket);
-                    Thread tcpThread = new Thread(tcpClient);
-                    tcpThread.start();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                        TCPClient tcpClient = new TCPClient(clientSocket);
+                        Thread tcpThread = new Thread(tcpClient);
+                        tcpThread.start();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                else{
+                    JPanel panel4 = new JPanel();
+                    JOptionPane.showMessageDialog(panel4,
+                            "Please upload the correct file!",
+                            "Warn", JOptionPane.WARNING_MESSAGE);
+                    System.out.println("Please upload the correct file!");
                 }
             }
         });

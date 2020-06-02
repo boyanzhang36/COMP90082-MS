@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:frontend/components/appointment.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/components/pdffile.dart';
 import 'package:frontend/screens/appointmentfile.dart';
 import 'package:frontend/util/authentication.dart';
 import 'package:frontend/util/serverDetails.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:share/share.dart';
@@ -34,12 +36,13 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
   _AppointmentDetailState(this._appointmentState1);
   TextEditingController saveController;
   Appointment _appointmentState;
+  Pdffile _file;
   var flag = false;
   var sendmsg;
-  var pdfTitle;
-  var pdfLink;
+  var pdfTitle = null;
+  var pdfLink = null;
   String pathPDF = "";
-  var _file;
+//  var _file;
   Animation<double> animation;
   AnimationController controller;
 
@@ -48,20 +51,16 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
 
     saveController = TextEditingController();
     getAppointmentDetails();
-    if (_appointmentState1.id.toString() != null)
-      {
-        pdfTitle = "Click this link to see the form";
-//        getPdfLink();
-      }
-    else{
-      pdfTitle = "No file at present";
-    }
-    getPdfLink().then((f) {
-      setState(() {
-        pathPDF = f.path;
-        print(pathPDF);
-      });
-    });
+//    if (_appointmentState1.id.toString() != null)
+//      {
+//        pdfTitle = "Click this link to see the form";
+////        getPdfLink();
+//      }
+//    else{
+//      pdfTitle = "No file at present";
+//    }
+    getPdfDetails();
+
 
     controller = new AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
@@ -113,6 +112,58 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
     }
   }
 
+  getPdfDetails() async {
+    String currentToken = await Authentication.getCurrentToken();
+    print(currentToken);
+    if (currentToken == null) {
+      print('bouncing');
+      Authentication.bounceUser(context);
+    } else {
+      var fileId = _appointmentState1.id.toString();;
+      String auth = "Bearer " + currentToken;
+      String url = ServerDetails.ip +
+          ':' +
+          ServerDetails.port +
+          ServerDetails.api +
+          'files/'+
+          fileId;
+
+      print(url);
+      Map<String, String> headers = {"Authorization": auth};
+      print(headers);
+      var jsonResponse = null;
+      var response = await http.get(url, headers: headers);
+//      print(response.body);
+      if (response.statusCode == 200) {
+        print("200" + response.body);
+        jsonResponse = json.decode(response.body);
+        if (jsonResponse != null) {
+          setState(() {
+            _file = Pdffile.fromJson(jsonResponse);
+            pdfTitle = _file.title.toString();
+            pdfLink = _file.link.toString();
+            getPdfLink().then((f) {
+              setState(() {
+                if (f != null)
+                {pathPDF = f.path;
+                print(pathPDF);}
+                else{
+                  pathPDF = "";
+                  print("No file found");
+                }
+              });
+            });
+          });
+        }
+      } else {
+        _file = null;
+        pdfTitle = null;
+        pdfLink = null;
+        print(response.statusCode);
+      }
+    }
+  }
+
   Future<File> getPdfLink() async{
     String currentToken = await Authentication.getCurrentToken();
     print(currentToken);
@@ -120,17 +171,23 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
       print('bouncing');
       Authentication.bounceUser(context);
     }else {
+      var fileId = _appointmentState1.id.toString();;
       String auth = "Bearer " + currentToken;
       String url = ServerDetails.ip +
           ':' +
           ServerDetails.port +
           ServerDetails.api +
-          'file/' +
-          _appointmentState1.pid.toString();
+          'file/link/' +
+          fileId;
       print(url);
+//      pdfLink = pdfLink.replaceAll("\\", "/");
       Map<String, String> headers = {"Authorization": auth};
-      final filename = url.substring(url.lastIndexOf("/") + 1);
-      var request = await HttpClient().getUrl(Uri.parse(url));
+
+      final filepath = pdfLink.substring(pdfLink.indexOf("/")+1, pdfLink.lastIndexOf("/"));
+      print(filepath);
+      final filename = pdfLink.substring(pdfLink.lastIndexOf("/") + 1);
+      print(filename);
+      var request = await HttpClient().getUrl(Uri.parse (url));
       request.headers.add("Authorization", auth);
       var response = await request.close();
 //      var response = await http.get(url, headers: headers);
@@ -139,12 +196,31 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
       if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
         String dir = (await getApplicationDocumentsDirectory()).path;
-        File file = new File('$dir/$filename');
+        var fpath = Directory('$dir/$filepath');
+        try{
+          bool exists = await fpath.exists();
+          if (!exists){
+            await fpath.parent.create();
+            await fpath.create();
+          }
+        }catch(e){
+          print(e);
+        }
+
+        File file = new File('$dir/$filepath/$filename');
+
         if (file != null) {
           await file.writeAsBytes(bytes);
           return file;
         }
       } else {
+        setState(() {
+          _file = null;
+          pdfTitle = null;
+          pdfLink = null;
+          print(response.statusCode);
+          return null;
+        });
       }
     }
   }
@@ -243,7 +319,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
             children: <Widget>[
-              Text(_appointmentState.note.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+              Text(_appointmentState.detail.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
                 textAlign: TextAlign.left,
 //
               ),
@@ -262,7 +338,8 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
             children: <Widget>[
-              Text(_appointmentState.date.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+              Text(DateFormat.jm().format(_appointmentState.date)+ '  ' +DateFormat('EE').format(_appointmentState.date)
+                  + ',  '+ DateFormat.MMMd().format(_appointmentState.date) + ',  ' +DateFormat.y().format(_appointmentState.date), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
                 textAlign: TextAlign.left,
               ),
             ],
@@ -298,7 +375,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
             children: <Widget>[
-              Text(_appointmentState.note.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+              Text(_appointmentState.title.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
                 textAlign: TextAlign.left,
               ),
             ],
@@ -315,9 +392,9 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Container(child:
-                _appointmentState1.pid != null?
+                pdfTitle != null?
                 GestureDetector(
-                  child: Text(pdfTitle.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial", decoration: TextDecoration.underline,color:Colors.grey, height:1.5 ),),
+                  child: Text(pdfTitle, style: TextStyle(fontSize: 20.0, fontFamily: "Arial", decoration: TextDecoration.underline,color:Colors.grey, height:1.5 ),),
                   onTap: (){
                     Navigator.push(
                         context,
@@ -326,7 +403,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                                 appointmentfile(pathPDF)));
                   },
                 )
-                : Text(pdfTitle.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height:1.5 ),),
+                : Text("No avaliable pdf file at present", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height:1.5 ),),
                 ),
 
 //              Text("pdflink", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height:1.5 ),),
@@ -624,8 +701,8 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                    title: Text("Success message"),
-                    content: Text("Confirmed!")
+                    title: Text("Confirmed!"),
+                    content: Text("Please also contact the clinic to confirm the appointment.\n")
                 )
             );
             getAppointmentDetails();
@@ -639,8 +716,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
       }
     }
   }
-
-
 
 //  _unconfirmed(){
 //

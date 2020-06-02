@@ -11,6 +11,7 @@ class appointmentfile extends StatelessWidget{
 //  final File _file;
   appointmentfile(this.pathPDF);
 
+
   @override
   Widget build(BuildContext context) {
     return PDFViewerScaffold(
@@ -19,11 +20,11 @@ class appointmentfile extends StatelessWidget{
           child: AppBar(
             leading: BackButton(color: Colors.black),
             centerTitle: true,
-            title: Text("Form", style: TextStyle(color: Colors.black)),
+            title: Text(pathPDF.substring(pathPDF.lastIndexOf("/") + 1, pathPDF.lastIndexOf(".")), style: TextStyle(color: Colors.black)),
             backgroundColor: Colors.white,
             brightness: Brightness.light,
 //            backgroundColor: Colors.transparent,
-            elevation: 0.5,
+            elevation: 4,
             actions: <Widget>[
               IconButton(
                   color: Colors.black,

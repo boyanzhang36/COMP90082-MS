@@ -36,39 +36,71 @@ class _resourcedetailState extends State<resourcedetail>
       ),
       body:   new Builder(
           builder:(BuildContext context){
-            return new Column(
-                children:<Widget>[
-                  Container(
-                      height: 90.0,
-                      child: _buildCard(_resourceState.name, _resourceState.website, Color.fromARGB(255, 196, 218, 234))
-                  ),
-                ]);
+            return new Container(
+                margin: const EdgeInsets.all(8.0),
+                decoration: new BoxDecoration(
+                  color: Color.fromARGB(255, 196, 218, 234),
+                  borderRadius: BorderRadius.all(Radius.circular(4.0)),),
+                child: _buildCard(_resourceState.name, _resourceState.website)
+            );
           }),
     );
   }
 
-  Widget _buildCard(String name, String url, Color backgroundColor) {
+  Widget _buildCard(String name, String url) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(1.0),
-        ),
-
-        elevation: 4.0,
-        color: backgroundColor,
-        child: InkWell(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              //Icon(Icons.bookmark),
-              Text(name, style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
-              Text(url, style: TextStyle(fontSize: 15.0),),
-            ],
+      child: Table(
+        children: [
+          TableRow(
+          children: [
+            ListTile(
+                title: Text(name,
+                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+          ),]
           ),
-        ),
-      ),
+          TableRow(
+            children: [
+            ListTile(
+                title: Text(url.toString(),
+                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                trailing: Icon(Icons.public),
+                onTap: () {
+                  launchURL('https://'+url);
+                }
+            ),
+            ]
+          ),
+        ],
+      )
+
+//      Card(
+////        shape: RoundedRectangleBorder(
+////          borderRadius: BorderRadius.circular(4.0),
+////        ),
+//
+////        elevation: 4,
+//        color: backgroundColor,
+//        child: Column(
+////          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          crossAxisAlignment: CrossAxisAlignment.stretch,
+//          children: <Widget>[
+//            //Icon(Icons.bookmark),
+//            ListTile(
+//              title: Text(name,
+//                  style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+//            ),
+//            ListTile(
+//                title: Text(url.toString(),
+//                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+//                trailing: Icon(Icons.public),
+//                onTap: () {
+//                  launchURL('https://'+url);
+//                }
+//            ),
+//          ],
+//        ),
+//      ),
     );
   }
 

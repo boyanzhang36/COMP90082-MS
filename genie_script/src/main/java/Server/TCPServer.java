@@ -169,6 +169,8 @@ public class TCPServer implements Runnable{
             return pathologyHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.RADIOLOGY.toString()))
             return radiologyHandler((JSONObject) json.get("doc"));
+        else if (command.equals(QueryCommand.RESOURCE.toString()))
+            return resourceHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.FILE.toString()))
             return fileHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.DISCONNECTION.toString()))
@@ -229,6 +231,12 @@ public class TCPServer implements Runnable{
     public boolean radiologyHandler(JSONObject radiology) {
         System.out.println(radiology.toJSONString());
         dataManager.processRadiology(radiology);
+        return false;
+    }
+
+    public boolean resourceHandler(JSONObject resource) {
+        System.out.println(resource.toJSONString());
+        dataManager.processResource(resource);
         return false;
     }
 

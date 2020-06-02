@@ -15,7 +15,7 @@ public class Appointment {
     private String detail;
     private String note;
     private String user_note;
-    private AppointmentStatus status;
+    private String status;
 
     public String getId() {
         return id;
@@ -97,11 +97,11 @@ public class Appointment {
         this.user_note = user_note;
     }
 
-    public AppointmentStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(AppointmentStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -155,7 +155,7 @@ public class Appointment {
         return this;
     }
 
-    public Appointment status(final AppointmentStatus status) {
+    public Appointment status(final String status) {
         this.status = status;
         return this;
     }

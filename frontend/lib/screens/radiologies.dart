@@ -60,7 +60,7 @@ class _RadiologiesState extends State<Radiologies> {
           child: AppBar(
             leading: BackButton(color: Colors.black),
             centerTitle: true,
-            title: Text("Radiologies",
+            title: Text("Radiology",
                 style:TextStyle(color: Colors.black
                 )
             ),

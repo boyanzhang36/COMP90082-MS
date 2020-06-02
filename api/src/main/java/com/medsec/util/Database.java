@@ -143,7 +143,7 @@ public class Database {
         }
     }
 
-    public void updateAppointmentStatus(String appointment_id, AppointmentStatus status) {
+    public void updateAppointmentStatus(String appointment_id, String status) {
 
         try {
             AppointmentMapper mapper = session.getMapper(AppointmentMapper.class);
@@ -286,10 +286,10 @@ public class Database {
     /*
     File
      */
-    public String getLink(String pid){
+    public String getLink(String id){
         try{
             FileMapper mapper = session.getMapper(FileMapper.class);
-            return mapper.getLink(pid);
+            return mapper.getLink(id);
         } finally {
             if(!keepAlive) close();
         }
@@ -317,7 +317,59 @@ public class Database {
         mapper.updateRadiology(radiology);
         session.commit();
     }
+    /*
+    Resource
+     */
+    public List<Resource> listUserResources(
+            String uid){
 
+        try {
+
+            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+            return mapper.getResourcesByUserId(uid);
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public Resource getResource(String resourceID) {
+
+        try {
+
+            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+            return mapper.getResourceById(resourceID);
+
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public void insertResource(Resource resource) {
+        try {
+            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+            mapper.insertResource(resource);
+            session.commit();
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
+
+    public void deleteResource(String resourceID){
+        ResourceMapper mapper=session.getMapper(ResourceMapper.class);
+        mapper.deleteResource(resourceID);
+        session.commit();
+    }
+
+    public void updateResource(Resource resource) {
+        try {
+            ResourceMapper mapper = session.getMapper(ResourceMapper.class);
+            mapper.updateResource(resource);
+            session.commit();
+        } finally {
+            if (!keepAlive) close();
+        }
+    }
 
 
     /*

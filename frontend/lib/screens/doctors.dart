@@ -61,7 +61,7 @@ class _DoctorsState extends State<Doctors> {
           child: AppBar(
             leading: BackButton(color: Colors.black),
             centerTitle: true,
-            title: Text("Doctors",
+            title: Text("Doctor",
                 style:TextStyle(color: Colors.black
                 )
             ),

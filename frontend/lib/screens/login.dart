@@ -318,7 +318,7 @@ class _LoginPageState extends State<LoginPage> {
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Center(
-            child: Text('Forgot password?', style: TextStyle(color: Colors.grey, fontSize: 17)),
+            child: Text('Change password?', style: TextStyle(color: Colors.grey, fontSize: 17)),
           ),
           content: Container(
               height: 180.0,

@@ -4,7 +4,7 @@ public class File {
     private String id;
     private String title;
     private String link;
-    private String pid;
+    private String apptid;
 
     public String getId() {
         return id;
@@ -30,12 +30,12 @@ public class File {
         this.link = link;
     }
 
-    public String getPid() {
-        return pid;
+    public String getApptid() {
+        return apptid;
     }
 
-    public void setPid(String pid) {
-        this.pid = pid;
+    public void setApptid(String apptid) {
+        this.apptid = apptid;
     }
 
     public File id(final String id) {
@@ -53,8 +53,8 @@ public class File {
         return this;
     }
 
-    public File pid(final String pid) {
-        this.pid = pid;
+    public File apptid(final String apptid) {
+        this.apptid = apptid;
         return this;
     }
 

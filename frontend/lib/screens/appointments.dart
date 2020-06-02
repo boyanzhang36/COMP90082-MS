@@ -113,7 +113,7 @@ class _AppointmentsState extends State<Appointments>
           child: AppBar(
               leading: BackButton(color: Colors.black),
               centerTitle: true,
-              title: Text("Appointments",
+              title: Text("Appointment",
                   style:TextStyle(color: Colors.black
             )
           ),

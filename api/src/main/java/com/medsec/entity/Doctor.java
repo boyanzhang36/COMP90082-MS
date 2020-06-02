@@ -64,4 +64,39 @@ public class Doctor {
     public void setExpertise(String expertise) {
         this.expertise = expertise;
     }
+
+    public Doctor id(final String id) {
+        this.id = id;
+        return this;
+    }
+
+    public Doctor name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Doctor address(final String address) {
+        this.address = address;
+        return this;
+    }
+
+    public Doctor contact(final String contact) {
+        this.contact = contact;
+        return this;
+    }
+
+    public Doctor email(final String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Doctor website(final String website) {
+        this.website = website;
+        return this;
+    }
+
+    public Doctor expertise(final String expertise) {
+        this.expertise = expertise;
+        return this;
+    }
 }

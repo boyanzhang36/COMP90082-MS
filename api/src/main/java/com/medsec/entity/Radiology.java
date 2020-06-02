@@ -55,4 +55,34 @@ public class Radiology {
     public void setWebsite(String website) {
         this.website = website;
     }
+
+    public Radiology id(final String id) {
+        this.id = id;
+        return this;
+    }
+
+    public Radiology name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Radiology contact(final String contact) {
+        this.contact = contact;
+        return this;
+    }
+
+    public Radiology address(final String address) {
+        this.address = address;
+        return this;
+    }
+
+    public Radiology fax(final String fax) {
+        this.fax = fax;
+        return this;
+    }
+
+    public Radiology website(final String website) {
+        this.website = website;
+        return this;
+    }
 }

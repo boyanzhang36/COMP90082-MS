@@ -612,4 +612,73 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
+    public void processResource(JSONObject resource) {
+        try {
+            int resourceId = Integer.parseInt((String) resource.get("id"));
+            stm = connection.createStatement();
+            String query = "SELECT id FROM Resource WHERE id = " + resourceId;
+            ResultSet resultSet = stm.executeQuery(query);
+            if (resultSet.next()) {
+                do {
+                    log.info("find the resource" + resourceId + ". Begin to update!");
+                    try {
+                        updateResource(resource);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                } while (resultSet.next());
+            } else {
+                log.info("Cannot find it, it should be a new one. Begin to insert!");
+                try {
+                    insertResource(resource);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateResource(JSONObject resource) throws ParseException{
+        int resourceId = Integer.parseInt((String) resource.get("id"));
+        int patientId = Integer.parseInt((String) resource.get("pid"));
+        String name = (String) resource.get("resourcename");
+        //String dateChange = (String) appointment.get("LastUpdated");
+//        Boolean isCancelled = Boolean.valueOf((String) appointment.get("is_cancelled")) ;
+//        String openhours = (String) pathology.get("openhours");
+        String website = (String) resource.get("website");
+        String query = "UPDATE Resource SET uid='" + patientId + "', name='" + name + "', website='" + website +
+//                "', is_cancelled='" + isCancelled +
+                "'" +
+                "WHERE id= " + resourceId;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertResource(JSONObject resource) throws ParseException{
+        int resourceId = Integer.parseInt((String) resource.get("id"));
+        int patientId = Integer.parseInt((String) resource.get("pid"));
+        String name = (String) resource.get("resourcename");
+//        String p = (String) resource.get("fax");
+        //        String openhours = (String) pathology.get("openhours");
+        String website = (String) resource.get("website");
+        String query = "INSERT INTO Resource (id, uid, name, website) " +
+                "VALUES(?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,resourceId);
+            preparedStatement.setInt(2,patientId);
+            preparedStatement.setString(3,name);
+            preparedStatement.setString(4,website);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

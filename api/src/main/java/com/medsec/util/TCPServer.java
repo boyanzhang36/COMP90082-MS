@@ -1,5 +1,6 @@
 package com.medsec.util;
 
+import com.medsec.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -14,12 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.io.File;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyStore;
+import java.util.HashMap;
 
 /**
  * TCPServer handles JSON GENIE Data sent from the script
@@ -133,7 +136,7 @@ class TCPServerProcess implements Runnable{
 
             DataInputStream dataInputStream = new DataInputStream(in);
             try {
-                dataManager.ConnectionDB();
+//                dataManager.ConnectionDB();
 //                while (true){
 //                    if(Thread.currentThread().isInterrupted()){
 //                        System.out.println("Yes,I am interruted,but I am still running");
@@ -190,6 +193,8 @@ class TCPServerProcess implements Runnable{
             return pathologyHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.RADIOLOGY.toString()))
             return radiologyHandler((JSONObject) json.get("doc"));
+        else if (command.equals(QueryCommand.RESOURCE.toString()))
+            return resourceHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.FILE.toString()))
             return fileHandler((JSONObject) json.get("doc"));
         else if (command.equals(QueryCommand.DISCONNECTION.toString()))
@@ -220,39 +225,141 @@ class TCPServerProcess implements Runnable{
         }
     }
 
-    public boolean userHandler(JSONObject patient) {
-        System.out.println(patient.toJSONString());
-        dataManager.processPatient(patient);
+    /** process user data, insert new user or update existed user */
+    public boolean userHandler(JSONObject user) {
+//        System.out.println(patient.toJSONString());
+//        dataManager.processPatient(patient);
+//        return false;
+        Database db = new Database();
+        String id = (String) user.get("PatientId");
+        if (!isPatientExist(id)) {
+            log.info("insert new patient");
+            User patient = dataManager.processPatient(user);
+            db.insertUser(patient);
+        } else {
+            log.info("update existed patient");
+            User patient = dataManager.processPatient(user);
+            db.updateUser(patient);
+        }
         return false;
     }
 
-    public boolean apptHandler(JSONObject appointment) {
-        System.out.println(appointment.toJSONString());
-        dataManager.processAppointment(appointment);
+    /** process appointment data, insert new appointment or update existed appointment */
+    public boolean apptHandler(JSONObject appt) {
+//        System.out.println(appointment.toJSONString());
+//        dataManager.processAppointment(appointment);
+//        return false;
+        Database db = new Database();
+        String id = (String) appt.get("Id");
+        if (!isApptExist(id)) {
+            log.info("insert new appointment");
+            Appointment apptointment = dataManager.processAppt(appt);
+            db.insertAppointment(apptointment);
+            try {
+                PushNotification pn = new PushNotification();
+                HashMap<String, String> pnResult = pn.sendNotification(apptointment);
+                log.info("Push notification for new appointment");
+                for (String token: pnResult.keySet()) {
+                    log.info("FCMToken: " + token + " Push Notification Request:" + pnResult.get(token));
+                }
+            } catch (IOException e) {
+                log.error("Push notification error");
+            }
+        } else {
+            log.info("update exist appointment");
+            Appointment apptointment = dataManager.processAppt(appt);
+            db.updateAppointment(apptointment);
+        }
         return false;
     }
 
-    public boolean doctorHandler(JSONObject doctor) {
-        System.out.println(doctor.toJSONString());
-        dataManager.processDoctor(doctor);
+    public boolean doctorHandler(JSONObject dctor) {
+//        System.out.println(doctor.toJSONString());
+//        dataManager.processDoctor(doctor);
+//        return false;
+        Database db = new Database();
+        String id = (String) dctor.get("id");
+        if (!isDoctorExist(id)) {
+            log.info("insert new doctor");
+            Doctor doctor = dataManager.processDoctor(dctor);
+            db.addDoctor(doctor);
+        } else {
+            log.info("update existed doctor");
+            Doctor doctor = dataManager.processDoctor(dctor);
+            db.updateDoctor(doctor);
+        }
         return false;
     }
 
-    public boolean hospitalHandler(JSONObject hospital) {
-        System.out.println(hospital.toJSONString());
-        dataManager.processHospital(hospital);
+    public boolean hospitalHandler(JSONObject hspital) {
+//        System.out.println(hospital.toJSONString());
+//        dataManager.processHospital(hospital);
+//        return false;
+        Database db = new Database();
+        String id = (String) hspital.get("id");
+        if (!isHospitalExist(id)) {
+            log.info("insert new hospital");
+            Hospital hospital = dataManager.processHospital(hspital);
+            db.addHospital(hospital);
+        } else {
+            log.info("update existed hospital");
+            Hospital hospital = dataManager.processHospital(hspital);
+            db.updateHospital(hospital);
+        }
         return false;
     }
 
-    public boolean pathologyHandler(JSONObject pathology) {
-        System.out.println(pathology.toJSONString());
-        dataManager.processPathology(pathology);
+    public boolean pathologyHandler(JSONObject pthology) {
+//        System.out.println(pathology.toJSONString());
+//        dataManager.processPathology(pathology);
+//        return false;
+        Database db = new Database();
+        String id = (String) pthology.get("id");
+        if (!isPathologyExist(id)) {
+            log.info("insert new pathology");
+            Pathology pathology = dataManager.processPathology(pthology);
+            db.addPathology(pathology);
+        } else {
+            log.info("update existed pathology");
+            Pathology pathology = dataManager.processPathology(pthology);
+            db.updatePathology(pathology);
+        }
         return false;
     }
 
-    public boolean radiologyHandler(JSONObject radiology) {
-        System.out.println(radiology.toJSONString());
-        dataManager.processRadiology(radiology);
+    public boolean radiologyHandler(JSONObject rdiology) {
+//        System.out.println(radiology.toJSONString());
+//        dataManager.processRadiology(radiology);
+//        return false;
+        Database db = new Database();
+        String id = (String) rdiology.get("id");
+        if (!isRadiologyExist(id)) {
+            log.info("insert new radiology");
+            Radiology radiology = dataManager.processRadiology(rdiology);
+            db.addRadiology(radiology);
+        } else {
+            log.info("update existed radiology");
+            Radiology radiology = dataManager.processRadiology(rdiology);
+            db.updateRadiology(radiology);
+        }
+        return false;
+    }
+
+    public boolean resourceHandler(JSONObject rsource) {
+//        System.out.println(resource.toJSONString());
+//        dataManager.processResource(resource);
+//        return false;
+        Database db = new Database();
+        String id = (String) rsource.get("id");
+        if (!isResourceExist(id)) {
+            log.info("insert new resource");
+            Resource resource = dataManager.processResource(rsource);
+            db.insertResource(resource);
+        } else {
+            log.info("update existed resource");
+            Resource resource = dataManager.processResource(rsource);
+            db.updateResource(resource);
+        }
         return false;
     }
 
@@ -266,11 +373,11 @@ class TCPServerProcess implements Runnable{
         String webappsDir=(new File(resoucePath,"../../")).getCanonicalPath();
 //        String path = TCPServer.class.getResource("\\").getPath();
         String fileName = (String)file.get("FileName");
-        String pid = fileName.substring(fileName.lastIndexOf("-") + 1,
+        String apptid = fileName.substring(fileName.lastIndexOf("-") + 1,
                 fileName.lastIndexOf(".")).trim();
-        String eachFilePath = "\\result\\" + pid + "\\" + fileName;
+//        String eachFilePath = "\\result\\" + apptid + "\\" + fileName;
+        String eachFilePath = "/result/" + apptid + "/" + fileName;
         String filePath = webappsDir + eachFilePath;
-//        System.out.println("#############################"+webappsDir);
         System.out.println(eachFilePath);
         System.out.println(filePath);
 
@@ -302,8 +409,67 @@ class TCPServerProcess implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        dataManager.processFile(file, eachFilePath);
+//        dataManager.processFile(file, eachFilePath);
+        String id = apptid;
+        com.medsec.entity.File appointmentFile = new com.medsec.entity.File().id(id)
+                .title(fileName).link(eachFilePath).apptid(apptid);
+        Database db = new Database();
+        if (!isFileExist(apptid)){
+            log.info("insert new File");
+            db.insertFile(appointmentFile);
+        }
+
         return false;
+
     }
 
+    /** check if the patient is already in the database */
+    public boolean isPatientExist(String id){
+        Database db = new Database();
+        User patient = db.getUserById(id);
+        return patient != null;
+    }
+
+    /** check if the appointment is already in the database */
+    public boolean isApptExist(String id){
+        Database db = new Database();
+        Appointment appt = db.getAppointment(id);
+        return appt != null;
+    }
+
+    public boolean isDoctorExist(String id){
+        Database db = new Database();
+        Doctor dctor = db.selectOneDoctor(id);
+        return dctor != null;
+    }
+
+    public boolean isHospitalExist(String id){
+        Database db = new Database();
+        Hospital hspital = db.selectOneHospital(id);
+        return hspital != null;
+    }
+
+    public boolean isPathologyExist(String id){
+        Database db = new Database();
+        Pathology pthology = db.selectOnePathology(id);
+        return pthology != null;
+    }
+
+    public boolean isRadiologyExist(String id){
+        Database db = new Database();
+        Radiology rology = db.selectOneRadiology(id);
+        return rology != null;
+    }
+
+    public boolean isResourceExist(String id){
+        Database db = new Database();
+        Resource rsource = db.getResource(id);
+        return rsource != null;
+    }
+
+    public boolean isFileExist(String id){
+        Database db = new Database();
+        com.medsec.entity.File file = db.selectFileById(id);
+        return file != null;
+    }
 }

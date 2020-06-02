@@ -60,7 +60,7 @@ class _HospitalsState extends State<Hospitals> {
           child: AppBar(
             leading: BackButton(color: Colors.black),
             centerTitle: true,
-            title: Text("Hospitals",
+            title: Text("Hospital",
                 style:TextStyle(color: Colors.black
                 )
             ),

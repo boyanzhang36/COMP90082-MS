@@ -166,8 +166,9 @@ public class SocketServerProcess implements Runnable {
         Instant dateStart = Instant.parse((String) appt.get("StartDate"));
         Instant date = startDateConvert(dateStart, startTime);
         int duration = Integer.parseInt((String) appt.get("ApptDuration")) / 60;
+        String status = (String) appt.get("status");
         Appointment appointment = new Appointment().id(id).uid(uid).title(title).detail(detail).note(note)
-                .date_create(dateCreate).date_change(dateChange).date(date).duration(duration).status(AppointmentStatus.UNCONFIRMED);
+                .date_create(dateCreate).date_change(dateChange).date(date).duration(duration).status(status);
         return appointment;
     }
 
@@ -228,7 +229,7 @@ public class SocketServerProcess implements Runnable {
             e.printStackTrace();
         }
         com.medsec.entity.File patientFile = new com.medsec.entity.File().id((String) file.get("Id"))
-                .title((String) file.get("FileName")).link(filePath).pid((String) file.get("PT_Id_Fk"));
+                .title((String) file.get("FileName")).link(filePath).apptid((String) file.get("PT_Id_Fk"));
         Database db = new Database();
         if (!isFileExist((String) file.get("Id"))){
             LOG.info("insert new File");

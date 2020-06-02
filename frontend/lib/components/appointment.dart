@@ -5,6 +5,7 @@ class Appointment {
   final String pid;
   final DateTime date;
   final String title;
+  final String detail;
   final String note;
   final String userNote;
   final int duration;
@@ -15,6 +16,7 @@ class Appointment {
         this.pid,
         this.date,
         this.title,
+        this.detail,
         this.note,
         this.userNote,
         this.duration,
@@ -26,6 +28,7 @@ class Appointment {
         pid: json['uid'],
         date: DateTime.parse(json['date']),
         title: json['title'],
+        detail: json['detail'],
         note: json['note'],
         userNote: json['user_note'],
         duration: json['duration'] as int,

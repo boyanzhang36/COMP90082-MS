@@ -59,7 +59,7 @@ public class JSONWriter {
             else if (GenieUI.FILE_EXTENSION.equals("xls") && GenieUI.COMMAND != QueryCommand.FILE){
                 sendExcel(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
             }
-            else if (GenieUI.COMMAND == QueryCommand.FILE){
+            else if (GenieUI.FILE_EXTENSION.equals("pdf") && GenieUI.COMMAND == QueryCommand.FILE){
                 sendFile(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
             }
             sendDisconnect(connectionSocket);
@@ -111,6 +111,7 @@ public class JSONWriter {
                 OutputStream os = connectionSocket.getOutputStream();
                 DataOutputStream dos = new DataOutputStream(os);
                 UploadFileManager uploadHtml = new UploadFileManager(uploadPath);
+                System.out.println("Uploaded Success");
                 Element htmlTable = uploadHtml.readHtmlFile();
                 Elements htmlTrs = htmlTable.select("tr");
 
@@ -155,6 +156,7 @@ public class JSONWriter {
                 OutputStream os = connectionSocket.getOutputStream();
                 DataOutputStream dos = new DataOutputStream(os);
                 UploadFileManager uploadExcel = new UploadFileManager(uploadPath);
+                System.out.println("Uploaded Success");
                 HSSFSheet excelSheet = uploadExcel.readExcelFile();
                 HSSFRow excelHeads = excelSheet.getRow(0);
 
@@ -202,6 +204,7 @@ public class JSONWriter {
                 DataOutputStream dos = new DataOutputStream(os);
 
                 UploadFileManager uploadedFile = new UploadFileManager(uploadPath);
+                System.out.println("Uploaded Success");
                 File myFile = uploadedFile.readFile();
 
                 JSONObject msg = new JSONObject();
