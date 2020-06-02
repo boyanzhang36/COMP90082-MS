@@ -9,6 +9,35 @@
     <select id="selectOneDoctor" resultType="com.medsec.entity.Doctor">
         SELECT * FROM Doctor where Doctor.id=#{id};
     </select>
+	
+    <select id="getDoctorsByUserId" resultType="com.medsec.entity.Doctor">
+		SELECT *
+		FROM Doctor
+		WHERE Doctor.id IN
+			  (SELECT did From Appointment WHERE uid= #{uid}
+        <choose>
+            <when test="since != null and until != null">
+                AND date BETWEEN #{since} AND #{until}
+            </when>
+            <when test="since != null and until == null">
+                AND date > #{since}
+            </when>
+            <when test="since == null and until != null">
+                <![CDATA[
+                AND date < #{until}
+                ]]>
+            </when>
+        </choose>
+        <choose>
+            <when test="status == null">
+                AND status != 'CANCELLED'
+            </when>
+            <otherwise>
+                AND status = #{status})
+            </otherwise>
+        </choose>
+    </select>	
+	
     <delete id="deleteDoctor" parameterType="String">
         DELETE FROM Doctor where Doctor.id=#{id};
     </delete>
