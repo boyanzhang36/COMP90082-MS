@@ -1,6 +1,8 @@
 package com.medsec.dao;
 
 import com.medsec.entity.Doctor;
+import com.medsec.util.AppointmentStatus;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

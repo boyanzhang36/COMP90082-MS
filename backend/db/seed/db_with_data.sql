@@ -1,27 +1,11 @@
--- MariaDB dump 10.17  Distrib 10.4.7-MariaDB, for debian-linux-gnu (x86_64)
---
--- Host: localhost    Database: medsec
--- ------------------------------------------------------
--- Server version	10.4.7-MariaDB-1:10.4.7+maria~bionic
+-- Adminer 4.7.3 MySQL dump
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `Appointment`
---
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP TABLE IF EXISTS `Appointment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Appointment` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
@@ -36,27 +20,17 @@ CREATE TABLE `Appointment` (
   `status` enum('UNCONFIRMED','CONFIRMED','CANCELLED') DEFAULT 'UNCONFIRMED',
   PRIMARY KEY (`id`),
   KEY `fk_Appointment_Patient1_idx` (`uid`),
-  CONSTRAINT `fk_Appointment_User` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
+  CONSTRAINT `Appointment_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `Appointment`
---
-
-LOCK TABLES `Appointment` WRITE;
-/*!40000 ALTER TABLE `Appointment` DISABLE KEYS */;
-INSERT INTO `Appointment` VALUES (1,1,'Day Oncology Unit','2018-05-16 05:23:41','2018-05-16 05:23:41','2018-06-12 10:30:00',60,'Education Session','Looking after yourself during chemotherapy - Watch\nPatient Health History Sheet - Please fill in and email back to daychemo.wrD@ramsayhealth.com.au\nPharmacy Medication Sheet - Please fill in and email back to daychemo.wrp@ramsayhealth.com.au\nParking Information - ReadQuestions Sheet - Read','Remember to bring scan result.','CONFIRMED'),(2,1,'Warringal Private Hospital / Epworth Eastern','2018-05-14 10:17:40','2018-05-14 10:17:40','2018-06-08 08:00:00',10,'Inflisaport Insertion','Warringal Private Hospital will contact you the day before to confirm admission and fasting times.\\nInfusaport Questionnaire - Please fill in and send back to reception@.66darebinst.com.au\\nDoctor Information - Read\\nProcedure Information - Read\\nAnaesthetists Information - Read',NULL,'CONFIRMED'),(3,1,'Warringal Private Hospital / Epworth Eastern','2018-05-14 10:17:40','2018-05-14 10:17:40','2018-06-08 08:00:00',10,NULL,NULL,NULL,'UNCONFIRMED'),(4,5,'Appoinment','2019-09-20 08:26:10',NULL,'2019-09-20 08:26:10',1,'test',NULL,NULL,'UNCONFIRMED');
-/*!40000 ALTER TABLE `Appointment` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Doctor`
---
+INSERT INTO `Appointment` (`id`, `uid`, `title`, `date_create`, `date_change`, `date`, `duration`, `detail`, `note`, `user_note`, `status`) VALUES
+(1,	1,	'Day Oncology Unit',	'2018-05-16 05:23:41',	'2018-05-16 05:23:41',	'2018-06-12 10:30:00',	60,	'Education Session',	'Looking after yourself during chemotherapy - Watch\nPatient Health History Sheet - Please fill in and email back to daychemo.wrD@ramsayhealth.com.au\nPharmacy Medication Sheet - Please fill in and email back to daychemo.wrp@ramsayhealth.com.au\nParking Information - ReadQuestions Sheet - Read',	'Remember to bring scan result.',	'CONFIRMED'),
+(2,	1,	'Warringal Private Hospital / Epworth Eastern',	'2018-05-14 10:17:40',	'2018-05-14 10:17:40',	'2018-06-08 08:00:00',	10,	'Inflisaport Insertion',	'Warringal Private Hospital will contact you the day before to confirm admission and fasting times.\r\nInfusaport Questionnaire - Please fill in and send back to reception@.66darebinst.com.au\r\nDoctor Information - Read\r\nProcedure Information - Read\r\nAnaesthetists Information - Read',	NULL,	'CONFIRMED'),
+(3,	1,	'Warringal Private Hospital / Epworth Eastern',	'2018-05-14 10:17:40',	'2018-05-14 10:17:40',	'2018-06-08 08:00:00',	10,	NULL,	NULL,	NULL,	'UNCONFIRMED'),
+(4,	5,	'Appoinment',	'2019-09-20 08:26:10',	NULL,	'2019-09-20 08:26:10',	30,	'test',	NULL,	NULL,	'UNCONFIRMED'),
+(11,	1,	'Day Oncology Unit',	'2018-05-16 05:23:41',	'2018-05-16 05:23:41',	'2018-06-11 14:02:00',	60,	'Education session',	'Looking after yourself during chemotherapy - Watch Patient Health History Sheet - Please fill in and email back to daychemo.wrp@ramsayhealth.com.au Parking Information - ReadQuestions Sheet - Read',	NULL,	'UNCONFIRMED');
 
 DROP TABLE IF EXISTS `Doctor`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Doctor` (
   `id` int(11) NOT NULL,
   `contact` varchar(45) NOT NULL,
@@ -68,50 +42,28 @@ CREATE TABLE `Doctor` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `Doctor`
---
-
-LOCK TABLES `Doctor` WRITE;
-/*!40000 ALTER TABLE `Doctor` DISABLE KEYS */;
-INSERT INTO `Doctor` VALUES (1,'555','14 Fake st','','doctor@doctor.com',NULL,'Radiology','Callum'),(2,'555','16 tardis street','555','timelord_01@Gallifrey','test.com','Electronic screwdriver','Dr. Who'),(3,'655','Bond st ','555','Drno@gmail.com','Www.no.com','Lasers, sharks','Dr. No'),(5,'55','Fgjgd','555','Gdshh','Gfdf','Cgjh','Gfdh');
-/*!40000 ALTER TABLE `Doctor` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `File`
---
+INSERT INTO `Doctor` (`id`, `contact`, `address`, `fax`, `email`, `website`, `expertise`, `name`) VALUES
+(1,	'555',	'14 Fake st',	'',	'doctor@doctor.com',	NULL,	'Radiology',	'Callum'),
+(2,	'555',	'16 tardis street',	'555',	'timelord_01@Gallifrey',	'test.com',	'Electronic screwdriver',	'Dr. Who'),
+(3,	'655',	'Bond st ',	'555',	'Drno@gmail.com',	'Www.no.com',	'Lasers, sharks',	'Dr. No'),
+(5,	'55',	'Fgjgd',	'555',	'Gdshh',	'Gfdf',	'Cgjh',	'Gfdh');
 
 DROP TABLE IF EXISTS `File`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `File` (
   `id` int(11) NOT NULL,
   `title` varchar(45) NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `pid` varchar(250) NOT NULL,
-  PRIMARY KEY (`id`)
+  `link` varchar(45) NOT NULL,
+  `apptid` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `apptid` (`apptid`),
+  CONSTRAINT `File_ibfk_2` FOREIGN KEY (`apptid`) REFERENCES `Appointment` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `File`
---
-
-LOCK TABLES `File` WRITE;
-/*!40000 ALTER TABLE `File` DISABLE KEYS */;
-/*!40000 ALTER TABLE `File` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Hospital`
---
+INSERT INTO `File` (`id`, `title`, `link`, `apptid`) VALUES
+(1,	'File-sample-1.pdf',	'/result/1/File-sample-1.pdf',	1);
 
 DROP TABLE IF EXISTS `Hospital`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Hospital` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -122,24 +74,11 @@ CREATE TABLE `Hospital` (
   `type` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `Hospital`
---
-
-LOCK TABLES `Hospital` WRITE;
-/*!40000 ALTER TABLE `Hospital` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Hospital` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `NotificationToken`
---
+INSERT INTO `Hospital` (`id`, `name`, `contact`, `address`, `fax`, `website`, `type`) VALUES
+(1,	'Harry',	'123456',	'Melbourne',	'123456',	'www.unimelb.edu.au',	'doctor');
 
 DROP TABLE IF EXISTS `NotificationToken`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `NotificationToken` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
@@ -147,27 +86,17 @@ CREATE TABLE `NotificationToken` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uid_fcm_token` (`uid`,`fcm_token`),
   KEY `fk_NotificationToken_User_idx` (`uid`),
-  CONSTRAINT `fk_NotificationToken_User` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  CONSTRAINT `NotificationToken_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `NotificationToken`
---
-
-LOCK TABLES `NotificationToken` WRITE;
-/*!40000 ALTER TABLE `NotificationToken` DISABLE KEYS */;
-INSERT INTO `NotificationToken` VALUES (45,5,'dYdFwGvckS4:APA91bFsMvl_sNQ4Wd9_DQITMVWNwHjhN9BFCtzi1NwvuQOjn4bz_vwpHgyPKlWnF3PbGWohzasSOdfD0CkA8gdCYLlaFvkS6F_8QgVEbDRfQhZpaCJLcUKYeRFAVxlTfqIMQk6X2i8i'),(47,6,'dYdFwGvckS4:APA91bFsMvl_sNQ4Wd9_DQITMVWNwHjhN9BFCtzi1NwvuQOjn4bz_vwpHgyPKlWnF3PbGWohzasSOdfD0CkA8gdCYLlaFvkS6F_8QgVEbDRfQhZpaCJLcUKYeRFAVxlTfqIMQk6X2i8i');
-/*!40000 ALTER TABLE `NotificationToken` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Pathology`
---
+INSERT INTO `NotificationToken` (`id`, `uid`, `fcm_token`) VALUES
+(48,	1,	'c7YzpQUQNS0:APA91bFMJ_3BRweXo__qhrQQ5pwXwnJbtlhtqJbu9HAU6LBrFyT6IO7TcQB1HNfvbUDMvt0hkk5WHEqcDrzUFORISASpZh34hPpUCVQ5Od0XEfiv31NAR3Ub0BfmOxdbvPk5xt01ia7a'),
+(60,	1,	'cCGT0Ormh00:APA91bEa2lO4G4ZuV2YUWetwBl_rdFXtz1PT5PEj-nK02ddFArfH_B0ikwRbrFbniX-xvIvTqaw3973u5G_knjhzDt_aUBr2jG0gMBOLKA8sL73PisBJciqx0rs3dQ4KVqL-FkrcOJ5T'),
+(45,	5,	'dYdFwGvckS4:APA91bFsMvl_sNQ4Wd9_DQITMVWNwHjhN9BFCtzi1NwvuQOjn4bz_vwpHgyPKlWnF3PbGWohzasSOdfD0CkA8gdCYLlaFvkS6F_8QgVEbDRfQhZpaCJLcUKYeRFAVxlTfqIMQk6X2i8i'),
+(47,	6,	'dYdFwGvckS4:APA91bFsMvl_sNQ4Wd9_DQITMVWNwHjhN9BFCtzi1NwvuQOjn4bz_vwpHgyPKlWnF3PbGWohzasSOdfD0CkA8gdCYLlaFvkS6F_8QgVEbDRfQhZpaCJLcUKYeRFAVxlTfqIMQk6X2i8i'),
+(79,	7,	'c7YzpQUQNS0:APA91bFMJ_3BRweXo__qhrQQ5pwXwnJbtlhtqJbu9HAU6LBrFyT6IO7TcQB1HNfvbUDMvt0hkk5WHEqcDrzUFORISASpZh34hPpUCVQ5Od0XEfiv31NAR3Ub0BfmOxdbvPk5xt01ia7a');
 
 DROP TABLE IF EXISTS `Pathology`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Pathology` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
@@ -177,51 +106,40 @@ CREATE TABLE `Pathology` (
   `website` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `Pathology`
---
-
-LOCK TABLES `Pathology` WRITE;
-/*!40000 ALTER TABLE `Pathology` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Pathology` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Radiology`
---
+INSERT INTO `Pathology` (`id`, `name`, `contact`, `address`, `fax`, `website`) VALUES
+(1,	'Harry',	'123456',	'Melbourne',	'123456',	'www.unimelb.edu.au'),
+(2,	'Mack',	'Carlton',	'123',	'123',	'www.google.com'),
+(3,	'Jack',	'North Melbourne',	'33333',	'333',	'www.google.com');
 
 DROP TABLE IF EXISTS `Radiology`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Radiology` (
-  `RadiologyId` int(11) NOT NULL,
-  `RadiologyName` varchar(255) NOT NULL,
-  `RadiologyContact` varchar(45) NOT NULL,
-  `RadiologyAddress` varchar(45) NOT NULL,
-  `RadiologyFax` varchar(45) NOT NULL,
-  `RadiologyWebsite` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`RadiologyId`)
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `contact` varchar(45) NOT NULL,
+  `address` varchar(45) NOT NULL,
+  `fax` varchar(45) NOT NULL,
+  `website` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `Radiology`
---
+INSERT INTO `Radiology` (`id`, `name`, `contact`, `address`, `fax`, `website`) VALUES
+(1,	'Harry',	'123456',	'Melbourne',	'123456',	'www.unimelb.edu.au');
 
-LOCK TABLES `Radiology` WRITE;
-/*!40000 ALTER TABLE `Radiology` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Radiology` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `Resource`;
+CREATE TABLE `Resource` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `website` varchar(45) NOT NULL,
+  KEY `uid` (`uid`),
+  CONSTRAINT `Resource_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Table structure for table `User`
---
+INSERT INTO `Resource` (`id`, `uid`, `name`, `website`) VALUES
+(1,	1,	'Download',	'www.google.com');
 
 DROP TABLE IF EXISTS `User`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `User` (
   `password` varchar(255) DEFAULT NULL,
   `id` int(11) NOT NULL,
@@ -240,25 +158,15 @@ CREATE TABLE `User` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `User`
---
+INSERT INTO `User` (`password`, `id`, `surname`, `firstname`, `middlename`, `dob`, `email`, `street`, `suburb`, `state`, `token`, `token_expire_date`, `token_valid_from`, `role`) VALUES
+('123',	1,	'Williamson',	'Alex',	'Mileston',	'1986-07-22',	'williamson@example.com',	'97 Masthead Drive',	'ROCKHAMPTON',	'QLD',	'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6IjRtcG9sZDVmcnVoM2o0aDMwbTAxbmhiYnN0IiwiZXhwIjoxNTkxMTY1NjQyLCJpYXQiOjE1OTEwNzkyNDIsInN1YiI6IjEifQ.0yISp-oKZpuezNVMBU0QqNf4biKTJt5N-YRI86Gso2jPuutQ73BfAN8h9OqDDHOL15f9KDPdEBmdKufPjrpXKQ',	'2020-06-03 06:27:22',	'2020-06-02 06:27:22',	'PATIENT'),
+('1230',	2,	'Maggard',	'Arnold',	'Logan',	'1968-02-10',	'arnold@example.com',	'42 Edgewater Close',	'HUSKISSON',	'NSW',	NULL,	NULL,	'2018-08-09 13:09:29',	'ADMIN'),
+(NULL,	3,	'Sharpe',	'Chad',	NULL,	'1979-08-03',	'chad@example.com',	'41 Ross Street',	NULL,	NULL,	NULL,	NULL,	NULL,	'PATIENT'),
+(NULL,	4,	'Haggerty',	'Susan',	NULL,	'1994-01-08',	'susan@example.com',	NULL,	NULL,	NULL,	NULL,	NULL,	'2018-08-04 14:05:19',	'PATIENT'),
+('1',	5,	'Dowling',	'Callum',	NULL,	'1991-01-25',	'callum.dowling@gmail.com',	NULL,	NULL,	NULL,	'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6Ijd0YmNtbnBhMWk4dGdqODUzNnJydjUwYmJnIiwiZXhwIjoxNTcwNzEzODEwLCJpYXQiOjE1NzA2Mjc0MTAsInN1YiI6IjUifQ.TwtoG1UZGOwOdTGYvY3a6RbCe1czXrAW9uIcNvTgEWuVLkNuOKD3iqx_TJozMQnsQi6M5hlW_vkXNGRe2DaBVw',	'2019-10-10 13:23:30',	'2019-10-09 13:23:30',	'PATIENT'),
+('ggg',	6,	'test',	'test',	'test',	'2019-10-09',	'test@test.com',	NULL,	NULL,	NULL,	'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6ImRnMmJyZjRvbnFhZ3JhMW9tc2VxNDNkYzlrIiwiZXhwIjoxNTcwNzIwMDQ2LCJpYXQiOjE1NzA2MzM2NDYsInN1YiI6IjYifQ.tJNNP26dCI4k8jyEYytaZVhQr2OxpP6h354DZZ_yvmsDPeF1rx-itajViUHarT0X6V_r14QiQqz-_xzGYesL1Q',	'2019-10-10 15:07:26',	'2019-10-09 15:07:26',	'PATIENT'),
+('111',	7,	'Mack',	'Li',	NULL,	'1968-10-22',	'mack@example.com',	'608 Swantston st',	'Carlton',	'VIC',	'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6InFybTZsdWxtYzdwODZxNDJyZ2k0dmNtYXYiLCJleHAiOjE1OTExNjIzNTksImlhdCI6MTU5MTA3NTk1OSwic3ViIjoiNyJ9.TQQEqmCOel56m0Q_FUzig45jDCTqAOp54clSaSFjKARFi6Ow8vtmqutJCmP1YjhXjyUk_7OWqXjew85HOV18Kg',	'2020-06-03 05:32:39',	'2020-06-02 05:32:39',	'PATIENT'),
+(NULL,	8,	'Jack',	'Cheng',	NULL,	'1950-02-20',	'Jack@example.com',	'666 Kings st',	'Melbourne',	'VIC',	NULL,	NULL,	NULL,	'PATIENT');
 
-LOCK TABLES `User` WRITE;
-/*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES ('123',1,'Williamson','Alex','Mileston','1986-08-07','williamson@example.com','97 Masthead Drive','ROCKHAMPTON','QLD',NULL,NULL,'2018-08-05 04:15:10','PATIENT'),('1230',2,'Maggard','Arnold','Logan','1968-02-10','arnold@example.com','42 Edgewater Close','HUSKISSON','NSW',NULL,NULL,'2018-08-09 13:09:29','ADMIN'),(NULL,3,'Sharpe','Chad',NULL,'1979-08-03','chad@example.com','41 Ross Street',NULL,NULL,NULL,NULL,NULL,'PATIENT'),(NULL,4,'Haggerty','Susan',NULL,'1994-01-08','susan@example.com',NULL,NULL,NULL,NULL,NULL,'2018-08-04 14:05:19','PATIENT'),('1',5,'Dowling','Callum',NULL,'1991-01-25','callum.dowling@gmail.com',NULL,NULL,NULL,'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6Ijd0YmNtbnBhMWk4dGdqODUzNnJydjUwYmJnIiwiZXhwIjoxNTcwNzEzODEwLCJpYXQiOjE1NzA2Mjc0MTAsInN1YiI6IjUifQ.TwtoG1UZGOwOdTGYvY3a6RbCe1czXrAW9uIcNvTgEWuVLkNuOKD3iqx_TJozMQnsQi6M5hlW_vkXNGRe2DaBVw','2019-10-10 13:23:30','2019-10-09 13:23:30','PATIENT'),('ggg',6,'test','test','test','2019-10-09','test@test.com',NULL,NULL,NULL,'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6ImRnMmJyZjRvbnFhZ3JhMW9tc2VxNDNkYzlrIiwiZXhwIjoxNTcwNzIwMDQ2LCJpYXQiOjE1NzA2MzM2NDYsInN1YiI6IjYifQ.tJNNP26dCI4k8jyEYytaZVhQr2OxpP6h354DZZ_yvmsDPeF1rx-itajViUHarT0X6V_r14QiQqz-_xzGYesL1Q','2019-10-10 15:07:26','2019-10-09 15:07:26','PATIENT');
-/*!40000 ALTER TABLE `User` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2019-10-09 15:18:30
+-- 2020-06-02 09:33:10

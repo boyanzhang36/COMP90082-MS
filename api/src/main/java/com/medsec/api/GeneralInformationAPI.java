@@ -6,10 +6,7 @@ import com.medsec.entity.Pathology;
 import com.medsec.entity.Radiology;
 import com.medsec.entity.Appointment;
 import com.medsec.filter.Secured;
-import com.medsec.util.ArgumentException;
-import com.medsec.util.Database;
-import com.medsec.util.DefaultRespondEntity;
-import com.medsec.util.UserRole;
+import com.medsec.util.*;
 import org.glassfish.jersey.server.JSONP;
 
 import javax.ws.rs.*;

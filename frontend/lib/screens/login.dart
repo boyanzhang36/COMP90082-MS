@@ -188,6 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: new Text('Username ', style: TextStyle(color: Colors.white70, fontSize: 17)),
                 ),
                 Text('or ', style: TextStyle(color: Colors.black, fontSize: 17)),
+                Text('Change ', style: TextStyle(color: Colors.black, fontSize: 17)),
                 new InkWell(
                   onTap: () {
                     createAlertDialog2(context);
