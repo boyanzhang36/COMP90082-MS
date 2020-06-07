@@ -14,28 +14,9 @@
 		SELECT *
 		FROM Doctor
 		WHERE Doctor.id IN
-			  (SELECT did From Appointment WHERE uid= #{uid}
-        <choose>
-            <when test="since != null and until != null">
-                AND date BETWEEN #{since} AND #{until}
-            </when>
-            <when test="since != null and until == null">
-                AND date > #{since}
-            </when>
-            <when test="since == null and until != null">
-                <![CDATA[
-                AND date < #{until}
-                ]]>
-            </when>
-        </choose>
-        <choose>
-            <when test="status == null">
-                AND status != 'CANCELLED'
-            </when>
-            <otherwise>
-                AND status = #{status})
-            </otherwise>
-        </choose>
+			  (SELECT did 
+			   From Appointment 
+			   WHERE uid= #{uid} AND status != 'CANCELLED')
     </select>	
 	
     <delete id="deleteDoctor" parameterType="String">

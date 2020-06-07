@@ -10,6 +10,7 @@ import com.medsec.util.ArgumentException;
 import com.medsec.util.Database;
 import com.medsec.util.DefaultRespondEntity;
 import com.medsec.util.UserRole;
+import com.medsec.util.*;
 import org.glassfish.jersey.server.JSONP;
 
 import javax.ws.rs.*;
@@ -159,26 +160,16 @@ public class GeneralInformationAPI {
     @JSONP(queryParam = "callback")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listUserDoctors(
-            @Context SecurityContext sc,
-            @QueryParam("since") String since,
-            @QueryParam("until") String until,
-            @QueryParam("is_confirmed") Boolean is_confirmed) {
+            @Context SecurityContext sc) {
 
         String uid = sc.getUserPrincipal().getName();
-        List<Doctor> results = retrieveUserDoctors(uid, since, until, is_confirmed);
-
+		
+		Database db = new Database();
+        List<Doctor> results = db.listUserDoctors(uid);
+		db.close();
         return Response.ok(results).build();
     }	
 	
-    private List <Doctor> retrieveUserDoctors(String uid, String since, String until, Boolean is_confirmed) {
-
-        AppointmentStatus status = null;
-        if (is_confirmed != null)
-            status = is_confirmed ? AppointmentStatus.CONFIRMED : AppointmentStatus.UNCONFIRMED;
-
-        Database db = new Database();
-        return db.listUserDoctors(uid, since, until, status);
-    }
 	
     @DELETE
     @Path("generalInformation/deleteDoctor/{doctorID}")
