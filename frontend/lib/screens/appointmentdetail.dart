@@ -51,14 +51,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
 
     saveController = TextEditingController();
     getAppointmentDetails();
-//    if (_appointmentState1.id.toString() != null)
-//      {
-//        pdfTitle = "Click this link to see the form";
-////        getPdfLink();
-//      }
-//    else{
-//      pdfTitle = "No file at present";
-//    }
     getPdfDetails();
 
 
@@ -133,7 +125,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
       print(headers);
       var jsonResponse = null;
       var response = await http.get(url, headers: headers);
-//      print(response.body);
       if (response.statusCode == 200) {
         print("200" + response.body);
         jsonResponse = json.decode(response.body);
@@ -190,8 +181,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
       var request = await HttpClient().getUrl(Uri.parse (url));
       request.headers.add("Authorization", auth);
       var response = await request.close();
-//      var response = await http.get(url, headers: headers);
-//      print(response.body);
       print(response.statusCode);
       if (response.statusCode == 200) {
         var bytes = await consolidateHttpClientResponseBytes(response);
@@ -232,20 +221,10 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
         preferredSize: Size.fromHeight(60.0),
         child: AppBar(
           leading: BackButton(color: Colors.black),
-//            IconButton(icon: Icon(Icons.arrow_back),
-//            color: Colors.black,
-//            onPressed: (){
-//              Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                      builder: (context) => Appointments()));
-//            },
-//  ),
           centerTitle: true,
           title: Text("Appointment Details", style: TextStyle(color: Colors.black)),
           backgroundColor: Colors.white,
           brightness: Brightness.light,
-//          backgroundColor: Color(0x44000000),
           elevation: 0.5,
           actions: <Widget>[
             IconButton(
@@ -271,14 +250,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
           borderRadius: BorderRadius.all(Radius.circular(4.0)),
           ),
       ),
-//        bottomNavigationBar:,
-//        bottomSheet:  _buttonBar(),
-//        Column(
-//          children: <Widget>[
-//
-////            Expanded(child: _buttonView())
-//          ],
-//        )
     );
   }
 
@@ -302,7 +273,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             children: <Widget>[
               Text(_appointmentState.title.toString(), style: TextStyle(fontSize: 25.0, fontFamily: "Arial",color:Colors.black, height: 1.5 ),
                 textAlign: TextAlign.left,
-//                              overflow: TextOverflow.ellipsis
               ),
             ],
           ),
@@ -321,7 +291,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             children: <Widget>[
               Text(_appointmentState.detail.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
                 textAlign: TextAlign.left,
-//
               ),
             ],
           ),
@@ -405,8 +374,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                 )
                 : Text("No avaliable pdf file at present", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height:1.5 ),),
                 ),
-
-//              Text("pdflink", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height:1.5 ),),
             ],
           ),
           Row(
@@ -429,10 +396,8 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                   Column(
                       children: <Widget>[
                         TextField(
-//                        autofocus: true,
                           controller: saveController,
                           decoration: InputDecoration(
-//                            labelText: "Note",
                             hintText: "Add your personal note here...",
                           ),
                         ),
@@ -468,17 +433,14 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                             )
                           ],
                         )
-
                       ]
                   )
                       :
                   Column(
                       children: <Widget>[
                         TextField(
-//                        autofocus: true,
                           controller: saveController,
                           decoration: InputDecoration(
-//                            labelText: "Note",
                             hintText: "Add your personal note here...",
                           ),
                         ),
@@ -501,7 +463,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
 
                       ])
               ),
-
             ],
           ),
           Row(
@@ -539,7 +500,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                           child: Text('CONFIRM')
                       ),
                     ],)
-
               )
             ],
           ),
@@ -598,9 +558,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
           }
         } else {
           messageToUser = response.body;
-//        setState(() {
-//
-//        });
         }
       }
     }
@@ -654,9 +611,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
         }
       } else {
         messageToUser = response.body;
-//        setState(() {
-//
-//        });
       }
     }
   }
@@ -710,18 +664,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
         }
       } else {
         messageToUser = response.body;
-//        setState(() {
-//
-//        });
       }
     }
   }
-
-//  _unconfirmed(){
-//
-//  }
-
-//  _cancelled(){
-//
-//  }
 }

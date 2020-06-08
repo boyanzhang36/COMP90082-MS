@@ -7,6 +7,7 @@ import java.time.Instant;
 public class Appointment {
     private String id;
     private String uid;
+    private String did;
     private String title;
     private Instant date_create;
     private Instant date_change;
@@ -31,6 +32,14 @@ public class Appointment {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getDid() {
+        return did;
+    }
+
+    public void setDid(String did) {
+        this.did = did;
     }
 
     public String getTitle() {
@@ -112,6 +121,11 @@ public class Appointment {
 
     public Appointment uid(final String uid) {
         this.uid = uid;
+        return this;
+    }
+
+    public Appointment did(final String did) {
+        this.did = did;
         return this;
     }
 

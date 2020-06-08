@@ -29,8 +29,6 @@ class appointmentfile extends StatelessWidget{
               IconButton(
                   color: Colors.black,
                   icon: Icon(Icons.print), onPressed: () {
-
-
               })],
           )
       ),

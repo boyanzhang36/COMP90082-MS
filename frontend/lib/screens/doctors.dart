@@ -33,7 +33,7 @@ class _DoctorsState extends State<Doctors> {
           ':' +
           ServerDetails.port +
           ServerDetails.api +
-          'generalInformation/doctors';
+          'generalInformation/userDoctors';
       print(url);
       Map<String, String> headers = {"Authorization": auth};
       print(headers);
