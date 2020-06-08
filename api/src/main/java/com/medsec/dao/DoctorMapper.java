@@ -1,7 +1,6 @@
 package com.medsec.dao;
 
 import com.medsec.entity.Doctor;
-import com.medsec.util.AppointmentStatus;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,10 +10,7 @@ public interface DoctorMapper {
     Doctor selectOneDoctor(String doctorID);
 	
     List<Doctor> getDoctorsByUserId(
-            @Param("uid")  String uid,
-            @Param("since")  String since,
-            @Param("until")  String until,
-            @Param("status") AppointmentStatus status);	//new doctor list
+            @Param("uid")  String uid);	//new doctor list
 			
     void deleteDoctor(String doctorID);
     void updateDoctor(Doctor doctor);

@@ -218,16 +218,12 @@ public class Database {
     }
 
 	//new doctor list
-    public List<Doctor> listUserDoctors(
-            String uid,
-            @Nullable String since,
-            @Nullable String until,
-            @Nullable AppointmentStatus status){
+    public List<Doctor> listUserDoctors(String uid){
 
         try {
 
             DoctorMapper mapper=session.getMapper(DoctorMapper.class);
-            return mapper.getDoctorsByUserId(uid, since, until, status);
+            return mapper.getDoctorsByUserId(uid);
 
         } finally {
             if (!keepAlive) close();
