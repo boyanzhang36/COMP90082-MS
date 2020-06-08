@@ -62,7 +62,7 @@ class doctordetail extends StatelessWidget{
                       borderRadius: BorderRadius.all(Radius.circular(4.0)),),
                     child: Table(
                       columnWidths: const {
-                        0: FixedColumnWidth(140.0),
+                        0: FixedColumnWidth(150.0),
                         1: FlexColumnWidth(1.0),
                       },
                       children: [

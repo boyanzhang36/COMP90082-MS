@@ -45,7 +45,7 @@ class _radiologydetailState extends State<radiologydetail>
                       runSpacing: 4.0,
                       alignment: WrapAlignment.start,
                       children: <Widget>[
-                        Icon(Icons.local_hospital,color: Colors.green, size: 45,),
+                        Icon(Icons.healing,color: Colors.green, size: 45,),
                         Text(_radiologyState.name,
                           style: TextStyle(fontSize: 25.0, fontFamily: "Arial",color:Colors.black, height: 1.5 ),
                         ),
@@ -60,7 +60,7 @@ class _radiologydetailState extends State<radiologydetail>
                       borderRadius: BorderRadius.all(Radius.circular(4.0)),),
                     child: Table(
                       columnWidths: const {
-                        0: FixedColumnWidth(140.0),
+                        0: FixedColumnWidth(150.0),
                         1: FlexColumnWidth(1.0),
                       },
                       children: [
