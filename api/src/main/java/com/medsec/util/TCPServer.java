@@ -7,20 +7,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.net.ssl.*;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.io.File;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.KeyStore;
 import java.util.HashMap;
 
@@ -29,12 +20,7 @@ import java.util.HashMap;
  */
 public class TCPServer implements Runnable{
 
-//    private static final int PORT = 11111;
-
     private static final Logger log = LogManager.getLogger();
-//    private static final Path PATH = Paths.get
-//            ("src/main/resources/").toAbsolutePath();
-//    private static final String GENIE_DB_NAME = "TestData/appointment.json";
     private static final String CLIENT_KEY_STORE_PASSWORD = "client";
     private static final String CLIENT_TRUST_KEY_STORE_PASSWORD = "client";
     private static final String CLIENT_KEY_PATH = "/client_ks.jks";
@@ -51,30 +37,16 @@ public class TCPServer implements Runnable{
     public void run()
     {
         System.out.println("Threaded Server Running");
-//        ServerSocket serverSocket = new ServerSocket(PORT);
         while(true)
         {
             try {
             Socket sock = serverSocket.accept();
-//            com.medsec.util.TCPServer server = new com.medsec.util.TCPServer(sock);
             TCPServerProcess s = new TCPServerProcess(sock);
-            // Multi-threading, possibly not needed but better to have
             Thread serverThread = new Thread(s);
             serverThread.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//            int nbRunning = 0;
-//            for (Thread t : Thread.getAllStackTraces().keySet()) {
-//                if (t.getState()==Thread.State.RUNNABLE) nbRunning++;
-//            }
-//            System.out.println("Total: " + nbRunning);
-
-//            serverThread.sleep(3000);
-//            serverThread.interrupt();
-//            serverThread.sleep(200);
-//            serverThread.interrupt();
-
         }
     }
 
@@ -136,35 +108,16 @@ class TCPServerProcess implements Runnable{
 
             DataInputStream dataInputStream = new DataInputStream(in);
             try {
-//                dataManager.ConnectionDB();
-//                while (true){
-//                    if(Thread.currentThread().isInterrupted()){
-//                        System.out.println("Yes,I am interruted,but I am still running");
-//                        return;
-//
-//                    }else{
-//                        System.out.println("not yet interrupted");
-//                    }
-//                }
-//                System.out.println("Previous: "+flag);
+
                 while(!flag && (msg = dataInputStream.readUTF()) != null) {
-//                    System.out.println(msg);
-//                    msg = dataInputStream.readUTF();
-//                        String data = SymmetricEncrypt.getInstance().decrypt(msg);
                     flag = processData(msg);
-//                    System.out.println(flag);
-//                    if(dataInputStream.available() > 0){
-//
-//                    }
+
                 }
                 Thread.currentThread().interrupt();
                 if (Thread.currentThread().isInterrupted())
                 {
                     log.info(Thread.currentThread().getName() +" is closed");
                 }
-//                System.out.println(Thread.currentThread().getName());
-//                connectionSocket.close();
-//                System.out.println("Client Disconnected");
             } catch (SocketException e) {
                 System.out.println("closed connection");
             }
@@ -206,8 +159,6 @@ class TCPServerProcess implements Runnable{
     public boolean authenticationHandler(String secretAuthenticate) {
         try {
             JSONParser parser = new JSONParser();
-//            Object obj = parser.parse(new FileReader("target/classes/TestData/authentication_server.json"));
-//            System.out.println(TCPServer.class.getResource("/TestData/authentication_server.json").getPath());
             Object obj = parser.parse(new FileReader(TCPServer.class.getResource("/TestData/authentication_server.json").getPath()));
             System.out.println(TCPServer.class.getResource("/TestData/authentication_server.json").getPath());
             JSONObject authentication = (JSONObject) obj;
@@ -227,9 +178,6 @@ class TCPServerProcess implements Runnable{
 
     /** process user data, insert new user or update existed user */
     public boolean userHandler(JSONObject user) {
-//        System.out.println(patient.toJSONString());
-//        dataManager.processPatient(patient);
-//        return false;
         Database db = new Database();
         String id = (String) user.get("PatientId");
         if (!isPatientExist(id)) {
@@ -246,9 +194,6 @@ class TCPServerProcess implements Runnable{
 
     /** process appointment data, insert new appointment or update existed appointment */
     public boolean apptHandler(JSONObject appt) {
-//        System.out.println(appointment.toJSONString());
-//        dataManager.processAppointment(appointment);
-//        return false;
         Database db = new Database();
         String id = (String) appt.get("Id");
         if (!isApptExist(id)) {
@@ -274,9 +219,6 @@ class TCPServerProcess implements Runnable{
     }
 
     public boolean doctorHandler(JSONObject dctor) {
-//        System.out.println(doctor.toJSONString());
-//        dataManager.processDoctor(doctor);
-//        return false;
         Database db = new Database();
         String id = (String) dctor.get("id");
         if (!isDoctorExist(id)) {
@@ -292,9 +234,6 @@ class TCPServerProcess implements Runnable{
     }
 
     public boolean hospitalHandler(JSONObject hspital) {
-//        System.out.println(hospital.toJSONString());
-//        dataManager.processHospital(hospital);
-//        return false;
         Database db = new Database();
         String id = (String) hspital.get("id");
         if (!isHospitalExist(id)) {
@@ -310,9 +249,6 @@ class TCPServerProcess implements Runnable{
     }
 
     public boolean pathologyHandler(JSONObject pthology) {
-//        System.out.println(pathology.toJSONString());
-//        dataManager.processPathology(pathology);
-//        return false;
         Database db = new Database();
         String id = (String) pthology.get("id");
         if (!isPathologyExist(id)) {
@@ -328,9 +264,6 @@ class TCPServerProcess implements Runnable{
     }
 
     public boolean radiologyHandler(JSONObject rdiology) {
-//        System.out.println(radiology.toJSONString());
-//        dataManager.processRadiology(radiology);
-//        return false;
         Database db = new Database();
         String id = (String) rdiology.get("id");
         if (!isRadiologyExist(id)) {
@@ -346,9 +279,6 @@ class TCPServerProcess implements Runnable{
     }
 
     public boolean resourceHandler(JSONObject rsource) {
-//        System.out.println(resource.toJSONString());
-//        dataManager.processResource(resource);
-//        return false;
         Database db = new Database();
         String id = (String) rsource.get("id");
         if (!isResourceExist(id)) {
@@ -367,7 +297,6 @@ class TCPServerProcess implements Runnable{
         int bytesRead = 0;
         int current = 0;
         InputStream in = null;
-//        String path = System.getProperty("user.dir");
 
         String resoucePath=TCPServer.class.getResource("/").getPath();
         String webappsDir=(new File(resoucePath,"../../")).getCanonicalPath();
@@ -390,7 +319,6 @@ class TCPServerProcess implements Runnable{
                 newFile.createNewFile();
             }
             DataInputStream clientData = new DataInputStream(in);
-//            String fileName = (String)file.get("FileName");
             OutputStream output = new FileOutputStream(filePath);
 
             long size = (long)file.get("FileSize");
@@ -409,7 +337,6 @@ class TCPServerProcess implements Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        dataManager.processFile(file, eachFilePath);
         String id = apptid;
         com.medsec.entity.File appointmentFile = new com.medsec.entity.File().id(id)
                 .title(fileName).link(eachFilePath).apptid(apptid);
