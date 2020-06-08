@@ -93,7 +93,6 @@ class _PathologiesState extends State<Pathologies> {
                 )
             )).toList()
         )
-
     );
 
   }
