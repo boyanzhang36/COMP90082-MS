@@ -180,22 +180,22 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.symmetric(horizontal: 30.0),
             child: Center(child: Wrap(
               children: <Widget>[
-                Text('Forget your ', style: TextStyle(color: Colors.black, fontSize: 17)),
+                Text('Forget your ', style: TextStyle(color: Colors.black, fontSize: 15)),
                 new InkWell(
                   onTap: () {
                     createAlertDialog1(context);
                   },
-                  child: new Text('Username ', style: TextStyle(color: Colors.white70, fontSize: 17)),
+                  child: new Text('Username ', style: TextStyle(color: Colors.white70, fontSize: 15)),
                 ),
-                Text('or ', style: TextStyle(color: Colors.black, fontSize: 17)),
-                Text('Change ', style: TextStyle(color: Colors.black, fontSize: 17)),
+                Text('or ', style: TextStyle(color: Colors.black, fontSize: 15)),
+                Text('Change ', style: TextStyle(color: Colors.black, fontSize: 15)),
                 new InkWell(
                   onTap: () {
                     createAlertDialog2(context);
                   },
-                  child: new Text('Password ', style: TextStyle(color: Colors.white70, fontSize: 17)),
+                  child: new Text('Password ', style: TextStyle(color: Colors.white70, fontSize: 15)),
                 ),
-                Text('?', style: TextStyle(color: Colors.black, fontSize: 17)),
+                Text('?', style: TextStyle(color: Colors.black, fontSize: 15)),
               ],
             ),)
         ),

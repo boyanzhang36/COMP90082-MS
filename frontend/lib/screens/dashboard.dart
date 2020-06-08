@@ -51,7 +51,7 @@ class _DashBoardState extends State<DashBoard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children:<Widget>[
                   Container(
-                      height: 90.0,
+                      height: 100.0,
                       child: _buildBar("APPOINTMENT", Icons.date_range, Color.fromARGB(255, 73, 204, 252), onTap: () {
                         Navigator.pushNamed(context, '/appointments');//icon used to be event
                       })
@@ -87,7 +87,7 @@ class _DashBoardState extends State<DashBoard> {
                         ),
                       )),
                   Container(
-                      height: 90.0,
+                      height: 100.0,
                       //padding: EdgeInsets.symmetric(horizontal: 30.0),
                       //margin: EdgeInsets.only(top: 15.0),
                       child: _buildBar("RESOURCE", Icons.book,Color.fromARGB(255, 71, 207, 203), onTap: () {
@@ -103,6 +103,9 @@ class _DashBoardState extends State<DashBoard> {
                             Route<dynamic> route) => false);;
                       })
                   ),
+                  Container(
+                      height: 50.0,
+                  )
                 ]);
           }),
       //bottomNavigationBar: PreferredSize(
