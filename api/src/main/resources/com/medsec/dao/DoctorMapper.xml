@@ -16,7 +16,7 @@
 		WHERE Doctor.id IN
 			  (SELECT did 
 			   From Appointment 
-			   WHERE uid= #{uid} AND status != 'CANCELLED')
+			   WHERE uid= #{uid} AND (status != 'CANCELLED'))
     </select>	
 	
     <delete id="deleteDoctor" parameterType="String">
