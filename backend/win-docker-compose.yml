@@ -41,8 +41,10 @@ services:
         context: ./db
       restart: always
       volumes:
-        - sql-data:/var/lib/mysql
+        - ./db/mysql:/var/lib/mysql
+        - ./db/seed:/var/seed
       environment:
+        TZ: Australia/Melbourne
         MYSQL_ROOT_PASSWORD: root
         MYSQL_USER: admin
         MYSQL_PASSWORD: test
@@ -65,7 +67,3 @@ networks:
     ipam:
       config:
         - subnet: 10.5.0.0/16
-
-volumes: 
-  sql-data:
-  
