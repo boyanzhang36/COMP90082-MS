@@ -65,89 +65,199 @@ class _hospitaldetailState extends State<hospitaldetail>
                       },
                       children: [
                         //address
-                        TableRow(
+                        _hospitalState.address != null ? TableRow(
                             children: [
                               ListTile(
                                 title: Text("Address:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
                               ),
                               ListTile(
                                   title: Text(_hospitalState.address,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.location_on),
                                   onTap: () {
                                     launchURL("https://www.google.com/maps/search/"+_hospitalState.address);
                                   }
                               )
                             ]
-                        ),
-                        //phone
-                        TableRow(
+                        ) : TableRow(
                             children: [
                               ListTile(
-                                title: Text("Phone:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                title: Text("Address:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
                               ),
                               ListTile(
-                                  title: Text(_hospitalState.contact,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //emergency department
+                        _hospitalState.emergencyDept != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Emergency Department:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                  title: Text(_hospitalState.emergencyDept,
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Emergency Department:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                title: Text("Not available",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //phone
+                        _hospitalState.phone != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Phone:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                  title: Text(_hospitalState.phone,
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.phone),
                                   onTap: () {
                                     _callPhone();
                                   }
                               )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Phone:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
+                              ),
+                              ListTile(
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //after hours phone
+                        _hospitalState.aftPhone != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("After Hours Phone:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
+                              ),
+                              ListTile(
+                                  title: Text(_hospitalState.aftPhone,
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                                  trailing: Icon(Icons.phone),
+                                  onTap: () {
+                                    _callAftPhone();
+                                  }
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("After Hours Phone:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
                             ]
                         ),
                         //fax
-                        TableRow(
+                        _hospitalState.fax != null ? TableRow(
                             children: [
                               ListTile(
                                 title: Text("Fax:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
                               ),
                               ListTile(
                                 title: Text(_hospitalState.fax,
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Fax:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text("Not available",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //email
+                        _hospitalState.email != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Email:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                title: Text(_hospitalState.email,
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Email:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                title: Text("Not available",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                               )
                             ]
                         ),
                         //website
-                        TableRow(
+                        _hospitalState.website != null ? TableRow(
                             children: [
                               ListTile(
                                 title: Text("Website:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
                               ),
                               ListTile(
                                   title: Text(_hospitalState.website,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.public),
                                   onTap: () {
-                                    launchURL('https://'+_hospitalState.website);
+                                    launchURL(_hospitalState.website);
                                   }
                               )
-
-
                             ]
-                        ),
-                        //type
-                        TableRow(
+                        ) : TableRow(
                             children: [
                               ListTile(
-                                title: Text("Type:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                title: Text("Website:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
                               ),
                               ListTile(
-                                title: Text(_hospitalState.type,
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                               )
                             ]
                         ),
-
                       ],
                     ),
                   )
@@ -160,7 +270,16 @@ class _hospitaldetailState extends State<hospitaldetail>
   }
 
   _callPhone() async {
-    var url = 'tel:' + _hospitalState.contact;
+    var url = 'tel:' + _hospitalState.phone;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _callAftPhone() async {
+    var url = 'tel:' + _hospitalState.aftPhone;
     if (await canLaunch(url)) {
       await launch(url);
     } else {

@@ -56,20 +56,27 @@ class _resourcedetailState extends State<resourcedetail>
           children: [
             ListTile(
                 title: Text(name,
-                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
           ),]
           ),
-          TableRow(
+          url != null ? TableRow(
             children: [
             ListTile(
                 title: Text(url.toString(),
-                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                 trailing: Icon(Icons.public),
                 onTap: () {
-                  launchURL('https://'+url);
+                  launchURL(url);
                 }
             ),
             ]
+          ) : TableRow(
+              children: [
+                ListTile(
+                    title: Text("will be shown here",
+                        style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                ),
+              ]
           ),
         ],
       )

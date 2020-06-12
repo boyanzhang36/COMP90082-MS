@@ -48,7 +48,7 @@ class doctordetail extends StatelessWidget{
                           alignment: WrapAlignment.start,
                           children: <Widget>[
                             Icon(Icons.person,color: Colors.green, size: 45,),
-                            Text("Dr. "+_doctor.name,
+                            Text(_doctor.name,
                               style: TextStyle(fontSize: 25.0, fontFamily: "Arial",color:Colors.black, height: 1.5 ),
                             ),
                           ],
@@ -69,43 +69,73 @@ class doctordetail extends StatelessWidget{
                         TableRow(
                             children: [
                               Text("ID:",
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
                               Text(_doctor.id,
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
                               )]
                         ),
-                        TableRow(
+                        _doctor.address != null ? TableRow(
                             children: [
                               Text("Address:",
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
                               Text(_doctor.address,
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              Text("Address:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text("Not available",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
                               )
                             ]
                         ),
-                        TableRow(
+                        _doctor.contact != null ? TableRow(
                             children: [
                               Text("Contact:",
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
                               Text(_doctor.contact,
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )]
+                        ) : TableRow(
+                            children: [
+                              Text("Contact:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text("Not available",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
                               )]
                         ),
-                        TableRow(
+                        _doctor.email != null ? TableRow(
                             children: [
                               Text("Email:",
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
                               Text(_doctor.email,
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              Text("Email:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text("Not available",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
                               )
                             ]
                         ),
-                        TableRow(
+                        _doctor.expertise != null ? TableRow(
                             children: [
                               Text("Expertise:",
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
                               Text(_doctor.expertise,
-                                style: TextStyle(fontSize: 25.0, fontFamily: "Arial", ),
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )]
+                        ) : TableRow(
+                            children: [
+                              Text("Expertise:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text("Not available",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
                               )]
                         ),
 

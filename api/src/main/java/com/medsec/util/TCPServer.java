@@ -111,7 +111,6 @@ class TCPServerProcess implements Runnable{
 
                 while(!flag && (msg = dataInputStream.readUTF()) != null) {
                     flag = processData(msg);
-
                 }
                 Thread.currentThread().interrupt();
                 if (Thread.currentThread().isInterrupted())
@@ -220,7 +219,7 @@ class TCPServerProcess implements Runnable{
 
     public boolean doctorHandler(JSONObject dctor) {
         Database db = new Database();
-        String id = (String) dctor.get("id");
+        String id = (String) dctor.get("Id");
         if (!isDoctorExist(id)) {
             log.info("insert new doctor");
             Doctor doctor = dataManager.processDoctor(dctor);
@@ -235,7 +234,7 @@ class TCPServerProcess implements Runnable{
 
     public boolean hospitalHandler(JSONObject hspital) {
         Database db = new Database();
-        String id = (String) hspital.get("id");
+        String id = (String) hspital.get("Id");
         if (!isHospitalExist(id)) {
             log.info("insert new hospital");
             Hospital hospital = dataManager.processHospital(hspital);
@@ -250,7 +249,7 @@ class TCPServerProcess implements Runnable{
 
     public boolean pathologyHandler(JSONObject pthology) {
         Database db = new Database();
-        String id = (String) pthology.get("id");
+        String id = (String) pthology.get("Id");
         if (!isPathologyExist(id)) {
             log.info("insert new pathology");
             Pathology pathology = dataManager.processPathology(pthology);
@@ -265,7 +264,7 @@ class TCPServerProcess implements Runnable{
 
     public boolean radiologyHandler(JSONObject rdiology) {
         Database db = new Database();
-        String id = (String) rdiology.get("id");
+        String id = (String) rdiology.get("Id");
         if (!isRadiologyExist(id)) {
             log.info("insert new radiology");
             Radiology radiology = dataManager.processRadiology(rdiology);
@@ -280,7 +279,7 @@ class TCPServerProcess implements Runnable{
 
     public boolean resourceHandler(JSONObject rsource) {
         Database db = new Database();
-        String id = (String) rsource.get("id");
+        String id = (String) rsource.get("Id");
         if (!isResourceExist(id)) {
             log.info("insert new resource");
             Resource resource = dataManager.processResource(rsource);

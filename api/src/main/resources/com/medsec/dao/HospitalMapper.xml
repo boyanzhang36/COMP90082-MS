@@ -19,17 +19,19 @@
     <update id="updateHospital" parameterType="com.medsec.entity.Hospital">
         update Hospital SET
         Hospital.name=#{name},
-        Hospital.contact=#{contact},
         Hospital.address=#{address},
+        Hospital.emergencyDept=#{emergencyDept},
+        Hospital.phone=#{phone},
+        Hospital.aftPhone=#{aftPhone},
         Hospital.fax=#{fax},
-        Hospital.website=#{website},
-        Hospital.type=#{type}
+        Hospital.email=#{email},
+        Hospital.website=#{website}
         where Hospital.id=#{id}
     </update>
 
     <insert id="addHospital" parameterType="com.medsec.entity.Hospital">
-        insert into Hospital (id, name, contact, address, fax, website, type)
-        values (#{id},#{name},#{contact},#{address},#{fax},#{website},#{type})
+        insert into Hospital (id, name, address, emergencyDept, phone, aftPhone, fax, email, website)
+        values (#{id},#{name},#{address},#{emergencyDept},#{phone},#{aftPhone},#{fax},#{email},#{website})
     </insert>
 
 </mapper>

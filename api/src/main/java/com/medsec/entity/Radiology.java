@@ -3,9 +3,11 @@ package com.medsec.entity;
 public class Radiology {
     private String id;
     private String name;
-    private String contact;
     private String address;
+    private String phone;
     private String fax;
+    private String hours;
+    private String email;
     private String website;
 
     public String getId() {
@@ -24,14 +26,6 @@ public class Radiology {
         this.name = name;
     }
 
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -40,12 +34,36 @@ public class Radiology {
         this.address = address;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getFax() {
         return fax;
     }
 
     public void setFax(String fax) {
         this.fax = fax;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getWebsite() {
@@ -66,18 +84,28 @@ public class Radiology {
         return this;
     }
 
-    public Radiology contact(final String contact) {
-        this.contact = contact;
-        return this;
-    }
-
     public Radiology address(final String address) {
         this.address = address;
         return this;
     }
 
+    public Radiology phone(final String phone) {
+        this.phone = phone;
+        return this;
+    }
+
     public Radiology fax(final String fax) {
         this.fax = fax;
+        return this;
+    }
+
+    public Radiology hours(final String hours) {
+        this.hours = hours;
+        return this;
+    }
+
+    public Radiology email(final String email) {
+        this.email = email;
         return this;
     }
 

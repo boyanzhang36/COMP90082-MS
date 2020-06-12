@@ -65,16 +65,16 @@ class _pathologydetailState extends State<pathologydetail>
                       },
                       children: [
                         //address
-                        TableRow(
+                        _pathologyState.address != null ? TableRow(
                             children: [
                               ListTile(
                                 title: Text("Address:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
                               ),
                               ListTile(
                                   title: Text(_pathologyState.address,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.location_on),
                                   onTap: () {
                                     launchURL("https://www.google.com/maps/search/"+_pathologyState.address);
@@ -82,60 +82,102 @@ class _pathologydetailState extends State<pathologydetail>
                               )
 
                             ]
-                        ),
-                        //phone
-                        TableRow(
+                        ) : TableRow(
                             children: [
                               ListTile(
-                                title: Text("Phone:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                title: Text("Address:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
                               ),
                               ListTile(
-                                  title: Text(_pathologyState.contact,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+
+                            ]
+                        ),
+                        //phone
+                        _pathologyState.phone != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Phone:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                  title: Text(_pathologyState.phone,
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.phone),
                                   onTap: () {
                                     _callPhone();
                                   }
                               )
-
-
                             ]
-                        ),
-                        //fax
-                        TableRow(
+                        ) : TableRow(
                             children: [
                               ListTile(
-                                title: Text("Fax:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                title: Text("Phone:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
                               ),
                               ListTile(
-                                title: Text(_pathologyState.fax,
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //hours
+                        _pathologyState.hours != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Hours:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text(_pathologyState.hours.toString(),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Hours:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text("Not available",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                               )
                             ]
                         ),
                         //website
-                        TableRow(
+                        _pathologyState.website != null ? TableRow(
                             children: [
                               ListTile(
                                 title: Text("Website:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
                               ),
                               ListTile(
                                   title: Text(_pathologyState.website,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.public),
                                   onTap: () {
-                                    launchURL('https://'+_pathologyState.website);
+                                    launchURL(_pathologyState.website);
                                   }
                               )
-
-
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Website:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
                             ]
                         ),
-                        //type
 
 
                       ],
@@ -150,7 +192,7 @@ class _pathologydetailState extends State<pathologydetail>
   }
 
   _callPhone() async {
-    var url = 'tel:' + _pathologyState.contact;
+    var url = 'tel:' + _pathologyState.phone.toString().replaceAll("(24/7)", "");
     if (await canLaunch(url)) {
       await launch(url);
     } else {

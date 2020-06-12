@@ -13,8 +13,8 @@
     </select>
 
     <insert id="addPathology" parameterType="com.medsec.entity.Pathology">
-        insert into Pathology(id,name,contact,address,fax,website)
-        values (#{id},#{name},#{contact},#{address},#{fax},#{website})
+        insert into Pathology(id,name,address,phone,hours,website)
+        values (#{id},#{name},#{address},#{phone},#{hours},#{website})
     </insert>
 
     <delete id="deletePathology" parameterType="String">
@@ -24,9 +24,9 @@
     <update id="updatePathology" parameterType="com.medsec.entity.Pathology">
         update Pathology set
         Pathology.name=#{name},
-        Pathology.contact=#{contact},
         Pathology.address=#{address},
-        Pathology.fax=#{fax},
+        Pathology.phone=#{phone},
+        Pathology.hours=#{hours},
         Pathology.website=#{website}
         where Pathology.id=#{id}
     </update>

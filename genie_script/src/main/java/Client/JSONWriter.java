@@ -63,6 +63,7 @@ public class JSONWriter {
                 sendFile(connectionSocket, GenieUI.COMMAND, GenieUI.FILE_UPLOAD_PATH);
             }
             sendDisconnect(connectionSocket);
+            System.out.println("Upload Finished!");
         }
 
         /**
@@ -129,7 +130,12 @@ public class JSONWriter {
                         Element pHead = tdHeads.get(j).select("p").get(0);
                         Element pContent = tds.get(j).select("p").get(0);
 
-                        jsonObject.put(pHead.text(), pContent.text());
+                        if (pContent != null){
+                            jsonObject.put(pHead.text(), pContent.text());
+                        }
+                        else{
+                            jsonObject.put(pHead.text(), pContent);
+                        }
 
                     }
 //                jsonObjectDoc.add(jsonObject);
@@ -174,10 +180,14 @@ public class JSONWriter {
                         HSSFCell excelCellContent = excelRow.getCell(j);
 
                         excelHead.setCellType(CellType.STRING);
-                        excelCellContent.setCellType(CellType.STRING);
 
-                        jsonObject.put(excelHead.getStringCellValue(), excelCellContent.getStringCellValue());
-
+                        if (excelCellContent != null){
+                            excelCellContent.setCellType(CellType.STRING);
+                            jsonObject.put(excelHead.getStringCellValue(), excelCellContent.getStringCellValue());
+                        }
+                        else {
+                            jsonObject.put(excelHead.getStringCellValue(), excelCellContent);
+                        }
                     }
 
                     msg.put("doc", jsonObject);
@@ -187,7 +197,9 @@ public class JSONWriter {
 
                 }
 
-
+            } catch (NullPointerException e) {
+                System.out.println("File content not found!");
+//                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }

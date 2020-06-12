@@ -40,9 +40,9 @@ public class DataManager {
     public Appointment processAppt(JSONObject appt) {
         String id = (String) appt.get("Id");
         String uid = (String) appt.get("PT_Id_Fk");
-        String did = (String) appt.get("Doctor_Id");
-        String title = (String) appt.get("Reason");
-        String detail = (String) appt.get("Comment");
+        String did = (String) appt.get("ProviderID");
+        String title = (String) appt.get("Name");
+        String detail = (String) appt.get("Reason");
         String note = (String) appt.get("Note");
         Instant dateCreate = Instant.parse((String) appt.get("CreationDate"));
         String test = (String) appt.get("StartTime");
@@ -80,60 +80,65 @@ public class DataManager {
     }
 
     public Doctor processDoctor(JSONObject dctor) {
-        String id = (String) dctor.get("id");
-        String name = (String) dctor.get("name");
-        String address = (String) dctor.get("address");
-        String contact = (String) dctor.get("contact");
-        String email = (String) dctor.get("email");
-        String website = (String) dctor.get("website");
-        String expertise = (String) dctor.get("expertise");
+        String id = (String) dctor.get("Id");
+        String name = (String) dctor.get("Name");
+        String address = (String) dctor.get("Address");
+        String contact = (String) dctor.get("Contact");
+        String email = (String) dctor.get("Email");
+        String website = (String) dctor.get("Website");
+        String expertise = (String) dctor.get("Expertise");
         Doctor doctor = new Doctor().id(id).name(name).address(address).contact(contact)
                 .email(email).website(website).expertise(expertise);
         return doctor;
     }
 
     public Hospital processHospital(JSONObject hspital) {
-        String id = (String) hspital.get("id");
-        String name = (String) hspital.get("name");
-        String contact = (String) hspital.get("contact");
-        String address = (String) hspital.get("address");
-        String fax = (String) hspital.get("fax");
-        String website = (String) hspital.get("website");
-        String type = (String) hspital.get("type");
-        Hospital hospital = new Hospital().id(id).name(name).contact(contact).address(address)
-                .fax(fax).website(website).type(type);
+        String id = (String) hspital.get("Id");
+        String name = (String) hspital.get("Name");
+        String address = (String) hspital.get("Address");
+        String emergencyDept = (String) hspital.get("EmergencyDept");
+        String phone = (String) hspital.get("Phone");
+        String aftPhone = (String) hspital.get("AftPhone");
+        String fax = (String) hspital.get("Fax");
+        String email = (String) hspital.get("Email");
+        String website = (String) hspital.get("Website");
+        Hospital hospital = new Hospital().id(id).name(name).address(address).emergencyDept(emergencyDept)
+                .phone(phone).aftPhone(aftPhone).fax(fax).email(email).website(website);
         return hospital;
     }
 
     public Pathology processPathology(JSONObject pthology) {
-        String id = (String) pthology.get("id");
-        String name = (String) pthology.get("name");
-        String contact = (String) pthology.get("contact");
-        String address = (String) pthology.get("address");
-        String fax = (String) pthology.get("fax");
-        String website = (String) pthology.get("website");
-        Pathology pathology = new Pathology().id(id).name(name).contact(contact).address(address)
-                .fax(fax).website(website);
+        String id = (String) pthology.get("Id");
+        String name = (String) pthology.get("Name");
+        String address = (String) pthology.get("Address");
+        String phone = (String) pthology.get("Phone");
+        String hours = (String) pthology.get("Hours");
+        if (hours != null){ hours = hours.replaceAll("\u2013", "-"); }
+        String website = (String) pthology.get("Website");
+        Pathology pathology = new Pathology().id(id).name(name).address(address).phone(phone)
+                .hours(hours).website(website);
         return pathology;
     }
 
     public Radiology processRadiology(JSONObject rdiology) {
-        String id = (String) rdiology.get("id");
-        String name = (String) rdiology.get("name");
-        String contact = (String) rdiology.get("contact");
-        String address = (String) rdiology.get("address");
-        String fax = (String) rdiology.get("fax");
-        String website = (String) rdiology.get("website");
-        Radiology radiology = new Radiology().id(id).name(name).contact(contact).address(address)
-                .fax(fax).website(website);
+        String id = (String) rdiology.get("Id");
+        String name = (String) rdiology.get("Name");
+        String address = (String) rdiology.get("Address");
+        String phone = (String) rdiology.get("Phone");
+        String fax = (String) rdiology.get("Fax");
+        String hours = (String) rdiology.get("Hours");
+        String email = (String) rdiology.get("Email");
+        String website = (String) rdiology.get("Website");
+        Radiology radiology = new Radiology().id(id).name(name).address(address).phone(phone)
+                .fax(fax).hours(hours).email(email).website(website);
         return radiology;
     }
 
     public Resource processResource(JSONObject rsource) {
-        String id = (String) rsource.get("id");
-        String uid = (String) rsource.get("uid");
-        String name = (String) rsource.get("name");
-        String website = (String) rsource.get("website");
+        String id = (String) rsource.get("Id");
+        String uid = (String) rsource.get("Uid");
+        String name = (String) rsource.get("Name");
+        String website = (String) rsource.get("Website");
         Resource resource = new Resource().id(id).uid(uid).name(name).website(website);
         return resource;
     }

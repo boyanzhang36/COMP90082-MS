@@ -65,16 +65,16 @@ class _radiologydetailState extends State<radiologydetail>
                       },
                       children: [
                         //address
-                        TableRow(
+                        _radiologyState.address != null ? TableRow(
                             children: [
                               ListTile(
                                 title: Text("Address:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
                               ),
                               ListTile(
                                   title: Text(_radiologyState.address,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.location_on),
                                   onTap: () {
                                     launchURL("https://www.google.com/maps/search/"+_radiologyState.address);
@@ -82,18 +82,31 @@ class _radiologydetailState extends State<radiologydetail>
                               )
 
                             ]
-                        ),
-                        //phone
-                        TableRow(
+                        ) : TableRow(
                             children: [
                               ListTile(
-                                title: Text("Phone:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                title: Text("Address:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
 
                               ),
                               ListTile(
-                                  title: Text(_radiologyState.contact,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+
+                            ]
+                        ),
+                        //phone
+                        _radiologyState.phone != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Phone:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                  title: Text(_radiologyState.phone,
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.phone),
                                   onTap: () {
                                     _callPhone();
@@ -102,40 +115,121 @@ class _radiologydetailState extends State<radiologydetail>
 
 
                             ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Phone:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+
+                              ),
+                              ListTile(
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+
+
+                            ]
                         ),
                         //fax
-                        TableRow(
+                        _radiologyState.fax != null ? TableRow(
                             children: [
                               ListTile(
                                 title: Text("Fax:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
                               ),
                               ListTile(
                                 title: Text(_radiologyState.fax,
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Fax:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text("Not available",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //hours
+                        _radiologyState.hours != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Hours:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text(_radiologyState.hours,
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Hours:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text("Not available",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ),
+                        //email
+                        _radiologyState.email != null ? TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Email:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text(_radiologyState.email,
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Email:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                title: Text("Not available",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                               )
                             ]
                         ),
                         //website
-                        TableRow(
+                        _radiologyState.website != null ? TableRow(
                             children: [
                               ListTile(
                                 title: Text("Website:",
-                                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
                               ),
                               ListTile(
                                   title: Text(_radiologyState.website,
-                                      style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                                   trailing: Icon(Icons.public),
                                   onTap: () {
-                                    launchURL('https://'+_radiologyState.website);
+                                    launchURL(_radiologyState.website);
                                   }
                               )
-
-
+                            ]
+                        ) : TableRow(
+                            children: [
+                              ListTile(
+                                title: Text("Website:",
+                                    style: TextStyle(fontSize: 17.5, fontFamily: "Arial", fontWeight: FontWeight.bold)),
+                              ),
+                              ListTile(
+                                  title: Text("Not available",
+                                      style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
+                              )
                             ]
                         ),
-                        //type
 
 
                       ],
@@ -150,7 +244,7 @@ class _radiologydetailState extends State<radiologydetail>
   }
 
   _callPhone() async {
-    var url = 'tel:' + _radiologyState.contact;
+    var url = 'tel:' + _radiologyState.phone;
     if (await canLaunch(url)) {
       await launch(url);
     } else {

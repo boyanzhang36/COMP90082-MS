@@ -3,9 +3,9 @@ package com.medsec.entity;
 public class Pathology {
     private String id;
     private String name;
-    private String contact;
     private String address;
-    private String fax;
+    private String phone;
+    private String hours;
     private String website;
 
     public String getId() {
@@ -24,14 +24,6 @@ public class Pathology {
         this.name = name;
     }
 
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -40,12 +32,20 @@ public class Pathology {
         this.address = address;
     }
 
-    public String getFax() {
-        return fax;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setFax(String fax) {
-        this.fax = fax;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
     }
 
     public String getWebsite() {
@@ -66,18 +66,18 @@ public class Pathology {
         return this;
     }
 
-    public Pathology contact(final String contact) {
-        this.contact = contact;
-        return this;
-    }
-
     public Pathology address(final String address) {
         this.address = address;
         return this;
     }
 
-    public Pathology fax(final String fax) {
-        this.fax = fax;
+    public Pathology phone(final String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public Pathology hours(final String hours) {
+        this.hours = hours;
         return this;
     }
 

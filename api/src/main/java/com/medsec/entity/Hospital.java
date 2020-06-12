@@ -3,11 +3,13 @@ package com.medsec.entity;
 public class Hospital {
     private String id;
     private String name;
-    private String contact;
     private String address;
+    private String emergencyDept;
+    private String phone;
+    private String aftPhone;
     private String fax;
+    private String email;
     private String website;
-    private String type;
 
     public String getId() {
         return id;
@@ -25,20 +27,36 @@ public class Hospital {
         this.name = name;
     }
 
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getEmergencyDept() {
+        return emergencyDept;
+    }
+
+    public void setEmergencyDept(String emergencyDept) {
+        this.emergencyDept = emergencyDept;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAftPhone() {
+        return aftPhone;
+    }
+
+    public void setAftPhone(String aftPhone) {
+        this.aftPhone = aftPhone;
     }
 
     public String getFax() {
@@ -49,20 +67,20 @@ public class Hospital {
         this.fax = fax;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getWebsite() {
         return website;
     }
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Hospital id(final String id) {
@@ -75,13 +93,23 @@ public class Hospital {
         return this;
     }
 
-    public Hospital contact(final String contact) {
-        this.contact = contact;
+    public Hospital address(final String address) {
+        this.address = address;
         return this;
     }
 
-    public Hospital address(final String address) {
-        this.address = address;
+    public Hospital emergencyDept(final String emergencyDept) {
+        this.emergencyDept = emergencyDept;
+        return this;
+    }
+
+    public Hospital phone(final String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public Hospital aftPhone(final String aftPhone) {
+        this.aftPhone = aftPhone;
         return this;
     }
 
@@ -90,13 +118,13 @@ public class Hospital {
         return this;
     }
 
-    public Hospital website(final String website) {
-        this.website = website;
+    public Hospital email(final String email) {
+        this.email = email;
         return this;
     }
 
-    public Hospital type(final String type) {
-        this.type = type;
+    public Hospital website(final String website) {
+        this.website = website;
         return this;
     }
 }
