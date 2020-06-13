@@ -80,34 +80,6 @@ class _resourcedetailState extends State<resourcedetail>
           ),
         ],
       )
-
-//      Card(
-////        shape: RoundedRectangleBorder(
-////          borderRadius: BorderRadius.circular(4.0),
-////        ),
-//
-////        elevation: 4,
-//        color: backgroundColor,
-//        child: Column(
-////          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//          crossAxisAlignment: CrossAxisAlignment.stretch,
-//          children: <Widget>[
-//            //Icon(Icons.bookmark),
-//            ListTile(
-//              title: Text(name,
-//                  style: TextStyle(fontSize: 25.0, fontFamily: "Arial", fontWeight: FontWeight.bold)),
-//            ),
-//            ListTile(
-//                title: Text(url.toString(),
-//                    style: TextStyle(fontSize: 25.0, fontFamily: "Arial")),
-//                trailing: Icon(Icons.public),
-//                onTap: () {
-//                  launchURL('https://'+url);
-//                }
-//            ),
-//          ],
-//        ),
-//      ),
     );
   }
 

@@ -90,9 +90,13 @@ class _DoctorsState extends State<Doctors> {
                           MaterialPageRoute(
                               builder: (context) {
                                 sendmsg = "Doctors Details" + "\n" + "\n" + "\n" +
+                                    "Name: "  + element.name.toString() + "\n" +
+                                    "Bio: "  + element.bio.toString() + "\n" +
                                     "Address: "  + element.address.toString() + "\n" +
-                                    "Contact: " + element.contact.toString() + "\n" +
+                                    "Phone: " + element.phone.toString() + "\n" +
+                                    "Fax: " + element.fax.toString() + "\n" +
                                     "Email: "  + element.email.toString() + "\n" +
+                                    "Website: "  + element.website.toString() + "\n" +
                                     "Expertise: "  + element.expertise.toString() + "\n" +"\n"
                                     +"\n" + "\n" + "From Medical Secretary App";
 

@@ -66,13 +66,30 @@ class doctordetail extends StatelessWidget{
                         1: FlexColumnWidth(1.0),
                       },
                       children: [
-                        TableRow(
+//                        TableRow(
+//                            children: [
+//                              Text("ID:",
+//                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+//                              Text(_doctor.id,
+//                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+//                              )]
+//                        ),
+                        _doctor.bio != null ? TableRow(
                             children: [
-                              Text("ID:",
+                              Text("Bio:",
                                 style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
-                              Text(_doctor.id,
+                              Text(_doctor.bio,
                                 style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
-                              )]
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              Text("Bio:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text("Not available",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )
+                            ]
                         ),
                         _doctor.address != null ? TableRow(
                             children: [
@@ -91,20 +108,37 @@ class doctordetail extends StatelessWidget{
                               )
                             ]
                         ),
-                        _doctor.contact != null ? TableRow(
+                        _doctor.phone != null ? TableRow(
                             children: [
-                              Text("Contact:",
+                              Text("Phone:",
                                 style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
-                              Text(_doctor.contact,
+                              Text(_doctor.phone,
                                 style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
                               )]
                         ) : TableRow(
                             children: [
-                              Text("Contact:",
+                              Text("Phone:",
                                 style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
                               Text("Not available",
                                 style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
                               )]
+                        ),
+                        _doctor.fax != null ? TableRow(
+                            children: [
+                              Text("Fax:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text(_doctor.fax,
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              Text("Fax:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text("Not available",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )
+                            ]
                         ),
                         _doctor.email != null ? TableRow(
                             children: [
@@ -117,6 +151,23 @@ class doctordetail extends StatelessWidget{
                         ) : TableRow(
                             children: [
                               Text("Email:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text("Not available",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )
+                            ]
+                        ),
+                        _doctor.website != null ? TableRow(
+                            children: [
+                              Text("Website:",
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
+                              Text(_doctor.website,
+                                style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
+                              )
+                            ]
+                        ) : TableRow(
+                            children: [
+                              Text("Website:",
                                 style: TextStyle(fontSize: 20.0, fontFamily: "Arial", fontWeight: FontWeight.bold),),
                               Text("Not available",
                                 style: TextStyle(fontSize: 20.0, fontFamily: "Arial", ),
