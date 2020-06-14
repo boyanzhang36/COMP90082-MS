@@ -140,10 +140,12 @@ While the api will be automatically deployed via docker-compose, the following d
 
 The code is built using maven and the documatation for building can be found in the last team's submission documents.  
 
-Essentially mvn clean install will build a ```.war``` file in the target directory, to deploy move this file into backend/tomcat/webapps then rebuild the docker containers with  
+Essentially ```mvn clean install``` will build a ```.war``` file in the target directory, to deploy move this file into backend/tomcat/webapps then rebuild the docker containers with  
 
 ```
+docker-compose down
 docker-compose --build
+docker-compose up -d
 ```
 
 One important note is that the java version maven uses must match with the java version tomcat uses, the following configuration works without issues:  

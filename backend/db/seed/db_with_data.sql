@@ -5,6 +5,7 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP DATABASE IF EXISTS `medsec`;
 CREATE DATABASE `medsec` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `medsec`;
 
@@ -12,52 +13,53 @@ DROP TABLE IF EXISTS `Appointment`;
 CREATE TABLE `Appointment` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
+  `did` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
+  `detail` longtext DEFAULT NULL,
   `date_create` datetime NOT NULL,
   `date_change` datetime DEFAULT NULL,
   `date` datetime NOT NULL,
   `duration` int(45) NOT NULL,
-  `detail` longtext DEFAULT NULL,
   `note` longtext DEFAULT NULL,
   `user_note` longtext DEFAULT NULL,
   `status` enum('UNCONFIRMED','CONFIRMED','CANCELLED') DEFAULT 'UNCONFIRMED',
   PRIMARY KEY (`id`),
   KEY `fk_Appointment_Patient1_idx` (`uid`),
-  CONSTRAINT `Appointment_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
+  KEY `did` (`did`),
+  CONSTRAINT `Appointment_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `User` (`id`),
+  CONSTRAINT `Appointment_ibfk_3` FOREIGN KEY (`did`) REFERENCES `Doctor` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `Appointment` (`id`, `uid`, `title`, `date_create`, `date_change`, `date`, `duration`, `detail`, `note`, `user_note`, `status`) VALUES
-(1,	1,	'Day Oncology Unit',	'2020-05-16 05:23:41',	'2020-05-16 05:23:41',	'2020-06-11 14:02:00',	60,	'Education session',	'Looking after yourself during chemotherapy - Watch Patient Health History Sheet - Please fill in and email back to daychemo.wrp@ramsayhealth.com.au Parking Information - ReadQuestions Sheet - Read',	NULL,	'CONFIRMED'),
-(2,	1,	'Day Oncology Unit',	'2020-05-16 05:23:41',	'2020-05-16 05:23:41',	'2020-07-08 14:02:00',	60,	'Education session',	'Looking after yourself during chemotherapy - Watch Patient Health History Sheet - Please fill in and email back to daychemo.wrp@ramsayhealth.com.au Parking Information - ReadQuestions Sheet - Read',	NULL,	'UNCONFIRMED'),
-(3,	1,	'Pathology',	'2020-05-16 05:23:41',	'2018-05-16 05:23:41',	'2020-06-08 14:02:00',	60,	'Education session',	'Education.',	NULL,	'UNCONFIRMED'),
-(4,	5,	'Appoinment',	'2020-04-20 08:26:10',	NULL,	'2020-07-20 08:26:10',	30,	'Test',	'Test.',	NULL,	'UNCONFIRMED');
+INSERT INTO `Appointment` (`id`, `uid`, `did`, `title`, `detail`, `date_create`, `date_change`, `date`, `duration`, `note`, `user_note`, `status`) VALUES
+(1, 1,  1,  'Day Oncology Unit',  'Education session',  '2020-05-16 05:23:41',  '2020-05-16 05:23:41',  '2020-06-15 14:02:00',  3660, 'Looking after yourself during chemotherapy - Watch Patient Health History Sheet - Please fill in and email back to daychemo.wrp@ramsayhealth.com.au Parking Information - ReadQuestions Sheet - Read', NULL, 'CONFIRMED');
 
 DROP TABLE IF EXISTS `Doctor`;
 CREATE TABLE `Doctor` (
   `id` int(11) NOT NULL,
-  `contact` varchar(45) NOT NULL,
-  `address` varchar(45) NOT NULL,
-  `fax` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `website` varchar(45) DEFAULT NULL,
-  `expertise` mediumtext NOT NULL,
   `name` varchar(45) NOT NULL,
+  `bio` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `fax` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `expertise` mediumtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `Doctor` (`id`, `contact`, `address`, `fax`, `email`, `website`, `expertise`, `name`) VALUES
-(1,	'555',	'14 Fake st',	'',	'doctor@doctor.com',	NULL,	'Radiology',	'Callum'),
-(2,	'555',	'16 tardis street',	'555',	'timelord_01@Gallifrey',	'test.com',	'Electronic screwdriver',	'Dr. Who'),
-(3,	'655',	'Bond st ',	'555',	'Drno@gmail.com',	'Www.no.com',	'Lasers, sharks',	'Dr. No'),
-(5,	'55',	'Fgjgd',	'555',	'Gdshh',	'Gfdf',	'Cgjh',	'Gfdh');
+INSERT INTO `Doctor` (`id`, `name`, `bio`, `address`, `phone`, `fax`, `email`, `website`, `expertise`) VALUES
+(1, 'Callum', NULL, '14 Fake st', '555',  NULL, 'doctor@doctor.com',  NULL, 'Radiology'),
+(2, 'Dr. Who',  NULL, '16 tardis street', '555',  '555',  'timelord_01@Gallifrey',  'test.com', 'Electronic screwdriver'),
+(3, 'Dr. No', NULL, 'Bond st ', '655',  '555',  'drno@gmail.com', 'www.no.com', 'Lasers, sharks');
 
 DROP TABLE IF EXISTS `File`;
 CREATE TABLE `File` (
   `id` int(11) NOT NULL,
-  `title` varchar(45) NOT NULL,
-  `link` varchar(45) NOT NULL,
   `apptid` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `link` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `link` (`link`),
   KEY `apptid` (`apptid`),
   CONSTRAINT `File_ibfk_2` FOREIGN KEY (`apptid`) REFERENCES `Appointment` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -66,17 +68,23 @@ CREATE TABLE `File` (
 DROP TABLE IF EXISTS `Hospital`;
 CREATE TABLE `Hospital` (
   `id` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `contact` varchar(45) NOT NULL,
-  `address` varchar(45) NOT NULL,
-  `fax` varchar(45) NOT NULL,
-  `website` varchar(45) DEFAULT NULL,
-  `type` varchar(45) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `emergencyDept` varchar(255) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `aftPhone` varchar(45) DEFAULT NULL,
+  `fax` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `Hospital` (`id`, `name`, `contact`, `address`, `fax`, `website`, `type`) VALUES
-(1,	'Harry',	'123456',	'Melbourne',	'123456',	'www.unimelb.edu.au',	'doctor');
+INSERT INTO `Hospital` (`id`, `name`, `address`, `emergencyDept`, `phone`, `aftPhone`, `fax`, `email`, `website`) VALUES
+(1, 'Warringal Private Hospital', '216 burgundy Street, Heidelberg VIC 3084', NULL, '(03) 9274 1300', NULL, '(03) 9459 7606', NULL, 'https://www.warringalprivate.com.au'),
+(2, 'Warringal Day Oncology Unit',  'Warringal Private Hospital, 8 Martin Street, HEIDELBERG VIC ', NULL, '(03) 9274 1423', '9274 1371',  NULL, 'daychemo.wrp@ramsayhealth.com.au', 'https://www.warringalprivate.com.au/Our-Services/Day-Oncology-Centre'),
+(3, 'Austin Hospital',  '145 Studley Rd, Heidelberg VIC 3084',  'Open 24 hours',  '(03) 9496 5000', NULL, '(03) 9458 4779', NULL, 'https://www.austin.org.au'),
+(4, 'Austin Repatriation Hospital', '300 Waterdale Road, Ivanhoe Victoria 3079',  NULL, '(03) 9496 5000', NULL, '(03) 9496 2541', NULL, 'https://www.austin.org.au/heidelberg-repatriation-hospital'),
+(5, 'Olivia Newton-John Cancer Wellness and Research Centre', '145 Studley Road, Heidelberg Victoria 3084', NULL, '(03) 9496 5000', NULL, '(03) 9458 4779', NULL, 'https://www.onjcancercentre.org');
 
 DROP TABLE IF EXISTS `NotificationToken`;
 CREATE TABLE `NotificationToken` (
@@ -90,82 +98,80 @@ CREATE TABLE `NotificationToken` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `NotificationToken` (`id`, `uid`, `fcm_token`) VALUES
-(48,	1,	'c7YzpQUQNS0:APA91bFMJ_3BRweXo__qhrQQ5pwXwnJbtlhtqJbu9HAU6LBrFyT6IO7TcQB1HNfvbUDMvt0hkk5WHEqcDrzUFORISASpZh34hPpUCVQ5Od0XEfiv31NAR3Ub0BfmOxdbvPk5xt01ia7a'),
-(60,	1,	'cCGT0Ormh00:APA91bEa2lO4G4ZuV2YUWetwBl_rdFXtz1PT5PEj-nK02ddFArfH_B0ikwRbrFbniX-xvIvTqaw3973u5G_knjhzDt_aUBr2jG0gMBOLKA8sL73PisBJciqx0rs3dQ4KVqL-FkrcOJ5T'),
-(80,	1,	'cMTb4GEv1aI:APA91bEptgtlZKCrzse3-3pxPxeRtuDG60SdQ3uDOEKiodBMp93HbmXBVBCr350DoBthwJam3SPWVC5cgheKpV_JW3ZkSXSndVWT9RgUp1YDX4Fb07OOVa5M5Mlnj0Ylzdby6cjWwaP6'),
-(81,	5,	'cMTb4GEv1aI:APA91bEptgtlZKCrzse3-3pxPxeRtuDG60SdQ3uDOEKiodBMp93HbmXBVBCr350DoBthwJam3SPWVC5cgheKpV_JW3ZkSXSndVWT9RgUp1YDX4Fb07OOVa5M5Mlnj0Ylzdby6cjWwaP6'),
-(45,	5,	'dYdFwGvckS4:APA91bFsMvl_sNQ4Wd9_DQITMVWNwHjhN9BFCtzi1NwvuQOjn4bz_vwpHgyPKlWnF3PbGWohzasSOdfD0CkA8gdCYLlaFvkS6F_8QgVEbDRfQhZpaCJLcUKYeRFAVxlTfqIMQk6X2i8i'),
-(47,	6,	'dYdFwGvckS4:APA91bFsMvl_sNQ4Wd9_DQITMVWNwHjhN9BFCtzi1NwvuQOjn4bz_vwpHgyPKlWnF3PbGWohzasSOdfD0CkA8gdCYLlaFvkS6F_8QgVEbDRfQhZpaCJLcUKYeRFAVxlTfqIMQk6X2i8i');
+(111, 1,  'cCGT0Ormh00:APA91bEa2lO4G4ZuV2YUWetwBl_rdFXtz1PT5PEj-nK02ddFArfH_B0ikwRbrFbniX-xvIvTqaw3973u5G_knjhzDt_aUBr2jG0gMBOLKA8sL73PisBJciqx0rs3dQ4KVqL-FkrcOJ5T'),
+(80,  1,  'cMTb4GEv1aI:APA91bEptgtlZKCrzse3-3pxPxeRtuDG60SdQ3uDOEKiodBMp93HbmXBVBCr350DoBthwJam3SPWVC5cgheKpV_JW3ZkSXSndVWT9RgUp1YDX4Fb07OOVa5M5Mlnj0Ylzdby6cjWwaP6');
 
 DROP TABLE IF EXISTS `Pathology`;
 CREATE TABLE `Pathology` (
   `id` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `contact` varchar(45) NOT NULL,
-  `address` varchar(45) NOT NULL,
-  `fax` varchar(45) NOT NULL,
-  `website` varchar(225) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `hours` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `Pathology` (`id`, `name`, `contact`, `address`, `fax`, `website`) VALUES
-(1,	'Dorevitch Pathology',	'0394572200',	'66 Darebin Street Heidelberg VIC 3084',	'',	'www.dorevitch.com.au/patients/find-a-collection-centre/'),
-(2,	'Mack',	'Carlton',	'123',	'123',	'www.google.com'),
-(3,	'Jack',	'North Melbourne',	'33333',	'333',	'www.google.com');
+INSERT INTO `Pathology` (`id`, `name`, `address`, `phone`, `hours`, `website`) VALUES
+(1, 'Dorevitch Pathology',  '66 Darebin Street, HEIDELBERG VIC 3084', '(03) 9457 2200', 'Monday Closed\nTuesday 12-5pm\nWednesday 9am-1pm\nThursday 9am-1pm\nFriday 9am-1pm\nSaturday Closed\nSunday  Closed ', 'https://www.dorevitch.com.au/patients/find-a-collection-centre/'),
+(2, 'Melbourne Pathology',  NULL, NULL, NULL, 'https://www.mps.com.au/locations/'),
+(3, 'Austin Pathology', 'Level 6, Harold Stokes Building, Austin Hospital Studley Road, Heidelberg, VIC 3084',  '9496-3100 (24/7)', NULL, 'https://www.austinpathology.org.au'),
+(4, 'Australian Clinical Labs', NULL, NULL, NULL, 'https://www.clinicallabs.com.au');
 
 DROP TABLE IF EXISTS `Radiology`;
 CREATE TABLE `Radiology` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `contact` varchar(45) NOT NULL,
-  `address` varchar(45) NOT NULL,
-  `fax` varchar(45) NOT NULL,
-  `website` varchar(45) DEFAULT NULL,
+  `name` varchar(45) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  `fax` varchar(45) DEFAULT NULL,
+  `hours` varchar(255) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `Radiology` (`id`, `name`, `contact`, `address`, `fax`, `website`) VALUES
-(1,	'1-MED',	'0394501800',	'level1/10 Martin St, Heigelberg VIC 3084',	'0394501888',	'i-med.com.au/clinics/clinic/Heidelberg');
+INSERT INTO `Radiology` (`id`, `name`, `address`, `phone`, `fax`, `hours`, `email`, `website`) VALUES
+(1, 'I-MED ', 'Level 1/10 Martin St, Heidelberg VIC 3084',  '(03) 9450 1800', '(03) 9450 1888', 'Monday - Friday, 8:30am - 5:30pm', NULL, 'https://i-med.com.au/clinics/clinic/Heidelberg'),
+(2, 'I-MED Warringal Radiology',  'Warringal Medical Centre Level 2, 214 Burgundy Street Heidelberg VIC 3084',  '(03) 9450 2100', '(03) 9450 2114', 'Monday - Friday, 8:30am - 5:30pm', NULL, 'https://i-med.com.au/clinics/clinic/Warringal'),
+(3, 'Austin Nuclear Medicine and PET',  'Level 1, Harold Stoke Building, 145 Studley Road', '(03) 9496 5718', '(03) 9457 6605', NULL, 'enquiries.miat@austin.org.au', 'https://www.austin.org.au/MIaT_Contact_Us/'),
+(4, 'Austin Radiology - Repatriation Hospital', '300 Waterdale Road, Ivanhoe Victoria 3079',  '(03) 9496 5000', '(03) 9496 2541', NULL, 'enquiries.radiology@austin.org.au',  'https://www.austin.org.au/heidelberg-repatriation-hospital');
 
 DROP TABLE IF EXISTS `Resource`;
 CREATE TABLE `Resource` (
   `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `website` varchar(45) NOT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `uid` (`uid`),
-  CONSTRAINT `Resource_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
+  CONSTRAINT `Resource_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `User` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `Resource` (`id`, `uid`, `name`, `website`) VALUES
-(1,	1,	'Download',	'www.google.com');
+(1, 1,  'Download Information', 'https://www.google.com');
 
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
-  `password` varchar(255) DEFAULT NULL,
   `id` int(11) NOT NULL,
-  `surname` varchar(45) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `firstname` varchar(45) NOT NULL,
   `middlename` varchar(45) DEFAULT NULL,
+  `surname` varchar(45) NOT NULL,
   `dob` date NOT NULL,
   `email` varchar(255) NOT NULL,
   `street` varchar(45) DEFAULT NULL,
   `suburb` varchar(45) DEFAULT NULL,
   `state` varchar(45) DEFAULT NULL,
   `token` varchar(255) DEFAULT NULL,
-  `token_expire_date` datetime DEFAULT NULL,
   `token_valid_from` datetime DEFAULT NULL,
+  `token_expire_date` datetime DEFAULT NULL,
   `role` enum('PATIENT','ADMIN') DEFAULT 'PATIENT',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `User` (`password`, `id`, `surname`, `firstname`, `middlename`, `dob`, `email`, `street`, `suburb`, `state`, `token`, `token_expire_date`, `token_valid_from`, `role`) VALUES
-('123',	1,	'Williamson',	'Alex',	'Mileston',	'1986-07-22',	'williamson@example.com',	'97 Masthead Drive',	'ROCKHAMPTON',	'QLD',	'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6ImlxYXM0bWNwanM3bG90bnM1YXJxbG1wZnJqIiwiZXhwIjoxNTkxMzM2MzAwLCJpYXQiOjE1OTEyNDk5MDAsInN1YiI6IjEifQ.vPNi7SOX-VKpZAzg04EXIYtmZqiqC6vnJngDHe4C0fA5jQXXwjgkLh-P0-Uog50GQUdyssTMHhqumLd6hAp8Ug',	'2020-06-05 05:51:40',	'2020-06-04 05:51:40',	'PATIENT'),
-('1230',	2,	'Maggard',	'Arnold',	'Logan',	'1968-02-10',	'arnold@example.com',	'42 Edgewater Close',	'HUSKISSON',	'NSW',	NULL,	NULL,	'2018-08-09 13:09:29',	'ADMIN'),
-(NULL,	3,	'Sharpe',	'Chad',	NULL,	'1979-08-03',	'chad@example.com',	'41 Ross Street',	NULL,	NULL,	NULL,	NULL,	NULL,	'PATIENT'),
-(NULL,	4,	'Haggerty',	'Susan',	NULL,	'1994-01-08',	'susan@example.com',	NULL,	NULL,	NULL,	NULL,	NULL,	'2018-08-04 14:05:19',	'PATIENT'),
-('1',	5,	'Dowling',	'Callum',	NULL,	'1991-01-25',	'callum.dowling@gmail.com',	NULL,	NULL,	NULL,	'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6InRpdHRnYWQ2c2NuOHJhMXYxOG1yN25qYjE3IiwiZXhwIjoxNTkxMzE1ODYyLCJpYXQiOjE1OTEyMjk0NjIsInN1YiI6IjUifQ.c3ljk1av8pClXVedfjF4Lxd9weoWX6Hvl-PTV-hubNp19NszhKiH-afb43q2cCe0RhLDLj_yBpbfnP5O-wtl_A',	'2020-06-05 00:11:02',	'2020-06-04 00:11:02',	'PATIENT'),
-('ggg',	6,	'test',	'test',	'test',	'2019-10-09',	'test@test.com',	NULL,	NULL,	NULL,	'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6ImRnMmJyZjRvbnFhZ3JhMW9tc2VxNDNkYzlrIiwiZXhwIjoxNTcwNzIwMDQ2LCJpYXQiOjE1NzA2MzM2NDYsInN1YiI6IjYifQ.tJNNP26dCI4k8jyEYytaZVhQr2OxpP6h354DZZ_yvmsDPeF1rx-itajViUHarT0X6V_r14QiQqz-_xzGYesL1Q',	'2019-10-10 15:07:26',	'2019-10-09 15:07:26',	'PATIENT');
+INSERT INTO `User` (`id`, `password`, `firstname`, `middlename`, `surname`, `dob`, `email`, `street`, `suburb`, `state`, `token`, `token_valid_from`, `token_expire_date`, `role`) VALUES
+(1, '123',  'Alex', 'Mileston', 'Williamson', '1986-06-24', 'williamson@example.com', '97 Masthead Drive',  'ROCKHAMPTON',  'QLD',  'eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiUEFUSUVOVCIsImp0aSI6ImFvYzVmdG5qbXNlanM3bzM2ajd1MTlkYzQyIiwiZXhwIjoxNTkyMjA5NDI0LCJpYXQiOjE1OTIxMjMwMjQsInN1YiI6IjEifQ.eSh69-KmTU1Ccfh8MDb5n-4LAVKb_aktomtRPBCKr_i7bpNfuabpW1Dr1FwFVaim3ZgteqFEyQDeobHmV3UjUg', '2020-06-14 08:23:44',  '2020-06-15 08:23:44',  'PATIENT');
 
--- 2020-06-10 16:55:50
+-- 2020-06-14 09:26:56
