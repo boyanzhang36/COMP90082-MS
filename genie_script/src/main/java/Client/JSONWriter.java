@@ -128,7 +128,11 @@ public class JSONWriter {
                     for (int j = 0; j < tds.size(); j++){
 
                         Element pHead = tdHeads.get(j).select("p").get(0);
-                        Element pContent = tds.get(j).select("p").get(0);
+                        Element pContent = tds.get(j).select("font").get(0);
+
+                        if (pContent.hasClass("p")){
+                            pContent = pContent.select("p").get(0);
+                        }
 
                         if (pContent != null){
                             jsonObject.put(pHead.text(), pContent.text());

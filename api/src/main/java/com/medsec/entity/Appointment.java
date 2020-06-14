@@ -1,6 +1,6 @@
 package com.medsec.entity;
 
-import com.medsec.util.AppointmentStatus;
+import com.medsec.util.*;
 
 import java.time.Instant;
 
@@ -9,14 +9,14 @@ public class Appointment {
     private String uid;
     private String did;
     private String title;
+    private String detail;
     private Instant date_create;
     private Instant date_change;
     private Instant date;
     private Integer duration;
-    private String detail;
     private String note;
     private String user_note;
-    private String status;
+    private AppointmentStatus status;
 
     public String getId() {
         return id;
@@ -48,6 +48,14 @@ public class Appointment {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public Instant getDate_create() {
@@ -82,14 +90,6 @@ public class Appointment {
         this.duration = duration;
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
     public String getNote() {
         return note;
     }
@@ -106,11 +106,11 @@ public class Appointment {
         this.user_note = user_note;
     }
 
-    public String getStatus() {
+    public AppointmentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
 
@@ -134,6 +134,11 @@ public class Appointment {
         return this;
     }
 
+    public Appointment detail(final String detail) {
+        this.detail = detail;
+        return this;
+    }
+
     public Appointment date_create(final Instant date_create) {
         this.date_create = date_create;
         return this;
@@ -154,11 +159,6 @@ public class Appointment {
         return this;
     }
 
-    public Appointment detail(final String detail) {
-        this.detail = detail;
-        return this;
-    }
-
     public Appointment note(final String note) {
         this.note = note;
         return this;
@@ -169,9 +169,8 @@ public class Appointment {
         return this;
     }
 
-    public Appointment status(final String status) {
+    public Appointment status(final AppointmentStatus status) {
         this.status = status;
         return this;
     }
-
 }

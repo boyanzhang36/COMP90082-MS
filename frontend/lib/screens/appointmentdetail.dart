@@ -94,7 +94,8 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             print("TEMP" + _appointmentState.date.toString());
             sendmsg = "Appointment Details" + "\n" + "\n" + "\n" +
                 "Appts: "  + _appointmentState.title.toString() + "\n" +
-                "Day/Time: " + _appointmentState.date.toString() + "\n" + "\n"
+                "Day/Time: " + DateFormat.jm().format(_appointmentState.date)+ '  ' +DateFormat('EE').format(_appointmentState.date)
+                + ',  '+ DateFormat.MMMd().format(_appointmentState.date) + ',  ' +DateFormat.y().format(_appointmentState.date) + "\n" + "\n"
                 +"\n" + "\n" + "From Medical Secretary App";
           });
         }
@@ -344,7 +345,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
             children: <Widget>[
-              Text(_appointmentState.title.toString(), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+              Text("Not available", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
                 textAlign: TextAlign.left,
               ),
             ],

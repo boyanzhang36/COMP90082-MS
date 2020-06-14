@@ -168,7 +168,7 @@ public class SocketServerProcess implements Runnable {
         int duration = Integer.parseInt((String) appt.get("ApptDuration")) / 60;
         String status = (String) appt.get("status");
         Appointment appointment = new Appointment().id(id).uid(uid).title(title).detail(detail).note(note)
-                .date_create(dateCreate).date_change(dateChange).date(date).duration(duration).status(status);
+                .date_create(dateCreate).date_change(dateChange).date(date).duration(duration).status(AppointmentStatus.UNCONFIRMED);
         return appointment;
     }
 

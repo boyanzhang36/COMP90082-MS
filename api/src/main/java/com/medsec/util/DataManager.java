@@ -24,15 +24,16 @@ public class DataManager {
     /** create patient instance from json object */
     public User processPatient(JSONObject user) {
         String id = (String) user.get("PatientId");
-        String surname = (String) user.get("Surname");
         String firstName = (String) user.get("FirstName");
+        String middleName = (String) user.get("MiddleName");
+        String surname = (String) user.get("Surname");
+        LocalDate dob = LocalDate.parse((String) user.get("DOB"));
         String email = (String) user.get("Email");
         String street = (String) user.get("Street");
         String suburb = (String) user.get("Suburb");
         String state = (String) user.get("State");
-        LocalDate dob = LocalDate.parse((String) user.get("DOB"));
-        User patient = new User().id(id).surname(surname).firstname(firstName).email(email)
-                .street(street).suburb(suburb).state(state).dob(dob).role(UserRole.PATIENT);
+        User patient = new User().id(id).firstname(firstName).middlename(middleName).surname(surname).dob(dob)
+                .email(email).street(street).suburb(suburb).state(state).role(UserRole.PATIENT);
         return patient;
     }
 
@@ -43,7 +44,6 @@ public class DataManager {
         String did = (String) appt.get("ProviderID");
         String title = (String) appt.get("Name");
         String detail = (String) appt.get("Reason");
-        String note = (String) appt.get("Note");
         Instant dateCreate = Instant.parse((String) appt.get("CreationDate"));
         String test = (String) appt.get("StartTime");
         long startTime = Long.parseLong(test);
@@ -51,9 +51,9 @@ public class DataManager {
         Instant dateStart = Instant.parse((String) appt.get("StartDate"));
         Instant date = startDateConvert(dateStart, startTime);
         int duration = Integer.parseInt((String) appt.get("ApptDuration"));
-        String status = (String) appt.get("Status");
-        Appointment appointment = new Appointment().id(id).uid(uid).did(did).title(title).detail(detail).note(note)
-                .date_create(dateCreate).date_change(dateChange).date(date).duration(duration).status(status);
+        String note = (String) appt.get("Note");
+        Appointment appointment = new Appointment().id(id).uid(uid).did(did).title(title).detail(detail)
+                .date_create(dateCreate).date_change(dateChange).date(date).duration(duration).note(note).status(AppointmentStatus.UNCONFIRMED);
         return appointment;
     }
 
@@ -79,19 +79,23 @@ public class DataManager {
         return instant;
     }
 
+    /** create doctor instance from json object */
     public Doctor processDoctor(JSONObject dctor) {
         String id = (String) dctor.get("Id");
         String name = (String) dctor.get("Name");
+        String bio = (String) dctor.get("Bio");
         String address = (String) dctor.get("Address");
-        String contact = (String) dctor.get("Contact");
+        String phone = (String) dctor.get("Phone");
+        String fax = (String) dctor.get("Fax");
         String email = (String) dctor.get("Email");
         String website = (String) dctor.get("Website");
         String expertise = (String) dctor.get("Expertise");
-        Doctor doctor = new Doctor().id(id).name(name).address(address).contact(contact)
-                .email(email).website(website).expertise(expertise);
+        Doctor doctor = new Doctor().id(id).name(name).bio(bio).address(address).phone(phone)
+                .fax(fax).email(email).website(website).expertise(expertise);
         return doctor;
     }
 
+    /** create hospital instance from json object */
     public Hospital processHospital(JSONObject hspital) {
         String id = (String) hspital.get("Id");
         String name = (String) hspital.get("Name");
@@ -107,6 +111,7 @@ public class DataManager {
         return hospital;
     }
 
+    /** create pathology instance from json object */
     public Pathology processPathology(JSONObject pthology) {
         String id = (String) pthology.get("Id");
         String name = (String) pthology.get("Name");
@@ -120,6 +125,7 @@ public class DataManager {
         return pathology;
     }
 
+    /** create radiology instance from json object */
     public Radiology processRadiology(JSONObject rdiology) {
         String id = (String) rdiology.get("Id");
         String name = (String) rdiology.get("Name");
@@ -134,6 +140,7 @@ public class DataManager {
         return radiology;
     }
 
+    /** create resource instance from json object */
     public Resource processResource(JSONObject rsource) {
         String id = (String) rsource.get("Id");
         String uid = (String) rsource.get("Uid");

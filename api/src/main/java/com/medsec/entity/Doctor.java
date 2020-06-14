@@ -3,8 +3,10 @@ package com.medsec.entity;
 public class Doctor {
     private String id;
     private String name;
+    private String bio;
     private String address;
-    private String contact;
+    private String phone;
+    private String fax;
     private String email;
     private String website;
     private String expertise;
@@ -25,6 +27,14 @@ public class Doctor {
         this.name = name;
     }
 
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -33,12 +43,20 @@ public class Doctor {
         this.address = address;
     }
 
-    public String getContact() {
-        return contact;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 
     public String getEmail() {
@@ -75,13 +93,23 @@ public class Doctor {
         return this;
     }
 
+    public Doctor bio(final String bio) {
+        this.bio = bio;
+        return this;
+    }
+
     public Doctor address(final String address) {
         this.address = address;
         return this;
     }
 
-    public Doctor contact(final String contact) {
-        this.contact = contact;
+    public Doctor phone(final String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public Doctor fax(final String fax) {
+        this.fax = fax;
         return this;
     }
 

@@ -210,9 +210,15 @@ class TCPServerProcess implements Runnable{
                 log.error("Push notification error");
             }
         } else {
-            log.info("update exist appointment");
-            Appointment apptointment = dataManager.processAppt(appt);
-            db.updateAppointment(apptointment);
+            Appointment appointment = dataManager.processAppt(appt);
+            Appointment apptintmentDB = db.getAppointment(id);
+            // Justify whether the uploaded data equals to the ones in database
+            if (!isApptEqual(appointment, apptintmentDB)) {
+                //if not equal, update the database
+                Database db1 = new Database();
+                log.info("update exist appointment");
+                db1.updateAppointment(appointment);
+            }
         }
         return false;
     }
@@ -338,15 +344,57 @@ class TCPServerProcess implements Runnable{
         }
         String id = apptid;
         com.medsec.entity.File appointmentFile = new com.medsec.entity.File().id(id)
-                .title(fileName).link(eachFilePath).apptid(apptid);
+                .apptid(apptid).title(fileName).link(eachFilePath);
         Database db = new Database();
         if (!isFileExist(apptid)){
-            log.info("insert new File");
+            log.info("insert new file");
             db.insertFile(appointmentFile);
+        } else {
+            log.info("update existed file");
+            db.updateFile(appointmentFile);
         }
 
         return false;
 
+    }
+
+    // Justify whether two Apponitments are identical
+    public boolean isApptEqual(Appointment appt, Appointment apptDB){
+
+        boolean flag = true;
+
+        if (!appt.getId().equals(apptDB.getId())){
+            flag = false;
+        }
+        if (!appt.getUid().equals(apptDB.getUid())){
+            flag = false;
+        }
+        if (!appt.getDid().equals(apptDB.getDid())){
+            flag = false;
+        }
+        if (!appt.getTitle().equals(apptDB.getTitle())){
+            flag = false;
+        }
+        if (!appt.getDate_create().equals(apptDB.getDate_create())){
+            flag = false;
+        }
+        if (!appt.getDate_change().equals(apptDB.getDate_change())){
+            flag = false;
+        }
+        if (!appt.getDate().equals(apptDB.getDate())){
+            flag = false;
+        }
+        if (!appt.getDuration().equals(apptDB.getDuration())){
+            flag = false;
+        }
+        if (!appt.getDetail().equals(apptDB.getDetail())){
+            flag = false;
+        }
+        if (!appt.getNote().equals(apptDB.getNote())){
+            flag = false;
+        }
+
+        return flag;
     }
 
     /** check if the patient is already in the database */
@@ -363,36 +411,42 @@ class TCPServerProcess implements Runnable{
         return appt != null;
     }
 
+    /** check if the doctor is already in the database */
     public boolean isDoctorExist(String id){
         Database db = new Database();
         Doctor dctor = db.selectOneDoctor(id);
         return dctor != null;
     }
 
+    /** check if the hospital is already in the database */
     public boolean isHospitalExist(String id){
         Database db = new Database();
         Hospital hspital = db.selectOneHospital(id);
         return hspital != null;
     }
 
+    /** check if the pathology is already in the database */
     public boolean isPathologyExist(String id){
         Database db = new Database();
         Pathology pthology = db.selectOnePathology(id);
         return pthology != null;
     }
 
+    /** check if the radiology is already in the database */
     public boolean isRadiologyExist(String id){
         Database db = new Database();
         Radiology rology = db.selectOneRadiology(id);
         return rology != null;
     }
 
+    /** check if the resource is already in the database */
     public boolean isResourceExist(String id){
         Database db = new Database();
         Resource rsource = db.getResource(id);
         return rsource != null;
     }
 
+    /** check if the file is already in the database */
     public boolean isFileExist(String id){
         Database db = new Database();
         com.medsec.entity.File file = db.selectFileById(id);

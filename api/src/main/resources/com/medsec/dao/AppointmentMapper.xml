@@ -47,19 +47,19 @@
     </update>
 
     <insert id="insertAppointment" parameterType="com.medsec.entity.Appointment">
-        INSERT INTO Appointment (id, uid, did, title, date_create, date_change, date, duration, detail, note, status)
-        VALUES (#{id}, #{uid}, #{did}, #{title}, #{date_create}, #{date_change},#{date},#{duration},#{detail},#{note},#{status});
+        INSERT INTO Appointment (id, uid, did, title, detail, date_create, date_change, date, duration, note, status)
+        VALUES (#{id}, #{uid}, #{did}, #{title}, #{detail}, #{date_create}, #{date_change}, #{date}, #{duration}, #{note}, #{status});
     </insert>
 
     <update id="updateAppointment" parameterType="com.medsec.entity.Appointment">
         UPDATE Appointment SET
         did= #{did},
         title= #{title},
+        detail= #{detail},
         date_create= #{date_create},
         date_change= #{date_change},
         date= #{date},
         duration= #{duration},
-        detail= #{detail},
         note= #{note},
         status= #{status}
         WHERE id= #{id}

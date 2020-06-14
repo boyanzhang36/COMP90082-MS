@@ -25,15 +25,17 @@
     <update id="updateDoctor" parameterType="com.medsec.entity.Doctor">
         update Doctor SET
         Doctor.name=#{name},
+        Doctor.bio=#{bio},
         Doctor.address=#{address},
-        Doctor.contact=#{contact},
+        Doctor.phone=#{phone},
+        Doctor.fax=#{fax},
         Doctor.email=#{email},
         Doctor.website=#{website},
         Doctor.expertise=#{expertise}
         where Doctor.id=#{id}
     </update>
     <insert id="addDoctor" parameterType="com.medsec.entity.Doctor">
-        INSERT INTO Doctor(id,name,address,contact,email,website,expertise)
-        VALUES (#{id},#{name},#{address},#{contact},#{email},#{website},#{expertise})
+        INSERT INTO Doctor(id,name,bio,address,phone,fax,email,website,expertise)
+        VALUES (#{id},#{name},#{bio},#{address},#{phone},#{fax},#{email},#{website},#{expertise})
     </insert>
 </mapper>

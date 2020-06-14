@@ -142,7 +142,7 @@ public class Database {
         }
     }
 
-    public void updateAppointmentStatus(String appointment_id, String status) {
+    public void updateAppointmentStatus(String appointment_id, AppointmentStatus status) {
         try {
             AppointmentMapper mapper = session.getMapper(AppointmentMapper.class);
             Appointment appointment = new Appointment()
@@ -444,6 +444,15 @@ public class Database {
     /*
     File
      */
+    public File selectFileById(String id) {
+        try {
+            FileMapper mapper = session.getMapper(FileMapper.class);
+            return mapper.selectFileById(id);
+        } finally {
+            if(!keepAlive) close();
+        }
+    }
+
     public String getLink(String id){
         try{
             FileMapper mapper = session.getMapper(FileMapper.class);
@@ -463,12 +472,13 @@ public class Database {
         }
     }
 
-    public File selectFileById(String id) {
+    public void updateFile(File file) {
         try {
             FileMapper mapper = session.getMapper(FileMapper.class);
-            return mapper.selectFileById(id);
+            mapper.updateFile(file);
+            session.commit();
         } finally {
-            if(!keepAlive) close();
+            if (!keepAlive) close();
         }
     }
 

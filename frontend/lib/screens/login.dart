@@ -285,7 +285,7 @@ class _LoginPageState extends State<LoginPage> {
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Center(
-            child: Text('Forgot username?', style: TextStyle(color: Colors.grey, fontSize: 17)),
+            child: Text('Forget username?', style: TextStyle(color: Colors.grey, fontSize: 17)),
           ),
           content: Container(
               height: 40.0,

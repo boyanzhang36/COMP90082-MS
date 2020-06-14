@@ -2,9 +2,9 @@ package com.medsec.entity;
 
 public class File {
     private String id;
+    private String apptid;
     private String title;
     private String link;
-    private String apptid;
 
     public String getId() {
         return id;
@@ -12,6 +12,14 @@ public class File {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getApptid() {
+        return apptid;
+    }
+
+    public void setApptid(String apptid) {
+        this.apptid = apptid;
     }
 
     public String getTitle() {
@@ -30,16 +38,13 @@ public class File {
         this.link = link;
     }
 
-    public String getApptid() {
-        return apptid;
-    }
-
-    public void setApptid(String apptid) {
-        this.apptid = apptid;
-    }
-
     public File id(final String id) {
         this.id = id;
+        return this;
+    }
+
+    public File apptid(final String apptid) {
+        this.apptid = apptid;
         return this;
     }
 
@@ -52,12 +57,4 @@ public class File {
         this.link = link;
         return this;
     }
-
-    public File apptid(final String apptid) {
-        this.apptid = apptid;
-        return this;
-    }
-
-
-
 }
