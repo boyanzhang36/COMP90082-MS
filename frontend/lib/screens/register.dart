@@ -58,6 +58,7 @@ class _RegisterState extends State<Register> {
           preferredSize: Size.fromHeight(60.0),
           child: AppBar(
             leading: BackButton(color: Colors.black),
+            centerTitle: true,
             title: Text("Register", style: TextStyle(color: Colors.black)),
             backgroundColor: Colors.white,
             brightness: Brightness.light,
