@@ -572,7 +572,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
           builder: (context) => AlertDialog(
               title: Text("Error message"),
               content: Text("Can't save empty user note!"),
-
           )
       );
     }
