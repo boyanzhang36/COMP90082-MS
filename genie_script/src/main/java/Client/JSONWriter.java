@@ -135,7 +135,12 @@ public class JSONWriter {
                         }
 
                         if (pContent != null){
-                            jsonObject.put(pHead.text(), pContent.text());
+                            if (!pContent.text().equals("")){
+                                jsonObject.put(pHead.text(), pContent.text());
+                            }
+                            else{
+                                jsonObject.put(pHead.text(), null);
+                            }
                         }
                         else{
                             jsonObject.put(pHead.text(), pContent);

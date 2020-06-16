@@ -23,18 +23,37 @@ public class DataManager {
 
     /** create patient instance from json object */
     public User processPatient(JSONObject user) {
-        String id = (String) user.get("PatientId");
+        String id = (String) user.get("Id");
         String firstName = (String) user.get("FirstName");
         String middleName = (String) user.get("MiddleName");
         String surname = (String) user.get("Surname");
-        LocalDate dob = LocalDate.parse((String) user.get("DOB"));
-        String email = (String) user.get("Email");
-        String street = (String) user.get("Street");
+        String dob = dobConvert((String) user.get("DOB"));
+        String email = (String) user.get("EmailAddress");
+        String addrLine1 = (String) user.get("AddressLine1");
+        String addrLine2 = (String) user.get("AddressLine2");
+        String street = null;
+        if (addrLine2 != null){
+            street = addrLine1 + ", " + addrLine2;
+        }else{
+            street = addrLine1;
+        }
         String suburb = (String) user.get("Suburb");
         String state = (String) user.get("State");
         User patient = new User().id(id).firstname(firstName).middlename(middleName).surname(surname).dob(dob)
                 .email(email).street(street).suburb(suburb).state(state).role(UserRole.PATIENT);
         return patient;
+    }
+
+    public String dobConvert(String dob) {
+        String[] dobArray = dob.split("/");
+        String day = dobArray[0];
+        String month = dobArray[1];
+        String year = dobArray[2];
+        if (Integer.parseInt(day) < 10){
+            day = "0" + day;
+        }
+        String dobNew = year + "-" + month + "-" + day;
+        return dobNew;
     }
 
     /** create appointment instance from json object */
@@ -44,37 +63,65 @@ public class DataManager {
         String did = (String) appt.get("ProviderID");
         String title = (String) appt.get("Name");
         String detail = (String) appt.get("Reason");
-        Instant dateCreate = Instant.parse((String) appt.get("CreationDate"));
-        String test = (String) appt.get("StartTime");
-        long startTime = Long.parseLong(test);
+        // CreationDate time is in UTC time zone
+        Instant dateCreate = dateConvert((String) appt.get("CreationDate"));
+        // StartTime is local time of clinic
+        long startTime = startTimeConvert((String) appt.get("StartTime"));
+        // LastUpdated time is in UTC time zone
         Instant dateChange = updateTimeConvert((String) appt.get("LastUpdated"));
-        Instant dateStart = Instant.parse((String) appt.get("StartDate"));
-        Instant date = startDateConvert(dateStart, startTime);
-        int duration = Integer.parseInt((String) appt.get("ApptDuration"));
+        Instant dateStart = dateConvert((String) appt.get("StartDate"));
+        Instant date = startDateTimeConvert(dateStart, startTime);
+        int duration = Integer.parseInt((String) appt.get("ApptDuration"))/60;
         String note = (String) appt.get("Note");
         Appointment appointment = new Appointment().id(id).uid(uid).did(did).title(title).detail(detail)
                 .date_create(dateCreate).date_change(dateChange).date(date).duration(duration).note(note).status(AppointmentStatus.UNCONFIRMED);
         return appointment;
     }
 
-    /* get the correct start time of an appointment */
-    public Instant startDateConvert(Instant startDate, long startTime) {
-        startDate = startDate.minus(Duration.ofHours(10));
-        startDate = startDate.plusMillis(startTime);
-        return startDate;
+    /** get the correct date format from String */
+    public Instant dateConvert(String date) {
+        String[] dateArray = date.split("/");
+        String day = dateArray[0];
+        String month = dateArray[1];
+        String year = dateArray[2];
+        if (Integer.parseInt(day) < 10){
+            day = "0" + day;
+        }
+        String time = year + "-" + month + "-" + day + "T" + "00" + ":" + "00" + ":" + "00"
+                + ".000Z";
+        Instant instant = Instant.parse(time);
+        return instant;
+    }
 
+    /* get the correct start time of an appointment */
+    public long startTimeConvert(String startTimeStr) {
+
+        String[] timeArray = startTimeStr.split(":");
+        long hour = Long.parseLong(timeArray[0]);
+        long minute = Long.parseLong(timeArray[1]);
+        long second = Long.parseLong(timeArray[2]);
+        long startTime = hour*3600 + minute*60 +second;
+
+        return startTime;
+    }
+
+    /* get the correct start date time of an appointment */
+    public Instant startDateTimeConvert(Instant startDate, long startTime) {
+//        startDate = startDate.minus(Duration.ofHours(10));
+        Instant startDateTime = startDate.plusSeconds(startTime);
+        return startDateTime;
     }
 
     /** get the correct update time from String */
-    public Instant updateTimeConvert(String lastChnageDate) {
-        String year = lastChnageDate.substring(0, 4);
-        String month = lastChnageDate.substring(4, 6);
-        String day = lastChnageDate.substring(6, 8);
-        String hour = lastChnageDate.substring(8, 10);
-        String minute = lastChnageDate.substring(10, 12);
-        String second = lastChnageDate.substring(12);
+    public Instant updateTimeConvert(String lastChangeDate) {
+        String year = lastChangeDate.substring(0, 4);
+        String month = lastChangeDate.substring(4, 6);
+        String day = lastChangeDate.substring(6, 8);
+        String hour = lastChangeDate.substring(8, 10);
+        String minute = lastChangeDate.substring(10, 12);
+        String second = lastChangeDate.substring(12);
         String updateTime = year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":" + second
-                + ".00Z";
+                + ".000Z";
         Instant instant = Instant.parse(updateTime);
         return instant;
     }

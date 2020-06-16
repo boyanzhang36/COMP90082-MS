@@ -29,7 +29,7 @@
     </update>
     <insert id="insertUser" parameterType="com.medsec.entity.User">
         INSERT INTO User (id, firstname, middlename, surname, dob, email, street, suburb, state, role)
-        VALUES (#{id}, #{surname}, #{firstname}, #{dob}, #{email}, #{street}, #{suburb}, #{state}, #{role});
+        VALUES (#{id}, #{firstname}, #{middlename}, #{surname}, #{dob}, #{email}, #{street}, #{suburb}, #{state}, #{role});
     </insert>
     <update id="updateUser" parameterType="com.medsec.entity.User">
         UPDATE User SET

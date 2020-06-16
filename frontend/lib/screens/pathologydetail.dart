@@ -178,8 +178,6 @@ class _pathologydetailState extends State<pathologydetail>
                               )
                             ]
                         ),
-
-
                       ],
                     ),
                   )

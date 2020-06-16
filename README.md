@@ -1,10 +1,20 @@
 
 # Medical Secretary App - COMP90082 2020 S1 Team 04
 
-This repoistory contains backend components (database, api) inherited from the previous team, our team has made significant modifications and bugfixes to the backend and made a frontend codebase from scratch. The individual components have also been packaged up using docker containers. The benefits of this approach is the following: changes made to the docker compose yml file will be version controlled and the nuances of a server setup can be ignored because each setup will use the same file. Overall, it is far less timeconsuming to spin up a server than going through the original method of installing each component.  
+This repository contains several components: api, backend, frontend, genie_script, docs and files. Some of them comes from previous teams, and our team has made some significant modifications and solved bugs to make the whole project work smoothly and meet the client's expectation.  
 
-The original documentation is located in the docs directory. This includes the api docuemntation as well as the original build configuration for the api and database.
+"api" is based on the Apache Tomcat server. It not only contains the Restful API for handling the HTTP requests and includes the socket server listener for listening the data from Genie Script program.  
 
+"backend" is a docker file including the Adminer, MySQL database and Tomcat server (a ```.war``` file generated from api).  
+
+"frontend" is the mobile frontend flutter program which can be deployed on both Android and iOS devices.  
+
+"genie_script" is the client that can upload the certain type files which are used to update the data in MySQL database.  
+
+"docs" includes the documentations from previous teams and the documentations of API of Tomcat server.  
+
+"files" includes files which can be uploaded by Genie Script program. There are some example exported files from Genie software, some files for uploading certain type, and the pdf report files are handed out in each appointment by our program.  
+ 
 ## Backend
 
 ### Getting Started

@@ -307,7 +307,7 @@ class _AppointmentsState extends State<Appointments>
                                 style: TextStyle(fontWeight: FontWeight.bold,
                                                   height: 1.5,)),
                             //Show End Time of Appointment
-                            Text(DateFormat.jm().format(event.date.add(Duration(seconds: event.duration ?? 0))),
+                            Text(DateFormat.jm().format(event.date.add(Duration(minutes: event.duration ?? 0))),
                                 style: TextStyle(color: Colors.black.withOpacity(0.6)),),
                           ]
                       ),//Text(DateFormat.Hm().format(event.date)),//DateFormat.Hm().format(now)

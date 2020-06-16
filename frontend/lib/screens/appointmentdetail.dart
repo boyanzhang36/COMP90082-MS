@@ -93,9 +93,11 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
             _appointmentState = Appointment.fromJson(jsonResponse);
             print("TEMP" + _appointmentState.date.toString());
             sendmsg = "Appointment Details" + "\n" + "\n" + "\n" +
-                "Appts: "  + _appointmentState.title.toString() + "\n" +
-                "Day/Time: " + DateFormat.jm().format(_appointmentState.date)+ '  ' +DateFormat('EE').format(_appointmentState.date)
-                + ',  '+ DateFormat.MMMd().format(_appointmentState.date) + ',  ' +DateFormat.y().format(_appointmentState.date) + "\n" + "\n"
+                "Appts: "  + (_appointmentState.title != null ? _appointmentState.title : "Not available") + "\n" +
+                "Day/Time: " + ((_appointmentState.date != null) && (_appointmentState.duration != null) ? DateFormat.jm().format(_appointmentState.date) + ' - ' + DateFormat.jm().format(_appointmentState.date.add(Duration(minutes: _appointmentState.duration ?? 0)))
+                + ',  ' + DateFormat('EE').format(_appointmentState.date)
+                + '  ' + DateFormat.MMMd().format(_appointmentState.date)
+                + ',  ' +DateFormat.y().format(_appointmentState.date) : "Not available") + "\n" + "\n"
                 +"\n" + "\n" + "From Medical Secretary App";
           });
         }
@@ -259,6 +261,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
         shrinkWrap: true,
         padding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
         children: <Widget>[
+          //appts
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -267,7 +270,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                   overflow: TextOverflow.ellipsis),
             ],
           ),
-          Wrap(
+          _appointmentState.title != null ? Wrap(
             spacing: 4.0,
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
@@ -276,7 +279,17 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                 textAlign: TextAlign.left,
               ),
             ],
+          ) : Wrap(
+            spacing: 4.0,
+            runSpacing: 4.0,
+            alignment: WrapAlignment.start,
+            children: <Widget>[
+              Text("Not available", style: TextStyle(fontSize: 25.0, fontFamily: "Arial",color:Colors.black, height: 1.5 ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
+          //details
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -285,7 +298,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                   overflow: TextOverflow.ellipsis),
             ],
           ),
-          Wrap(
+          _appointmentState.detail != null ? Wrap(
             spacing: 4.0,
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
@@ -294,7 +307,17 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                 textAlign: TextAlign.left,
               ),
             ],
+          ) : Wrap(
+            spacing: 4.0,
+            runSpacing: 4.0,
+            alignment: WrapAlignment.start,
+            children: <Widget>[
+              Text("Not available", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
+          //day/time
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -303,17 +326,29 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                   overflow: TextOverflow.ellipsis),
             ],
           ),
-          Wrap(
+          (_appointmentState.date != null) && (_appointmentState.duration != null) ? Wrap(
             spacing: 4.0,
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
             children: <Widget>[
-              Text(DateFormat.jm().format(_appointmentState.date)+ '  ' +DateFormat('EE').format(_appointmentState.date)
-                  + ',  '+ DateFormat.MMMd().format(_appointmentState.date) + ',  ' +DateFormat.y().format(_appointmentState.date), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+              Text(DateFormat.jm().format(_appointmentState.date) + ' - ' + DateFormat.jm().format(_appointmentState.date.add(Duration(minutes: _appointmentState.duration ?? 0)))
+                  + ',  ' + DateFormat('EE').format(_appointmentState.date)
+                  + '  ' + DateFormat.MMMd().format(_appointmentState.date)
+                  + ',  ' +DateFormat.y().format(_appointmentState.date), style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ) : Wrap(
+            spacing: 4.0,
+            runSpacing: 4.0,
+            alignment: WrapAlignment.start,
+            children: <Widget>[
+              Text("Not available", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
                 textAlign: TextAlign.left,
               ),
             ],
           ),
+          //notes
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -322,7 +357,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                   overflow: TextOverflow.ellipsis),
             ],
           ),
-          Wrap(
+          _appointmentState.note != null ? Wrap(
             spacing: 4.0,
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
@@ -331,7 +366,17 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                 textAlign: TextAlign.left,
               ),
             ],
+          ) : Wrap(
+            spacing: 4.0,
+            runSpacing: 4.0,
+            alignment: WrapAlignment.start,
+            children: <Widget>[
+              Text("Not available", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+                textAlign: TextAlign.left,
+              ),
+            ],
           ),
+          //location
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -350,6 +395,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
               ),
             ],
           ),
+          //forms
           Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -377,6 +423,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                 ),
             ],
           ),
+          //user note
           Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -466,6 +513,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
               ),
             ],
           ),
+          //status
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -474,7 +522,7 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                   overflow: TextOverflow.ellipsis),
             ],
           ),
-          Wrap(
+          _appointmentState.status != null ? Wrap(
             spacing: 4.0,
             runSpacing: 4.0,
             alignment: WrapAlignment.start,
@@ -502,6 +550,15 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                       ),
                     ],)
               )
+            ],
+          ) : Wrap(
+            spacing: 4.0,
+            runSpacing: 4.0,
+            alignment: WrapAlignment.start,
+            children: <Widget>[
+              Text("Not available", style: TextStyle(fontSize: 20.0, fontFamily: "Arial",color:Colors.grey, height: 1.5 ),
+                textAlign: TextAlign.left,
+              ),
             ],
           ),
         ]

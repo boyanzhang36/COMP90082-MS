@@ -82,5 +82,4 @@ class _resourcedetailState extends State<resourcedetail>
       )
     );
   }
-
 }

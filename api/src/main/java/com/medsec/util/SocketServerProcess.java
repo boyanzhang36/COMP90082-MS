@@ -139,10 +139,23 @@ public class SocketServerProcess implements Runnable {
         String street = (String) user.get("AddressLine1");
         String suburb = (String) user.get("Suburb");
         String state = (String) user.get("State");
-        LocalDate dob = LocalDate.parse((String) user.get("DOB"));
+//        LocalDate dob = LocalDate.parse((String) user.get("DOB"));
+        String dob = dobConvert((String) user.get("DOB"));
         User patient = new User().id(id).surname(surname).firstname(firstName).email(email)
                 .street(street).suburb(suburb).state(state).dob(dob).role(UserRole.PATIENT);
         return patient;
+    }
+
+    public String dobConvert(String dob){
+        String[] dobArray = dob.split("/");
+        String day = dobArray[0];
+        String month = dobArray[1];
+        String year = dobArray[2];
+        if (Integer.parseInt(day) < 10){
+            day = "0" + day;
+        }
+        String dobNew = year + "-" + month + "-" + day;
+        return dobNew;
     }
 
     /** check if the patient is already in the database */

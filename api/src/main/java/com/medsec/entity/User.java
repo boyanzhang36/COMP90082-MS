@@ -11,7 +11,7 @@ public class User implements Principal {
 	private String firstname;
 	private String middlename;
     private String surname;
-	private LocalDate dob;
+	private String dob;
 	private String email;
 	private String street;
 	private String suburb;
@@ -64,11 +64,11 @@ public class User implements Principal {
         this.surname = surname;
     }
 
-    public LocalDate getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
@@ -161,7 +161,7 @@ public class User implements Principal {
         return this;
     }
 
-    public User dob(final LocalDate dob) {
+    public User dob(final String dob) {
         setDob(dob);
         return this;
     }

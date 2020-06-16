@@ -178,7 +178,7 @@ class TCPServerProcess implements Runnable{
     /** process user data, insert new user or update existed user */
     public boolean userHandler(JSONObject user) {
         Database db = new Database();
-        String id = (String) user.get("PatientId");
+        String id = (String) user.get("Id");
         if (!isPatientExist(id)) {
             log.info("insert new patient");
             User patient = dataManager.processPatient(user);
@@ -346,7 +346,7 @@ class TCPServerProcess implements Runnable{
         com.medsec.entity.File appointmentFile = new com.medsec.entity.File().id(id)
                 .apptid(apptid).title(fileName).link(eachFilePath);
         Database db = new Database();
-        if (!isFileExist(apptid)){
+        if (!isFileExist(id)){
             log.info("insert new file");
             db.insertFile(appointmentFile);
         } else {
@@ -366,41 +366,62 @@ class TCPServerProcess implements Runnable{
         if (!appt.getId().equals(apptDB.getId())){
             flag = false;
         }
+        
         if (!appt.getUid().equals(apptDB.getUid())){
             flag = false;
         }
+        
         if (!appt.getDid().equals(apptDB.getDid())){
             flag = false;
         }
+        
         if (!appt.getTitle().equals(apptDB.getTitle())){
             flag = false;
         }
+        
         if (!appt.getDate_create().equals(apptDB.getDate_create())){
             flag = false;
         }
+        
         if (!appt.getDate_change().equals(apptDB.getDate_change())){
             flag = false;
         }
+        
         if (!appt.getDate().equals(apptDB.getDate())){
             flag = false;
         }
+        
         if (!appt.getDuration().equals(apptDB.getDuration())){
             flag = false;
         }
-        if (!appt.getDetail().equals(apptDB.getDetail())){
+        
+        if (!checkEquals(appt.getDetail(), apptDB.getDetail())){
             flag = false;
         }
-        if (!appt.getNote().equals(apptDB.getNote())){
+        
+        if (!checkEquals(appt.getNote(), apptDB.getNote())){
             flag = false;
         }
-
+        
         return flag;
+    }
+
+    public boolean checkEquals(String newRecord, String dbRecord){
+        if (newRecord == null){
+            newRecord = "";
+        }
+        if (dbRecord == null){
+            dbRecord = "";
+        }
+        boolean results = newRecord.equals(dbRecord);
+        return results;
     }
 
     /** check if the patient is already in the database */
     public boolean isPatientExist(String id){
         Database db = new Database();
         User patient = db.getUserById(id);
+        System.out.println(patient != null);
         return patient != null;
     }
 

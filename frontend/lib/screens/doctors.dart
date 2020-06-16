@@ -91,13 +91,13 @@ class _DoctorsState extends State<Doctors> {
                               builder: (context) {
                                 sendmsg = "Doctors Details" + "\n" + "\n" + "\n" +
                                     "Name: "  + element.name.toString() + "\n" +
-                                    "Bio: "  + element.bio.toString() + "\n" +
-                                    "Address: "  + element.address.toString() + "\n" +
-                                    "Phone: " + element.phone.toString() + "\n" +
-                                    "Fax: " + element.fax.toString() + "\n" +
-                                    "Email: "  + element.email.toString() + "\n" +
-                                    "Website: "  + element.website.toString() + "\n" +
-                                    "Expertise: "  + element.expertise.toString() + "\n" +"\n"
+                                    "Bio: "  + (element.bio != null ? element.bio : "Not available") + "\n" +
+                                    "Address: "  + (element.address != null ? element.address : "Not available") + "\n" +
+                                    "Phone: " + (element.phone != null ? element.phone : "Not available") + "\n" +
+                                    "Fax: " + (element.fax != null ? element.fax : "Not available") + "\n" +
+                                    "Email: "  + (element.email != null ? element.email : "Not available") + "\n" +
+                                    "Website: "  + (element.website != null ? element.website : "Not available") + "\n" +
+                                    "Expertise: "  + (element.expertise != null ? element.expertise : "Not available") + "\n" +"\n"
                                     +"\n" + "\n" + "From Medical Secretary App";
 
                                   return doctordetail(element, sendmsg);
