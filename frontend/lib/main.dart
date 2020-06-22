@@ -45,7 +45,6 @@ class _MyAppState extends State<MyApp>
         '/pathologies': (context) => Pathologies(),
         '/resources': (context) => Resources(),
        }
-
     );
   }
 }

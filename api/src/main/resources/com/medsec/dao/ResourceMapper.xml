@@ -25,7 +25,7 @@
     <update id="updateResource" parameterType="com.medsec.entity.Resource">
         UPDATE Resource SET
         name= #{name},
-        website= #{website},
+        website= #{website}
         WHERE Resource.id= #{id}
     </update>
 </mapper>
