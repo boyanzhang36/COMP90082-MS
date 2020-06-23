@@ -8,14 +8,14 @@ class pathologydetail extends StatefulWidget {
 
   final Pathology _pathology;
   const pathologydetail(this._pathology);
+
   @override
   _pathologydetailState createState() => _pathologydetailState(_pathology);
 }
 
-class _pathologydetailState extends State<pathologydetail>
-{
-  var _pathologyState;
+class _pathologydetailState extends State<pathologydetail> {
 
+  var _pathologyState;
   _pathologydetailState(this._pathologyState);
 
   @override
@@ -80,7 +80,6 @@ class _pathologydetailState extends State<pathologydetail>
                                     launchURL("https://www.google.com/maps/search/"+_pathologyState.address);
                                   }
                               )
-
                             ]
                         ) : TableRow(
                             children: [
@@ -93,7 +92,6 @@ class _pathologydetailState extends State<pathologydetail>
                                   title: Text("Not available",
                                       style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                               )
-
                             ]
                         ),
                         //phone

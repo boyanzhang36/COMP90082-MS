@@ -8,14 +8,14 @@ class hospitaldetail extends StatefulWidget {
 
   final Hospital _hospital;
   const hospitaldetail(this._hospital);
+
   @override
   _hospitaldetailState createState() => _hospitaldetailState(_hospital);
 }
 
-class _hospitaldetailState extends State<hospitaldetail>
-{
-  var _hospitalState;
+class _hospitaldetailState extends State<hospitaldetail> {
 
+  var _hospitalState;
   _hospitaldetailState(this._hospitalState);
 
   @override

@@ -2,12 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 //https://medium.com/@viveky259259/flutter-firebase-notifications-7954a3ad8111
+
 class FirebaseNotifications {
+
   FirebaseMessaging _firebaseMessaging;
   static var fcmtoken;
 
-
   void setUpFirebase(BuildContext context) {
+
     _firebaseMessaging = FirebaseMessaging();
     firebaseCloudMessaging_Listeners(context);
 
@@ -18,10 +20,8 @@ class FirebaseNotifications {
   }
 
   void firebaseCloudMessaging_Listeners(BuildContext context) {
+
     if (Platform.isIOS) iOS_Permission(context);
-
-
-
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {

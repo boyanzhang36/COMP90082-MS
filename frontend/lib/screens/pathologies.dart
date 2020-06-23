@@ -12,6 +12,7 @@ class Pathologies extends StatefulWidget {
 }
 
 class _PathologiesState extends State<Pathologies> {
+
   List<Pathology> _pathologies = List<Pathology>();
 
   @override
@@ -94,6 +95,5 @@ class _PathologiesState extends State<Pathologies> {
             )).toList()
         )
     );
-
   }
 }

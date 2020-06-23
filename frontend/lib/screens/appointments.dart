@@ -15,6 +15,7 @@ class Appointments extends StatefulWidget {
 
 class _AppointmentsState extends State<Appointments>
     with TickerProviderStateMixin {
+
   var _calendarController;
   Map<DateTime, List> _events;
   List _selectedEvents;
@@ -29,9 +30,6 @@ class _AppointmentsState extends State<Appointments>
     final _selectedDay = DateTime.now();
     _calendarController = CalendarController();
     _eventsCheck = Map<DateTime, Appointment>();
-
-
-
 
     getAppointments();
     _animationController = AnimationController(

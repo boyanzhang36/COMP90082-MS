@@ -31,7 +31,4 @@ class Authentication{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
   }
-
 }
-
-

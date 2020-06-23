@@ -2,7 +2,6 @@ class Resource {
   final String name;
   final String website;
 
-
   Resource({
     this.name,
     this.website});

@@ -4,7 +4,6 @@ class Pdffile {
   final String title;
   final String link;
 
-
   Pdffile(
       {this.id,
         this.apptid,

@@ -15,10 +15,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   bool _isLoading = false;
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
-
   final TextEditingController resetPasswordEmailPasswordController = new TextEditingController();
   final TextEditingController oldPasswordController = new TextEditingController();
   final TextEditingController newPasswordController = new TextEditingController();
@@ -200,8 +200,6 @@ class _LoginPageState extends State<LoginPage> {
             ),)
         ),
       )
-
-
     ]);
   }
 
@@ -433,5 +431,4 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
-
 }

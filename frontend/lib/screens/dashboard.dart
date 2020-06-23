@@ -80,7 +80,6 @@ class _DashBoardState extends State<DashBoard> {
                               Navigator.of(context).pushNamed("/pathologies");//indigo[400]
                             }),
                             //_buildCard("PATHOLOGY", FontAwesomeIcons.ambulance, Colors.teal, onTap: (){Navigator.of(context).pushNamed("ambulance");}),
-
                             //          _buildCard("Medical History", Icons.library_books, Colors.deepPurpleAccent, onTap: (){Navigator.of(context).pushNamed("history");}),
                             //          _buildCard("Ask A doctor", Icons.chat, Colors.indigo, onTap: (){Navigator.of(context).pushNamed("support");}),
                           ],

@@ -14,6 +14,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+
   bool _isLoading = false;
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController surnameController = new TextEditingController();

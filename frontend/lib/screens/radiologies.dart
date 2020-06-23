@@ -12,6 +12,7 @@ class Radiologies extends StatefulWidget {
 }
 
 class _RadiologiesState extends State<Radiologies> {
+
   List<Radiology> _radiologies = List<Radiology>();
 
   @override
@@ -95,6 +96,5 @@ class _RadiologiesState extends State<Radiologies> {
         )
 
     );
-
   }
 }

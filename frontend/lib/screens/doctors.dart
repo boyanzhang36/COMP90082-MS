@@ -12,6 +12,7 @@ class Doctors extends StatefulWidget {
 }
 
 class _DoctorsState extends State<Doctors> {
+
   var sendmsg;
   List<Doctor> _doctors = List<Doctor>();
 
@@ -106,9 +107,6 @@ class _DoctorsState extends State<Doctors> {
                 )
             )).toList()
         )
-
     );
-
   }
 }
-

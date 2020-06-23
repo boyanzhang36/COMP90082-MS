@@ -8,14 +8,14 @@ class resourcedetail extends StatefulWidget {
 
   final Resource _resource;
   const resourcedetail(this._resource);
+
   @override
   _resourcedetailState createState() => _resourcedetailState(_resource);
 }
 
-class _resourcedetailState extends State<resourcedetail>
-{
-  var _resourceState;
+class _resourcedetailState extends State<resourcedetail> {
 
+  var _resourceState;
   _resourcedetailState(this._resourceState);
 
   @override

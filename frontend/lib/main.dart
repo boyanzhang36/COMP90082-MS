@@ -20,7 +20,6 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-
 class _MyAppState extends State<MyApp>
 {
   @override
@@ -55,19 +54,17 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Future<String> currentToken;
 
+  Future<String> currentToken;
 
   @override
   void initState() {
     _getValidToken();
     super.initState();
-
   }
 
   void _getValidToken() async{
     currentToken = Authentication.getCurrentToken();
-
   }
 
   @override

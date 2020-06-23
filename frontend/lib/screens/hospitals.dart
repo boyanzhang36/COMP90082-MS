@@ -12,6 +12,7 @@ class Hospitals extends StatefulWidget {
 }
 
 class _HospitalsState extends State<Hospitals> {
+
   List<Hospital> _hospitals = List<Hospital>();
 
   @override
@@ -93,8 +94,6 @@ class _HospitalsState extends State<Hospitals> {
             )
           )).toList()
         )
-
     );
-
   }
 }

@@ -8,9 +8,7 @@ import 'package:flutter_full_pdf_viewer/full_pdf_viewer_scaffold.dart';
 class appointmentfile extends StatelessWidget{
 
   String pathPDF = "";
-//  final File _file;
   appointmentfile(this.pathPDF);
-
 
   @override
   Widget build(BuildContext context) {

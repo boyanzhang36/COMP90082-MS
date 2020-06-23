@@ -32,6 +32,7 @@ class AppointmentDetail extends StatefulWidget {
 }
 
 class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTickerProviderStateMixin {
+
   final _appointmentState1;
   _AppointmentDetailState(this._appointmentState1);
   TextEditingController saveController;
@@ -42,7 +43,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
   var pdfTitle = null;
   var pdfLink = null;
   String pathPDF = "";
-//  var _file;
   Animation<double> animation;
   AnimationController controller;
 
@@ -52,7 +52,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
     saveController = TextEditingController();
     getAppointmentDetails();
     getPdfDetails();
-
 
     controller = new AnimationController(
         duration: const Duration(milliseconds: 400), vsync: this);
@@ -237,7 +236,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                 DateTime now = new DateTime.now();
                 Share.share(sendmsg, subject: 'Appointment details send on ' + "$now");
               }
-
             })
           ],
         )
@@ -508,7 +506,6 @@ class _AppointmentDetailState extends State<AppointmentDetail>  with SingleTicke
                             child: Text('CANCEL'),
                           )
                         ],)
-
                       ])
               ),
             ],

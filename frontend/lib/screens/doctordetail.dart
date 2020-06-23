@@ -31,7 +31,6 @@ class doctordetail extends StatelessWidget{
                 DateTime now = new DateTime.now();
                 Share.share(sendmsg, subject: 'Doctors Details send on ' + now.toString());
               }
-
             })],
           )
       ),
@@ -200,6 +199,4 @@ class doctordetail extends StatelessWidget{
           }),
     );
   }
-
-
 }

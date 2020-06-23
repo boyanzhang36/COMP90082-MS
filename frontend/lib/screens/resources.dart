@@ -12,6 +12,7 @@ class Resources extends StatefulWidget {
 }
 
 class _ResourcesState extends State<Resources> {
+
   List<Resource> _resources = List<Resource>();
 
   @override

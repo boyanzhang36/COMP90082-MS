@@ -8,14 +8,14 @@ class radiologydetail extends StatefulWidget {
 
   final Radiology _radiology;
   const radiologydetail(this._radiology);
+
   @override
   _radiologydetailState createState() => _radiologydetailState(_radiology);
 }
 
-class _radiologydetailState extends State<radiologydetail>
-{
-  var _radiologyState;
+class _radiologydetailState extends State<radiologydetail> {
 
+  var _radiologyState;
   _radiologydetailState(this._radiologyState);
 
   @override
@@ -80,7 +80,6 @@ class _radiologydetailState extends State<radiologydetail>
                                     launchURL("https://www.google.com/maps/search/"+_radiologyState.address);
                                   }
                               )
-
                             ]
                         ) : TableRow(
                             children: [
@@ -93,7 +92,6 @@ class _radiologydetailState extends State<radiologydetail>
                                   title: Text("Not available",
                                       style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                               )
-
                             ]
                         ),
                         //phone
@@ -112,8 +110,6 @@ class _radiologydetailState extends State<radiologydetail>
                                     _callPhone();
                                   }
                               )
-
-
                             ]
                         ) : TableRow(
                             children: [
@@ -126,8 +122,6 @@ class _radiologydetailState extends State<radiologydetail>
                                   title: Text("Not available",
                                       style: TextStyle(fontSize: 17.5, fontFamily: "Arial")),
                               )
-
-
                             ]
                         ),
                         //fax
@@ -230,8 +224,6 @@ class _radiologydetailState extends State<radiologydetail>
                               )
                             ]
                         ),
-
-
                       ],
                     ),
                   ),

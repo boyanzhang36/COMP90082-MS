@@ -8,7 +8,9 @@ import org.jsoup.nodes.Element;
 
 import java.io.*;
 
-
+/**
+ * Upload different types of files
+ */
 public class UploadFileManager {
 
     private static String UPLOAD_PATH = null;

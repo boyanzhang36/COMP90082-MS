@@ -6,7 +6,7 @@ import java.net.Socket;
 import javax.net.ssl.SSLSocket;
 
 /**
- * TCPClient script that sends JSON GENIE Data everyday
+ * TCPClient script that sends JSON GENIE Data
  */
 public class TCPClient implements Runnable{
 
@@ -29,5 +29,4 @@ public class TCPClient implements Runnable{
             connectionSocket.close();
         }catch(Exception e){e.printStackTrace();}
     }
-
 }
