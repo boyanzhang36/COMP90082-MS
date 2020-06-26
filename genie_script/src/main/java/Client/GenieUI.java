@@ -207,32 +207,32 @@ public class GenieUI {
 
 
         System.out.println("Client Scheduled Script Running");
-        prevTime = System.currentTimeMillis();
-
-        // Scheduler service
-        WatchService watchService = FileSystems.getDefault().newWatchService();
-        PATH.register(
-                watchService,
-                StandardWatchEventKinds.ENTRY_MODIFY);
-
-        // Init socket connection and wait for scheduler
-        WatchKey key;
-        while ((key = watchService.take()) != null) {
-            for (WatchEvent<?> event : key.pollEvents()) {
-                final Path changed = (Path) event.context();
-                if (changed.endsWith(GENIE_DB_NAME) && System.currentTimeMillis() >
-                        prevTime){
-                    System.out.println("Send Update");
-//                    Socket clientSocket = new Socket(IP, PORT);
-                    Socket clientSocket = initSSLSocket();
-                    TCPClient tcpClient = new TCPClient(clientSocket);
-                    Thread tcpThread = new Thread(tcpClient);
-                    tcpThread.start();
-                    prevTime = System.currentTimeMillis() + DELAY_UPDATE;
-                }
-            }
-            key.reset();
-        }
+//        prevTime = System.currentTimeMillis();
+//
+//        // Scheduler service
+//        WatchService watchService = FileSystems.getDefault().newWatchService();
+//        PATH.register(
+//                watchService,
+//                StandardWatchEventKinds.ENTRY_MODIFY);
+//
+//        // Init socket connection and wait for scheduler
+//        WatchKey key;
+//        while ((key = watchService.take()) != null) {
+//            for (WatchEvent<?> event : key.pollEvents()) {
+//                final Path changed = (Path) event.context();
+//                if (changed.endsWith(GENIE_DB_NAME) && System.currentTimeMillis() >
+//                        prevTime){
+//                    System.out.println("Send Update");
+////                    Socket clientSocket = new Socket(IP, PORT);
+//                    Socket clientSocket = initSSLSocket();
+//                    TCPClient tcpClient = new TCPClient(clientSocket);
+//                    Thread tcpThread = new Thread(tcpClient);
+//                    tcpThread.start();
+//                    prevTime = System.currentTimeMillis() + DELAY_UPDATE;
+//                }
+//            }
+//            key.reset();
+//        }
     }
 
     public static Socket initSSLSocket() {
