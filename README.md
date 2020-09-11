@@ -1,5 +1,5 @@
 
-# Medical Secretary App - COMP90082 2020 S1 Team 04
+# Medical Secretary App - COMP90082 2020 S2 Team Kookaburra
 
 This repository contains several components: api, backend, frontend, genie_script, docs and files. Some of them comes from previous teams, and our team has added more functions, made some significant modifications in both frontend and backend and solved bugs to make the whole project work smoothly and meet the client's expectation.  
 
