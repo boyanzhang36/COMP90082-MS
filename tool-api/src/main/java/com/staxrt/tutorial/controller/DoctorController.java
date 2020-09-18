@@ -62,5 +62,59 @@ public class DoctorController {
     return doctorRepository.save(doctor);
   }
 
+  @GetMapping("/doctors/{id}")
+  public ResponseEntity<Doctor> getDoctorsById(@PathVariable(value = "id") int doctorId)
+      throws ResourceNotFoundException {
+    Doctor doctor =
+        doctorRepository
+            .findById(doctorId)
+            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found on :: " + doctorId));
+    return ResponseEntity.ok().body(doctor);
+  }
+
+   /**
+   * Update user response entity.
+   *
+   * @param doctorId the user id
+   * @return the response entity
+   * @throws ResourceNotFoundException the resource not found exception
+   */
+  @PutMapping("/doctors/{id}")
+  public ResponseEntity<Doctor> updateDoctor(
+      @PathVariable(value = "id") Integer doctorId, @Valid @RequestBody Doctor doctorDetails)
+      throws ResourceNotFoundException {
+
+    Doctor doctor =
+        doctorRepository
+            .findById(doctorId)
+            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found on :: " + doctorId));
+
+    doctor.setName(doctorDetails.getName());
+    doctor.setBio(doctorDetails.getBio());
+    doctor.setAddress(doctorDetails.getAddress());
+    doctor.setPhone(doctorDetails.getPhone());
+    doctor.setFax(doctorDetails.getFax());
+    doctor.setEmail(doctorDetails.getEmail());
+    doctor.setWebsite(doctorDetails.getWebsite());
+    doctor.setExpertise(doctorDetails.getExpertise());
+
+
+    final Doctor updatedDoctor = doctorRepository.save(doctor);
+    return ResponseEntity.ok(updatedDoctor);
+  }
+
+  @DeleteMapping("/doctors/{id}")
+  public Map<String, Boolean> deleteDoctor(@PathVariable(value = "id") Integer doctorId) throws Exception {
+    Doctor doctor =
+        doctorRepository
+            .findById(doctorId)
+            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found on :: " + doctorId));
+
+    doctorRepository.delete(doctor);
+    Map<String, Boolean> response = new HashMap<>();
+    response.put("deleted", Boolean.TRUE);
+    return response;
+  }
+
 
 }

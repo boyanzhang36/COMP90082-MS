@@ -100,12 +100,13 @@ public class Doctor {
         return name;
     }
 
+
   /**
    * Sets first name.
    *
    * @param firstName the first name
    */
-  public void bio(String name) {
+  public void setName(String name) {
         this.name = name;
     }
 

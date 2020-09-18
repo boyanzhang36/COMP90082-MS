@@ -10,4 +10,4 @@ import org.springframework.stereotype.Repository;
  * @author Givantha Kalansuriya
  */
 @Repository
-public interface DoctorRepository extends JpaRepository<Doctor, Long> {}
+public interface DoctorRepository extends JpaRepository<Doctor, Integer> {}
