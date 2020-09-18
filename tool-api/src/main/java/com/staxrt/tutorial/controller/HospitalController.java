@@ -6,6 +6,7 @@ import com.staxrt.tutorial.model.Hospital;
 import com.staxrt.tutorial.repository.HospitalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
