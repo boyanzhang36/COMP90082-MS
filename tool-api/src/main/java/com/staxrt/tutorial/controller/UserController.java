@@ -93,14 +93,14 @@ public class UserController {
 
         user.setFirstname(userDetails.getFirstname());
         user.setMiddlename(userDetails.getMiddlename());
-        user.setLastname(userDetails.getLastname());
+        user.setSurname(userDetails.getSurname());
         user.setPassword(userDetails.getPassword());
         user.setEmail(userDetails.getEmail());
         user.setStreet(userDetails.getStreet());
         user.setSuburb(userDetails.getSuburb());
         user.setState(userDetails.getState());
         user.setTokenvalidfrom(userDetails.getTokenvalidfrom());
-        user.setTokenexpirydate(userDetails.getTokenexpirydate());
+        user.setTokenexpiredate(userDetails.getTokenexpiredate());
         user.setRole(userDetails.getRole());
         
                 

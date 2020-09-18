@@ -19,21 +19,21 @@ import java.util.Date;
  * @author Givantha Kalansuriya
  */
 @Entity
-@Table(name = "\" User\"")
+@Table(name = "\"User\"")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "first_name", nullable = false)
-    private String first_name;
+    @Column(name = "firstname", nullable = false)
+    private String firstname;
 
-    @Column(name = "last_name", nullable = false)
-    private String last_name;
+    @Column(name = "surname", nullable = false)
+    private String surname;
 
-    @Column(name = "middle_name", nullable = true)
-    private String middle_name;
+    @Column(name = "middlename", nullable = true)
+    private String middlename;
 
 
     @Column(name = "password", nullable = true)
@@ -41,8 +41,8 @@ public class User {
 
 
     @DateTimeFormat
-    @Column(name = "DOB", nullable = false)
-    private Date DOB;
+    @Column(name = "dob", nullable = false)
+    private Date dob;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -63,8 +63,8 @@ public class User {
     private Date token_valid_from;
 
     @UpdateTimestamp
-    @Column(name = "token_expiry_date", nullable = false)
-    private Date token_expiry_date;
+    @Column(name = "token_expire_date", nullable = false)
+    private Date token_expire_date;
 
     @Enumerated(EnumType.STRING)
     @Column(name ="role")
@@ -112,20 +112,20 @@ public class User {
      * @return the first name
      */
     public String getFirstname() {
-        return first_name;
+        return firstname;
     }
-    public void setFirstname(String first_name) {
-        this.first_name = first_name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
 
     }
     public String getMiddlename() {
-        return middle_name;
+        return middlename;
     }
-    public void setMiddlename(String middle_name) {
-        this.middle_name = middle_name;
+    public void setMiddlename(String middlename) {
+        this.middlename = middlename;
     }
-    public String getLastname() {
-        return last_name;
+    public String getSurname() {
+        return surname;
     }
 
 
@@ -136,8 +136,8 @@ public class User {
      */
 
 
-    public void setLastname(String last_name) {
-        this.last_name = last_name;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     /**
@@ -146,7 +146,7 @@ public class User {
      * @return the last name
      */
     public Date getDOB() {
-        return DOB;
+        return dob;
     }
 
     /**
@@ -154,8 +154,8 @@ public class User {
      *
      * @param lastName the last name
      */
-    public void setDOB(Date DOB) {
-        this.DOB = DOB;
+    public void setDOB(Date dob) {
+        this.dob = dob;
     }
 
     /**
@@ -241,8 +241,8 @@ public class User {
      *
      * @return the fax
      */
-    public Date getTokenexpirydate() {
-        return token_expiry_date;
+    public Date getTokenexpiredate() {
+        return token_expire_date;
     }
 
     /**
@@ -250,8 +250,8 @@ public class User {
      *
      * @param email the phone
      */
-    public void setTokenexpirydate(Date token_expiry_date) {
-        this.token_expiry_date = token_expiry_date;
+    public void setTokenexpiredate(Date token_expire_date) {
+        this.token_expire_date = token_expire_date;
     }
 
     public Role getRole() {
