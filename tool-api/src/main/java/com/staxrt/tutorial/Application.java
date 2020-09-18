@@ -17,6 +17,11 @@ public class Application {
    * @param args the input arguments
    */
   public static void main(String[] args) {
+
+    try {
 		SpringApplication.run(Application.class, args);
+    } catch (Exception e){
+      System.out.println(e);
+    }
 	}
 }
