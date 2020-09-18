@@ -47,7 +47,7 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "street", nullable = true)
+    @Column(name = "street", nullable = true, unique = true)
     private String street;
 
     @Column(name = "suburb", nullable = true)
