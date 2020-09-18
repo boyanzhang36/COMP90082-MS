@@ -99,6 +99,7 @@ public class UserController {
         user.setStreet(userDetails.getStreet());
         user.setSuburb(userDetails.getSuburb());
         user.setState(userDetails.getState());
+        user.setToken(userDetails.getToken());
         user.setTokenvalidfrom(userDetails.getTokenvalidfrom());
         user.setTokenexpiredate(userDetails.getTokenexpiredate());
         user.setRole(userDetails.getRole());

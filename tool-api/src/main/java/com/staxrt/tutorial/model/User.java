@@ -224,6 +224,10 @@ public class User {
      *
      * @return the fax
      */
+    public String getToken()
+    {return token;}
+    public void setToken(String token)
+    {this.token=token;}
     public Date getTokenvalidfrom() {
         return token_valid_from;
     }
