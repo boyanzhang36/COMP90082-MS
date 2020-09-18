@@ -43,7 +43,7 @@ import java.util.Date;
 public class Doctor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     
@@ -145,11 +145,90 @@ public class Doctor {
         this.address = address;
     }
 
+  /**
+   * Gets phone.
+   *
+   * @return the email
+   */
+  public String getPhone() {
+        return phone;
+    }
+
+  /**
+   * Sets phone.
+   *
+   * @param email the phone
+   */
+  public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+      /**
+   * Gets fax.
+   *
+   * @return the fax
+   */
+  public String getFax() {
+        return fax;
+    }
+
+  /**
+   * Sets phone.
+   *
+   * @param email the phone
+   */
+  public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+          /**
+   * Gets fax.
+   *
+   * @return the fax
+   */
+  public String getEmail() {
+        return email;
+    }
+
+  /**
+   * Sets phone.
+   *
+   * @param email the phone
+   */
+  public void setEmail(String email) {
+        this.email = email;
+    }
+
+  public String getWebsite() {
+        return website;
+    }
+
+  /**
+   * Sets phone.
+   *
+   * @param email the phone
+   */
+  public void setWebsite(String website) {
+        this.website = website;
+    }
+
+  public String getExpertise() {
+        return expertise;
+    }
+
+  /**
+   * Sets phone.
+   *
+   * @param email the phone
+   */
+  public void setExpertise(String expertise) {
+        this.expertise = expertise;
+    }
 
 
     @Override
     public String toString() {
-        return name;
+        return address;
     }
 
 

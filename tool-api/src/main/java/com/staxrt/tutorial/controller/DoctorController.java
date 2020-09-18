@@ -51,5 +51,16 @@ public class DoctorController {
     return doctorRepository.findAll();
   }
 
+    /**
+   * Create user user.
+   *
+   * @param user the user
+   * @return the user
+   */
+  @PostMapping("/doctors")
+  public Doctor createDoctor(@Valid @RequestBody Doctor doctor) {
+    return doctorRepository.save(doctor);
+  }
+
 
 }
