@@ -2,9 +2,9 @@ package com.staxrt.tutorial.controller;
 
 
 import com.staxrt.tutorial.exception.ResourceNotFoundException;
-import com.staxrt.tutorial.model.Doctor;
 import com.staxrt.tutorial.model.Hospital;
 import com.staxrt.tutorial.repository.HospitalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +17,7 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class HospitalController {
 
+    @Autowired
     private HospitalRepository hospitalRepository;
 
     @GetMapping("/hospitals")

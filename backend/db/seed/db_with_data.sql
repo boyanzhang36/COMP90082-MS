@@ -67,7 +67,7 @@ CREATE TABLE `File` (
 
 DROP TABLE IF EXISTS `Hospital`;
 CREATE TABLE `Hospital` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `emergencyDept` varchar(255) DEFAULT NULL,
