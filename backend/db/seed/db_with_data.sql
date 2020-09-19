@@ -35,7 +35,7 @@ INSERT INTO `Appointment` (`id`, `uid`, `did`, `title`, `detail`, `date_create`,
 
 DROP TABLE IF EXISTS `Doctor`;
 CREATE TABLE `Doctor` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `bio` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
@@ -48,9 +48,9 @@ CREATE TABLE `Doctor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `Doctor` (`id`, `name`, `bio`, `address`, `phone`, `fax`, `email`, `website`, `expertise`) VALUES
-(1,	'Callum',	NULL,	'14 Fake st',	'555',	NULL,	'doctor@doctor.com',	NULL,	'Radiology'),
-(2,	'Dr. Who',	NULL,	'16 tardis street',	'555',	'555',	'timelord_01@Gallifrey',	'test.com',	'Electronic screwdriver'),
-(3,	'Dr. No',	NULL,	'Bond st ',	'655',	'555',	'drno@gmail.com',	'www.no.com',	'Lasers, sharks');
+(1,	'Doctor #1',	"1's Bio",	'Fake Address #1',	'Phone#1',	"Fax#1",	'doctor1@doctor.com',	"doctor1.com",	'Radiology'),
+(2,	"Doctor #2",	"2's Bio",	'Fake Address #2',	'Phone#2',	'Fax#2',	'doctor1@doctor.com',	'doctor2.com',	'Pathology');
+
 
 DROP TABLE IF EXISTS `File`;
 CREATE TABLE `File` (
@@ -67,7 +67,7 @@ CREATE TABLE `File` (
 
 DROP TABLE IF EXISTS `Hospital`;
 CREATE TABLE `Hospital` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `emergencyDept` varchar(255) DEFAULT NULL,
