@@ -1,16 +1,19 @@
-// in src/App.js
-import * as React from "react";
-import { Admin, Resource, ListGuesser } from 'react-admin';
-import {DoctorList}  from './doctors';
+import React, { Component } from "react";
+import { Admin, Resource, ListGuesser } from "react-admin";
+import jsonServerProvider from "ra-data-json-server";
+import doctors from "./doctors"
 
-// import jsonServerProvider from 'ra-data-json-server';
+const dataProvider =
+  jsonServerProvider("localhost:8081/api/v1/doctors");
 
-import dataProvider from './dataProvider';
+class App extends Component {
+  render() {
+    return (
+      <Admin dataProvider={dataProvider}>
+        <Resource name="doctors" list={doctors} />
+      </Admin>
+    );
+  }
+}
 
-// const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
-const App = () => (
-    <Admin dataProvider={dataProvider}>
-        <Resource name="doctors" list={DoctorList} />
-    </Admin>
-);
 export default App;
