@@ -2,22 +2,19 @@ package com.staxrt.tutorial.controller;
 
 
 import com.staxrt.tutorial.exception.ResourceNotFoundException;
-import com.staxrt.tutorial.model.Hospital;
 import com.staxrt.tutorial.model.Pathology;
 import com.staxrt.tutorial.repository.PathologyRepository;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/vi")
+@RequestMapping("/api/v1")
 public class PathologyController {
     @Autowired
     private PathologyRepository pathologyRepository;
@@ -32,10 +29,10 @@ public class PathologyController {
         return ResponseEntity.ok().body(pathology);
     }
 
-//    @PostMapping("pathologies")
-//      public Pathology createPathology(@Valid @RequestBody Pathology pathology) {
-//            return pathologyRepository.save(pathology);
-//      }
+    @PostMapping("pathologies")
+      public Pathology createPathology(@Valid @RequestBody Pathology pathology) {
+            return pathologyRepository.save(pathology);
+      }
 
 
     @PutMapping("pathologies/{id}")
