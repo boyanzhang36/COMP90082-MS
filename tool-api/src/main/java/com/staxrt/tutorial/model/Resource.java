@@ -19,9 +19,8 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "uid", nullable = false)
-    private User uid;
+    @Column(name = "uid")
+    private int uid;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -43,17 +42,11 @@ public class Resource {
         this.id = id;
     }
 
-    public User getUid() {
+    public int getUid() {
         return uid;
     }
 
-
-    /**
-     * Sets id.
-     *
-     * @param uid the id
-     */
-    public void setUid(User uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 

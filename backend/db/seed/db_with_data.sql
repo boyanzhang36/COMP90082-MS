@@ -26,7 +26,7 @@ CREATE TABLE `Appointment` (
   PRIMARY KEY (`id`),
   KEY `fk_Appointment_Patient1_idx` (`uid`),
   KEY `did` (`did`),
-  CONSTRAINT `Appointment_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `User` (`id`),
+  CONSTRAINT `Appointment_ibfk_2` FOREIGN KEY (`uid`) REFERENCES `User` (`id`) ,
   CONSTRAINT `Appointment_ibfk_3` FOREIGN KEY (`did`) REFERENCES `Doctor` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -119,7 +119,7 @@ INSERT INTO `Pathology` (`id`, `name`, `address`, `phone`, `hours`, `website`) V
 
 DROP TABLE IF EXISTS `Radiology`;
 CREATE TABLE `Radiology` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
@@ -138,7 +138,7 @@ INSERT INTO `Radiology` (`id`, `name`, `address`, `phone`, `fax`, `hours`, `emai
 
 DROP TABLE IF EXISTS `Resource`;
 CREATE TABLE `Resource` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `name` varchar(45) NOT NULL,
   `website` varchar(255) DEFAULT NULL,
@@ -152,7 +152,7 @@ INSERT INTO `Resource` (`id`, `uid`, `name`, `website`) VALUES
 
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE `User` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `password` varchar(255) DEFAULT NULL,
   `firstname` varchar(45) NOT NULL,
   `middlename` varchar(45) DEFAULT NULL,
