@@ -102,7 +102,7 @@ INSERT INTO `NotificationToken` (`id`, `uid`, `fcm_token`) VALUES
 
 DROP TABLE IF EXISTS `Pathology`;
 CREATE TABLE `Pathology` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
