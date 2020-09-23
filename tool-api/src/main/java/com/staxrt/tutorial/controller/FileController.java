@@ -37,7 +37,7 @@ public class FileController {
         return fileRepository.save(file);
     }
 
-    @GetMapping("/files/{id}")
+    @PutMapping("/files/{id}")
     public ResponseEntity<File> updateFile(@PathVariable("id") int id,
                                            @Valid @RequestBody File newFile)
             throws ResourceNotFoundException {
