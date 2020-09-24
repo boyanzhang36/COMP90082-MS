@@ -64,6 +64,9 @@ CREATE TABLE `File` (
   CONSTRAINT `File_ibfk_2` FOREIGN KEY (`apptid`) REFERENCES `Appointment` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `File` (`id`, `apptId`, `title`, `link`) VALUES
+(1,	1,	"File 1",	'Link #1');
+
 
 DROP TABLE IF EXISTS `Hospital`;
 CREATE TABLE `Hospital` (
