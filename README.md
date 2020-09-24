@@ -124,61 +124,42 @@ Exit docker bash:
 ```
 exit
 ```
+### Spinning up tool API
 
-
-
-### Deployment
-
-In order to deploy the app, configure your router settings such that the server exposes the api port on the internet. To find the port, view the docker-compose yml port mapping.  
-
-Edit the ```~/{projectname}/frontend/lib/util/serverDetails.dart``` file to reflect your public ip address.  
-
-## API
-
-While the api will be automatically deployed via docker-compose, the following details are about how to rebuild the api code, should changes be required.  
-
-The code is built using Maven and the documentation for building can be found in the api folder ```README.md``` file.  
-
-Essentially ```mvn clean install``` will build a ```.war``` file in the target directory. To deploy, move this file into ```~/{projectname}/backend/tomcat/webapps``` then rebuild the docker containers with:  
+Return to root of tool/api
 
 ```
-docker-compose stop
-docker-compose --build
-docker-compose up -d
+cd ../..
 ```
 
-One important note is that the Java version Maven uses must match with the Java version Tomcat uses, the following configuration works without issues:  
+Spin up the api : 
 
 ```
-Apache Maven 3.6.3
-Java version: 1.8
+./mvnw spring-boot:run
 ```
 
-For more detailed instructions, please see the documentations from previous two teams and repeat those steps (while making sure to use the updated version of Java and Maven), and obviously no need to set up Tomcat because docker will handle that.  
+### Spinning up tool UI
 
-## Frontend
-
-The frontend project is located in the ```~/{projectname}/frontend``` directory, please refer to your platform specific guide on how to set up flutter on your system and import a project.  
-
-The following config was used successfully to build flutter code:  
+Navigate to the tool-ui folder
 
 ```
-Flutter 1.17.1 • channel stable • https://github.com/flutter/flutter.git
-Engine • revision 6bc433c6b6
-Tools • Dart 2.8.2
+cd ../tool-ui
 ```
 
-There are 2 more configurations you will want to change. Firstly, the app points to an ip address and port which is located in a filed called ```~/{projectname}/frontend/lib/util/serverDetails.dart``` - change the relevant fields to your server.  
+Install the npm dependencies 
 
-Secondly, the fcm token setup should be changed over to your account. Set up a firebase account, then follow the steps required to activate firebase for your app. This is a very involved process which included generating key files from firebase and changing configurations for both the android and ios subdirectories of the project. Consult the official documentation.  
+```
+npm i
+```
+
+Spin up the ui
+
+```
+npm run start
+```
 
 ## Authors
 
-Wenkai Huang - wenkai.huang@hotmail.com  
-Callum Dowling - callum.dowling@gmail.com
+Christian Gioia - christiang101@gmail.com  
 
-## Acknowledgments
 
-Previous MH-Bilby team who built docker and part of frontend.  
-
-Previous medical-secretary team who built the genie script and api.
