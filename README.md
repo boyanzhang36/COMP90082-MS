@@ -1,27 +1,21 @@
 
 # Medical Secretary App - COMP90082 2020 S2 Team Kookaburra
 
-This repository contains several components: api, backend, frontend, genie_script, docs and files. Some of them comes from previous teams, and our team has added more functions, made some significant modifications in both frontend and backend and solved bugs to make the whole project work smoothly and meet the client's expectation.  
+Team Kookoburra's Contribution has been an database administration tool, so priveliged administrators for Medical Secretary, can alter the application on a very fine-grained level. 
 
-Here is the brief introduction of each part of our project.  
+It's purpose is essentially to allow easier, more user-friendly alteration of the application, without the indirect genie_script. 
 
-"api" is based on the Apache Tomcat server. It not only contains the RESTful API for handling the HTTP requests and includes the socket server listener for listening the data from Genie Script program. What is more, it also can do the DML statements on our MySQL database. We add more APIs, fix some bugs, make it deal with more types of data and so on to make the server work well.  
+From the root, our contribution can be seen in both tool-api and tool-ui: 
 
-"backend" is a docker file including the Adminer, MySQL database (and the SQL script) and Tomcat server (a ```.war``` file generated from api).  
+1. Tool-Api: A java-driven Spring Boot RESTful API, which receives requests on http://localhost:8081 at the moment, for development purposes. 
 
-"frontend" is the mobile app frontend using flutter which can be deployed on both Android and iOS devices.  We modify a lot of interfaces and add more functions in the frontend, and it is very similar with the prototype.  
-
-"genie_script" is a TCP client that can upload certain type files which are used to add or update the data in MySQL database. Since we cannot use the Genie database API directly at present, this is an approach to add or update data in our own MySQL database.  
-
-"docs" includes the documentations from previous teams and the documentations of API.  
-
-"files" includes sample files which can be uploaded by Genie Script program. In details, there are some exported sample files from Genie software, some files for uploading certain modules, and the pdf report files which can also be handed out in each appointment by our program.  
+2. Tool-UI: A REACT application that renders our database, and allows the user to easily interact with it via the Tool-API. It current lives on http://localhost:8081. 
 
 ## Backend
 
 ### Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.  
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. Production deployment is a consideration for Sprint 2. 
 
 ### Prerequisites
 
@@ -52,21 +46,19 @@ Getting the repo:
 git clone {remote url}
 ```
 
+## Spinning up Database
+
 Navigate to backend directory:  
 
 ```
-cd {projectname}/backend/
+cd {projectname}/tool-api/
 ```
 
-Optionally change the clinic name in the ```~/{projectname}/backend/.env``` file to name the clinics appropriately.  
-
-Spin up server use the following command:  
+Spin up the Medsec development database. 
 
 ```
 docker-compose up -d
 ```
-
-This will install and run each container, it may take some time to download images. Please ensure that the ports specified in docker-compose.yml are not being used up by other processes on your server.  
 
 Now we need to seed the database server, this needs to be done manually, as we want the database to remain persistent from now on.  
 
@@ -133,13 +125,7 @@ Exit docker bash:
 exit
 ```
 
-Confirm setup by typing in ```localhost/adminer.php``` into a browser, then login using:  
-server: DB  
-username: root  
-password: root  
-(These settings are specified in docker-compose.yml)  
 
-You should be able to see a database named medsec. You can also manage the database using this interface if needed.  
 
 ### Deployment
 
