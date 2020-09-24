@@ -21,6 +21,7 @@
 package com.staxrt.tutorial.model;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -44,31 +45,32 @@ public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
     
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "bio", nullable = true)
+    @Column(name = "bio")
     private String bio;
 
-    @Column(name = "address", nullable = true)
+    @Column(name = "address")
     private String address;
-    
-    @Column(name = "phone", nullable = true)
+
+    @Column(name = "phone")
     private String phone;
 
-    @Column(name = "fax", nullable = true)
+    @Column(name = "fax")
     private String fax;
     
-    @Column(name = "email", nullable = true)
+    @Column(name = "email")
     private String email;
     
-    @Column(name = "website", nullable = true)
+    @Column(name = "website")
     private String website;
     
-    @Column(name = "expertise", nullable = true)
+    @Column(name = "expertise")
     private String expertise;
 
     

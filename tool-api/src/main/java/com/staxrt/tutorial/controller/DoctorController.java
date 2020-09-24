@@ -27,13 +27,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.http.HttpMethod;
+
 import javax.validation.Valid;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class DoctorController {
@@ -46,6 +48,7 @@ public class DoctorController {
    *
    * @return the list
    */
+
   @GetMapping("/doctors")
   public List<Doctor> getAllUsers() {
     return doctorRepository.findAll();
@@ -57,6 +60,25 @@ public class DoctorController {
    * @param user the user
    * @return the user
    */
+
+     @RequestMapping(value="/doctors", method = RequestMethod.OPTIONS)
+     ResponseEntity<?> collectionOptions() 
+     {
+          return ResponseEntity
+                  .ok()
+                  .allow(HttpMethod.GET, HttpMethod.POST, HttpMethod.OPTIONS)
+                  .build();
+     }
+      
+     @RequestMapping(value="/doctors/{id}", method = RequestMethod.OPTIONS)
+     ResponseEntity<?> singularOptions() 
+     {
+          return ResponseEntity
+                  .ok()
+                  .allow(HttpMethod.GET, HttpMethod.DELETE, HttpMethod.PUT, HttpMethod.OPTIONS)
+                  .build();
+     }
+
   @PostMapping("/doctors")
   public Doctor createDoctor(@Valid @RequestBody Doctor doctor) {
     return doctorRepository.save(doctor);
@@ -108,7 +130,7 @@ public class DoctorController {
     Doctor doctor =
         doctorRepository
             .findById(doctorId)
-            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found on :: " + doctorId));
+            .orElseThrow(() -> new ResourceNotFoundException("Doctor not found on : " + doctorId));
 
     doctorRepository.delete(doctor);
     Map<String, Boolean> response = new HashMap<>();

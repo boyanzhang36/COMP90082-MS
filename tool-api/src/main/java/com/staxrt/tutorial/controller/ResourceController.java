@@ -1,12 +1,8 @@
 package com.staxrt.tutorial.controller;
 
 import com.staxrt.tutorial.exception.ResourceNotFoundException;
-import com.staxrt.tutorial.model.Doctor;
 import com.staxrt.tutorial.model.Resource;
-import com.staxrt.tutorial.model.User;
-import com.staxrt.tutorial.repository.DoctorRepository;
 import com.staxrt.tutorial.repository.ResourceRepository;
-import com.staxrt.tutorial.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class ResourceController {

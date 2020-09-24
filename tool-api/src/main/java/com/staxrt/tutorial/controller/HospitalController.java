@@ -2,11 +2,10 @@ package com.staxrt.tutorial.controller;
 
 
 import com.staxrt.tutorial.exception.ResourceNotFoundException;
-import com.staxrt.tutorial.model.Doctor;
 import com.staxrt.tutorial.model.Hospital;
 import com.staxrt.tutorial.repository.HospitalRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class HospitalController {
@@ -60,7 +60,7 @@ public class HospitalController {
     }
 
     @DeleteMapping("/hospitals/{id}")
-    public Map<String, Boolean> deleteHospical(@PathVariable("id") int id) throws Exception {
+    public Map<String, Boolean> deleteHospital(@PathVariable("id") int id) throws Exception {
         Hospital hospital = hospitalRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Hospital not found on: " + id));
 
