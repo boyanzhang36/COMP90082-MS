@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+    db:
+      build:
+        context: ./db
+      restart: always
+      volumes:
+        - sql-data:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: test
+        MYSQL_DATABASE: database
+        COMPOSE_PROJECT_NAME: dev
+      ports:
+        - "8889:3306"
+      container_name: dev_DB
+     
+
+volumes: 
+  sql-data:
+  
