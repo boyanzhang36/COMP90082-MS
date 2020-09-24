@@ -6,7 +6,6 @@ import com.staxrt.tutorial.model.Hospital;
 import com.staxrt.tutorial.repository.HospitalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,7 +60,7 @@ public class HospitalController {
     }
 
     @DeleteMapping("/hospitals/{id}")
-    public Map<String, Boolean> deleteHospical(@PathVariable("id") int id) throws Exception {
+    public Map<String, Boolean> deleteHospital(@PathVariable("id") int id) throws Exception {
         Hospital hospital = hospitalRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Hospital not found on: " + id));
 

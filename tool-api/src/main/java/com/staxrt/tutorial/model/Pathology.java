@@ -11,6 +11,7 @@ public class Pathology {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
     @Column(name = "name", nullable = false)
