@@ -11,7 +11,7 @@ USE `medsec`;
 
 DROP TABLE IF EXISTS `Appointment`;
 CREATE TABLE `Appointment` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `did` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -54,7 +54,7 @@ INSERT INTO `Doctor` (`id`, `name`, `bio`, `address`, `phone`, `fax`, `email`, `
 
 DROP TABLE IF EXISTS `File`;
 CREATE TABLE `File` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `apptid` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `link` varchar(255) NOT NULL,
