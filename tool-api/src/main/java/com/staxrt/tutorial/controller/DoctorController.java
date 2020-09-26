@@ -43,23 +43,14 @@ public class DoctorController {
   @Autowired
   private DoctorRepository doctorRepository;
 
-  /**
-   * Get all users list.
-   *
-   * @return the list
-   */
+  // Get all Users
 
   @GetMapping("/doctors")
   public List<Doctor> getAllUsers() {
     return doctorRepository.findAll();
   }
 
-    /**
-   * Create user user.
-   *
-   * @param user the user
-   * @return the user
-   */
+
 
      @RequestMapping(value="/doctors", method = RequestMethod.OPTIONS)
      ResponseEntity<?> collectionOptions() 
@@ -79,11 +70,12 @@ public class DoctorController {
                   .build();
      }
 
+  // Create a Doctor 
   @PostMapping("/doctors")
   public Doctor createDoctor(@Valid @RequestBody Doctor doctor) {
     return doctorRepository.save(doctor);
   }
-
+  // Get a Doctor
   @GetMapping("/doctors/{id}")
   public ResponseEntity<Doctor> getDoctorsById(@PathVariable(value = "id") int doctorId)
       throws ResourceNotFoundException {
@@ -94,13 +86,7 @@ public class DoctorController {
     return ResponseEntity.ok().body(doctor);
   }
 
-   /**
-   * Update user response entity.
-   *
-   * @param doctorId the user id
-   * @return the response entity
-   * @throws ResourceNotFoundException the resource not found exception
-   */
+// Update a doctor 
   @PutMapping("/doctors/{id}")
   public ResponseEntity<Doctor> updateDoctor(
       @PathVariable(value = "id") Integer doctorId, @Valid @RequestBody Doctor doctorDetails)
@@ -125,6 +111,7 @@ public class DoctorController {
     return ResponseEntity.ok(updatedDoctor);
   }
 
+  // Delete a doctor 
   @DeleteMapping("/doctors/{id}")
   public Map<String, Boolean> deleteDoctor(@PathVariable(value = "id") Integer doctorId) throws Exception {
     Doctor doctor =

@@ -20,9 +20,11 @@ public class PathologyController {
     @Autowired
     private PathologyRepository pathologyRepository;
 
+    // Get all pathologies 
     @GetMapping("pathologies")
     public List<Pathology> getAllPathologies() {return pathologyRepository.findAll();}
 
+    // Get a specific pathology 
     @GetMapping("pathologies/{id}")
     public ResponseEntity<Pathology> getPathologyById(@PathVariable("id")int id) throws ResourceNotFoundException {
         Pathology pathology = pathologyRepository.findById(id)
@@ -30,12 +32,13 @@ public class PathologyController {
         return ResponseEntity.ok().body(pathology);
     }
 
+    // Create a pathology 
     @PostMapping("pathologies")
       public Pathology createPathology(@Valid @RequestBody Pathology pathology) {
             return pathologyRepository.save(pathology);
       }
 
-
+    // Update a pathology 
     @PutMapping("pathologies/{id}")
     public ResponseEntity<Pathology> updatePathologyById(@PathVariable("id") int id,
                                                          @Valid @RequestBody Pathology newPathology)
@@ -54,6 +57,7 @@ public class PathologyController {
         return ResponseEntity.ok(updatedPathology);
     }
 
+    // Delete a pathology 
     @DeleteMapping("pathologies/{id}")
     public Map<String, Boolean> deletePathology(@PathVariable("id") int id) throws Exception {
         Pathology pathology = pathologyRepository.findById(id)

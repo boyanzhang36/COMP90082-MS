@@ -22,11 +22,14 @@ public class AppointmentController {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
+
+    // Get all Users
     @GetMapping("/appointments")
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
     }
 
+    // Get a User
     @GetMapping("/appointments/{id}")
     public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id") int id)
             throws ResourceNotFoundException {
@@ -37,11 +40,13 @@ public class AppointmentController {
         return ResponseEntity.ok().body(appointment);
     }
 
+    // Post a Appointment 
     @PostMapping("/appointments")
     public Appointment createAppointment(@Valid @RequestBody Appointment appointment) {
         return appointmentRepository.save(appointment);
     }
 
+    // Update a Appointment 
     @PutMapping("/appointments/{id}")
     public ResponseEntity<Appointment> updateAppointment(@PathVariable("id") int id,
                                                    @Valid @RequestBody Appointment newAppointment)
@@ -66,6 +71,8 @@ public class AppointmentController {
         return ResponseEntity.ok(updatedAppointment);
     }
 
+
+    // Delete an Appointment 
     @DeleteMapping("/appointments/{id}")
     public Map<String, Boolean> deleteAppointment(@PathVariable("id") int id) throws Exception {
         Appointment appointment = appointmentRepository.findById(id)

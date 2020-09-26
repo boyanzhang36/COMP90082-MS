@@ -21,27 +21,20 @@ public class ResourceController {
     @Autowired
     private ResourceRepository resourceRepository;
 
-    /**
-     * Get all users list.
-     *
-     * @return the list
-     */
+    // Get all resources 
     @GetMapping("/resources")
     public List<Resource> getAllResources() {
         return resourceRepository.findAll();
     }
 
-    /**
-     * Create user user.
-     *
-     * @param resource the user
-     * @return the user
-     */
+
+    // Create a resource 
     @PostMapping("/resources")
     public Resource createResource(@Valid @RequestBody Resource resource) {
         return resourceRepository.save(resource);
     }
 
+    // Get a specific resource 
     @GetMapping("/resources/{id}")
     public ResponseEntity<Resource> getResourcesById(@PathVariable(value = "id") int resourceId)
             throws ResourceNotFoundException {
@@ -52,13 +45,7 @@ public class ResourceController {
         return ResponseEntity.ok().body(resource);
     }
 
-    /**
-     * Update user response entity.
-     *
-     * @param resourceId the user id
-     * @return the response entity
-     * @throws ResourceNotFoundException the resource not found exception
-     */
+    // Update a resource 
     @PutMapping("/resources/{id}")
     public ResponseEntity<Resource> updateResource(
             @PathVariable(value = "id") int resourceId, @Valid @RequestBody Resource resourceDetails)
@@ -81,6 +68,7 @@ public class ResourceController {
         return ResponseEntity.ok(updatedResource);
     }
 
+    // Delete a resource 
     @DeleteMapping("/resources/{id}")
     public Map<String, Boolean> deleteResource(@PathVariable(value = "id") Integer resourceId) throws Exception {
         Resource resource =

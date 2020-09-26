@@ -21,9 +21,11 @@ public class NotificationTokenController {
     @Autowired
     private NotificationTokenRepository notificationTokenRepository;
 
+    // Get all notification TOkens 
     @GetMapping("/notificationTokens")
     public List<NotificationToken> getAllNT() { return notificationTokenRepository.findAll(); }
 
+    // Get a specific notification token 
     @GetMapping("/notificationTokens/{id}")
     public ResponseEntity<NotificationToken> getNTById(@PathVariable("id") int id) throws ResourceNotFoundException {
         NotificationToken notificationToken = notificationTokenRepository.findById(id)
@@ -31,11 +33,13 @@ public class NotificationTokenController {
         return ResponseEntity.ok().body(notificationToken);
     }
 
+    // Create a notification token 
     @PostMapping("/notificationTokens")
     public NotificationToken createNT(@Valid @RequestBody NotificationToken notificationToken) {
         return notificationTokenRepository.save(notificationToken);
     }
 
+    // Update a notification token 
     @PutMapping("/notificationTokens/{id}")
     public ResponseEntity<NotificationToken> updateNT(@PathVariable("id") int id,
                                                         @Valid @RequestBody NotificationToken newNotificationToken)
@@ -52,6 +56,7 @@ public class NotificationTokenController {
         return ResponseEntity.ok(updatedNT);
     }
 
+    // Delete a notification token 
     @DeleteMapping("/notificationTokens/{id}")
     public Map<String, Boolean> deleteNT(@PathVariable("id") int id) throws Exception {
         NotificationToken nToken = notificationTokenRepository.findById(id)
