@@ -21,11 +21,13 @@ public class HospitalController {
     @Autowired
     private HospitalRepository hospitalRepository;
 
+    // Get all hospitals
     @GetMapping("/hospitals")
     public List<Hospital> getAllHospitals() {
         return hospitalRepository.findAll();
     }
 
+    // Get a hospital
     @GetMapping("/hospitals/{id}")
     public ResponseEntity<Hospital> getHospitalById(@PathVariable("id") int id) throws ResourceNotFoundException {
         Hospital hospital = hospitalRepository.findById(id)
@@ -33,11 +35,13 @@ public class HospitalController {
         return ResponseEntity.ok().body(hospital);
     }
 
+    // Post a hospital
     @PostMapping("/hospitals")
     public Hospital createHospital(@Valid @RequestBody Hospital hospital) {
         return hospitalRepository.save(hospital);
     }
 
+    // Update a hospital
     @PutMapping("/hospitals/{id}")
     public ResponseEntity<Hospital> updateHospital(@PathVariable("id") int id,
                                                    @Valid @RequestBody Hospital newHospital)
@@ -59,6 +63,7 @@ public class HospitalController {
         return ResponseEntity.ok(updatedHospital);
     }
 
+    // Delete a hospital 
     @DeleteMapping("/hospitals/{id}")
     public Map<String, Boolean> deleteHospital(@PathVariable("id") int id) throws Exception {
         Hospital hospital = hospitalRepository.findById(id)

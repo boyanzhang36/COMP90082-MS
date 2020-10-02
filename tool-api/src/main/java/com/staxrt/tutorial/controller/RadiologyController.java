@@ -28,27 +28,20 @@ public class RadiologyController {
     @Autowired
     private RadiologyRepository radiologyRepository;
 
-    /**
-     * Get all users list.
-     *
-     * @return the list
-     */
+
+    // Get all radiologies 
     @GetMapping("/radiologies")
     public List<Radiology> getAllRadiologies() {
         return radiologyRepository.findAll();
     }
 
-    /**
-     * Create user user.
-     *
-     * @param resource the user
-     * @return the user
-     */
+    // Create a pathology 
     @PostMapping("/radiologies")
     public Radiology createRadiology(@Valid @RequestBody Radiology radiology) {
         return radiologyRepository.save(radiology);
     }
 
+    // Get a specific radiology 
     @GetMapping("/radiologies/{id}")
     public ResponseEntity<Radiology> getRadiologiesById(@PathVariable(value = "id") int radiologyId)
             throws ResourceNotFoundException {
@@ -59,13 +52,7 @@ public class RadiologyController {
         return ResponseEntity.ok().body(radiology);
     }
 
-    /**
-     * Update user response entity.
-     *
-     * @param resourceId the user id
-     * @return the response entity
-     * @throws ResourceNotFoundException the resource not found exception
-     */
+    // Update a radiology 
     @PutMapping("/radiologies/{id}")
     public ResponseEntity<Radiology> updateRadiology(
             @PathVariable(value = "id") int radiologyId, @Valid @RequestBody Radiology radiologyDetails)
@@ -89,6 +76,7 @@ public class RadiologyController {
         return ResponseEntity.ok(updatedRadiology);
     }
 
+    // Delete a radiology 
     @DeleteMapping("/radiologies/{id}")
     public Map<String, Boolean> deleteRadiology(@PathVariable(value = "id") Integer radiologyId) throws Exception {
         Radiology radiology =

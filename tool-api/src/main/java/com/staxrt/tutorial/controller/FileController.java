@@ -20,12 +20,13 @@ public class FileController {
     @Autowired
     private FileRepository fileRepository;
 
+    // Get all Files
     @GetMapping("/files")
     public List<File> getAllFiles() {
         return fileRepository.findAll();
     }
 
-
+    // Get a specific file 
     @GetMapping("/files/{id}")
     public ResponseEntity<File> getFileById(@PathVariable("id") int id) throws ResourceNotFoundException {
         File file = fileRepository.findById(id)
@@ -33,11 +34,13 @@ public class FileController {
         return ResponseEntity.ok().body(file);
     }
 
+    // Create a file
     @PostMapping("/files")
     public File createFile(@Valid @RequestBody File file) {
         return fileRepository.save(file);
     }
 
+    // Update a file
     @PutMapping("/files/{id}")
     public ResponseEntity<File> updateFile(@PathVariable("id") int id,
                                            @Valid @RequestBody File newFile)
@@ -54,6 +57,7 @@ public class FileController {
         return ResponseEntity.ok(updatedFile);
     }
 
+    // Delete a file 
     @DeleteMapping("/files/{id}")
     public Map<String, Boolean> deleteFile(@PathVariable("id") int id) throws Exception {
         File file = fileRepository.findById(id)

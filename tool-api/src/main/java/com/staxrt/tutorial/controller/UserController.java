@@ -43,22 +43,15 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    /**
-     * Get all users list.
-     *
-     * @return the list
-     */
+
+    // Get a user 
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    /**
-     * Create user user.
-     *
-     * @param user the user
-     * @return the user
-     */
+
+    // create a user 
     @PostMapping("/users")
     public User createUser(@Valid @RequestBody User user) {
         return userRepository.save(user);
@@ -74,13 +67,7 @@ public class UserController {
         return ResponseEntity.ok().body(user);
     }
 
-    /**
-     * Update user response entity.
-     *
-     * @param userId the user id
-     * @return the response entity
-     * @throws ResourceNotFoundException the resource not found exception
-     */
+    // Update a user 
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUser(
             @PathVariable(value = "id") int userId, @Valid @RequestBody User userDetails)
@@ -111,6 +98,7 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+    // Delete a user 
     @DeleteMapping("/users/{id}")
     public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Integer userId) throws Exception {
         User user =
