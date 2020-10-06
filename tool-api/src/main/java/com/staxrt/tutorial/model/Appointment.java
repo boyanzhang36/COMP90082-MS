@@ -4,6 +4,8 @@ package com.staxrt.tutorial.model;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "\"Appointment\"")
@@ -11,35 +13,44 @@ import javax.persistence.*;
 public class Appointment {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
     //    @ManyToOne
     //    @JoinColumn(name = "uid")
+    @NotNull
+
     @Column(name = "uid", nullable = false)
     private int uid;
 
     //    @ManyToOne
     //    @JoinColumn(name = "did")
+    @NotNull
     @Column(name = "did", nullable = false)
     private int did;
 
+    @NotNull
     @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "detail")
     private String detail;
 
+    @NotNull
     @Column(name = "date_create", nullable = false)
     private String date_create; // DateTime?
 
+    @NotNull
     @Column(name = "date_change", nullable = false)
     private String date_change; // DateTime?
 
+    @NotNull
     @Column(name = "date", nullable = false)
     private String date; // DateTime?
 
+    @NotNull
     @Column(name = "duration", nullable = false)
     private int duration;
 

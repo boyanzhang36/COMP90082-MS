@@ -3,6 +3,8 @@ package com.staxrt.tutorial.model;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -22,6 +24,8 @@ public class Resource {
     @Column(name = "uid")
     private int uid;
 
+    @Size(min = 2, message = "Name should have atleast 2 characters")
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 

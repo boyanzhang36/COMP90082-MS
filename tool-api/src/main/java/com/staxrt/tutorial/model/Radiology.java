@@ -10,6 +10,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 
@@ -26,25 +29,34 @@ public class Radiology {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
+    @Size(min = 2, message = "Name should have atleast 2 characters")
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotNull
     @Column(name = "address", nullable = true)
     private String address;
 
+    @NotNull
     @Column(name = "phone", nullable = true)
     private String phone;
 
 
+    @NotNull
     @Column(name = "fax", nullable = true)
     private String fax;
 
+    @NotNull
     @Column(name = "hours", nullable = true)
     private String hours;
 
+    @NotNull
+    @Email
     @Column(name = "email", nullable = true)
     private String email;
 
+    @NotNull
     @Column(name = "website", nullable = true)
     private String website;
 
