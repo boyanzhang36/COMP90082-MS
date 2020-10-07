@@ -3,6 +3,9 @@ package com.staxrt.tutorial.model;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.lang.annotation.Native;
 
 @Entity
 @Table(name = "\"Pathology\"")
@@ -11,15 +14,18 @@ public class Pathology {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
+    @NotNull
+    @Size(min = 2, message = "Name should have atleast 2 characters")
     @Column(name = "name", nullable = false)
     private String name;
-
+    @NotNull
     @Column(name = "address", nullable = false)
     private String address;
-
+    @NotNull
     @Column(name = "phone", nullable = false)
     private String phone;
 

@@ -3,6 +3,7 @@ package com.staxrt.tutorial.model;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "\"NotificationToken\"")
@@ -11,6 +12,7 @@ public class NotificationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     @Column(name = "id", updatable = false, nullable = false)
     public int id;
 

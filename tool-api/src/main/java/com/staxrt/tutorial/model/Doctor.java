@@ -30,6 +30,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 
@@ -45,10 +48,12 @@ public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
-    
+    @NotNull
+    @Size(min = 2, message = "Name should have atleast 2 characters")
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -63,7 +68,7 @@ public class Doctor {
 
     @Column(name = "fax")
     private String fax;
-    
+    @Email
     @Column(name = "email")
     private String email;
     

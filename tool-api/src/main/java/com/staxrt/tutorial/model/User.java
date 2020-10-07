@@ -11,6 +11,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
+import javax.validation.constraints.*;
+
 import java.util.Date;
 
 /**
@@ -28,10 +30,12 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
-
+    @NotNull
+    @Size(min = 2, message = "First Name should have atleast 2 characters")
     @Column(name = "firstname", nullable = false)
     private String firstname;
-
+    @NotNull
+    @Size(min = 2, message = "Surname should have atleast 2 characters")
     @Column(name = "surname", nullable = false)
     private String surname;
 
@@ -42,11 +46,12 @@ public class User {
     @Column(name = "password", nullable = true)
     private String password;
 
-
+    @NotNull
     @DateTimeFormat
     @Column(name = "dob", nullable = false)
     private Date dob;
-
+    @Email
+    @NotBlank
     @Column(name = "email", nullable = false)
     private String email;
 
