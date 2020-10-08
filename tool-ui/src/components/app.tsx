@@ -12,6 +12,12 @@ import { CustomStyles } from './customStyles/customStyles.comp';
 import './app.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { AmplifyAuthenticator, AmplifySignOut, AmplifySignUp, AmplifySignIn } from '@aws-amplify/ui-react';
+
+import Amplify from "aws-amplify";
+import awsExports from "./aws-exports";
+Amplify.configure(awsExports);
+
 const httpService = new HttpService();
 const defaultAppName: string = 'RESTool App';
 
@@ -108,6 +114,34 @@ function App() {
   }, [config]);
 
   return (
+    <AmplifyAuthenticator usernameAlias="email">
+      <AmplifySignUp
+
+        slot="sign-up"
+        usernameAlias="email"
+
+        formFields={[
+          {
+            type: "email",
+            label: "Email Address",
+            placeholder: "Enter your email address",
+            required: true,
+          },
+          {
+            type: "password",
+            label: "Password",
+            placeholder: "Enter your password",
+            required: true,
+          },
+          {
+            type: "phone_number",
+            label: "Phone number",
+            placeholder: "Enter your phone number",
+            required: false,
+          }
+        ]} 
+      />
+      <AmplifySignIn slot="sign-in" hideSignUp usernameAlias="email" />
     <div className="restool-app">
       {
         !config ?
@@ -123,7 +157,9 @@ function App() {
           }
           <Router>
             <aside>
+
               <h1 title={appName} onClick={() => scrollToTop()}>{appName}</h1>
+              <AmplifySignOut />
               {
                 <Navigation />
               }
@@ -142,8 +178,10 @@ function App() {
             />
           </Router>
         </AppContext.Provider>
+
       }
     </div>
+    </AmplifyAuthenticator>
   );
 }
 
