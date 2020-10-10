@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "tooluie6d9932e": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

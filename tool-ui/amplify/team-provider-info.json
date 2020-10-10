@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-toolui-dev-230244-authRole",
+      "UnauthRoleArn": "arn:aws:iam::816570060161:role/amplify-toolui-dev-230244-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::816570060161:role/amplify-toolui-dev-230244-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-toolui-dev-230244-deployment",
+      "UnauthRoleName": "amplify-toolui-dev-230244-unauthRole",
+      "StackName": "amplify-toolui-dev-230244",
+      "StackId": "arn:aws:cloudformation:us-east-2:816570060161:stack/amplify-toolui-dev-230244/b06dd890-0702-11eb-bd45-06a590253d7a",
+      "AmplifyAppId": "d13idzpbmzj777"
+    },
+    "categories": {
+      "auth": {
+        "tooluie6d9932e": {}
+      }
+    }
+  }
+}

@@ -14,13 +14,11 @@
     "type": "git",
     "url": "https://bitbucket.cis.unimelb.edu.au:8445/scm/~cgioia/comp90082-2020-ms-kookaburra.git"
   },
-  
-    "husky": {
-      "hooks": {
-        "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-      }
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  ,
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
