@@ -1,0 +1,31 @@
+{
+  "name": "comp90082-2020-ms-kookaburra",
+  "version": "1.0.0",
+  "description": "Team Kookoburra's Contribution has been an database administration tool, so priveliged administrators for Medical Secretary, can alter the application on a very fine-grained level.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.cis.unimelb.edu.au:8445/scm/~cgioia/comp90082-2020-ms-kookaburra.git"
+  },
+  
+    "husky": {
+      "hooks": {
+        "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      }
+    }
+  ,
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "husky": "^4.3.0"
+  }
+}
