@@ -13,10 +13,20 @@ import './app.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { AmplifyAuthenticator, AmplifySignOut, AmplifySignUp, AmplifySignIn } from '@aws-amplify/ui-react';
-
+import cognitoConfig from "../cognito-config.json"; 
 import Amplify from "aws-amplify";
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
+
+// re-use an existing authentication resource from AWS
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: true,
+    region: cognitoConfig.cognito.REGION,
+    userPoolId: cognitoConfig.cognito.USER_POOL_ID,
+    userPoolWebClientId: cognitoConfig.cognito.APP_CLIENT_ID
+  }
+});
 
 const httpService = new HttpService();
 const defaultAppName: string = 'RESTool App';
